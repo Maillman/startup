@@ -1,6 +1,7 @@
 # Notes
 ## Git Notes
 Resolving conflicts is pretty hard. I would recommend trying to avoid doing such things. Always pull first, make the changes and push. I'd honestly would rather resolve the conflicts on GitHub and not on VS Code.
+Github Copilot is extremely powerful, make sure to renew my Github Student Education plan to maintain access to that feature.
 ## AWS Notes
 Honestly, it's a good thing I was practically walked the whole way through as it was very easy to get lost. So I'm pretty thankful for the instructions on setting up an EC2 instance and create an elastic IP address.
 
@@ -9,3 +10,7 @@ My elastic IP address is 34.200.36.24
 To SSH into my EC2 instance from the CS260 folder in Git Bash, use this command:
 
 ssh -i inclass.pem ubuntu@34.200.36.24
+## Startup Notes
+You can now reach my startup using https://melvinwhitaker.com instead of the elastic IP address.
+Caddy is really useful in generating certificates to give to the user.
+I also realize how important it is to have Vim, especially when SSH'ing into my server.
