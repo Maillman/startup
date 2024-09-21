@@ -15,6 +15,8 @@ ssh -i inclass.pem ubuntu@34.200.36.24
 Also, I really like how you can take an image from anywhere and if linked will show up on your HTML page.
 
 **HTML Input:** The color type seems to act a little weird whenever you mess with it on the HTML page and also try to edit it in HTML. Looking at the GitHub page and even [it's associated link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) is also extremely useful when trying to figure out implementing input into an html page. Especially when trying to deal with regex and patterns like emails and whatnot!
+
+**HTML Media:** This one was actually really fun to try. I had to do a lot of finagling around, but after a lot of trial and research, I not only managed to grab video and audio from Reddit, but I also even managed to combine separate audio and video together! I can definitely see myself looking more into this in the future.
 ## Startup Notes
 You can now reach my startup using https://melvinwhitaker.com instead of the elastic IP address.
 Caddy is really useful in generating certificates to give to the user.
