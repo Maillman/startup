@@ -10,6 +10,9 @@ My elastic IP address is 34.200.36.24
 To SSH into my EC2 instance from the CS260 folder in Git Bash, use this command:
 
 ssh -i inclass.pem ubuntu@34.200.36.24
+## HTML Notes
+**HTML Structure:** Don't forget that you not only have to open a tag, but close the tag as well or else things will start looking a little wierd and it will be very frustrating trying to figure out what was wrong. Perhaps I will also learn more with time.
+Also, I really like how you can take an image from anywhere and if linked will show up on your page.
 ## Startup Notes
 You can now reach my startup using https://melvinwhitaker.com instead of the elastic IP address.
 Caddy is really useful in generating certificates to give to the user.
