@@ -19,6 +19,8 @@ Also, I really like how you can take an image from anywhere and if linked will s
 **HTML Media:** This one was actually really fun to try. I had to do a lot of finagling around, but after a lot of trial and research, I not only managed to grab video and audio from Reddit, but I also even managed to combine separate audio and video together! I can definitely see myself looking more into this in the future.
 
 **Startup HTML:** Doing the HTML for my startup was pretty fun. Really taking the time to look at the [Mozilla documentation for HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) is particularly useful, I have found myself going through it very often and find new ways to use elements I was unfamiliar with. Copilot can also be of some assistance as well getting things fairly close to what you need and then modifying it to exactly where you want it. I also found myself stylizing the discussion page already in line and then realized I was copying and pasting the same style across multiple elements, it is probably wiser to move that all into a CSS document instead.
+## CSS Notes
+**CSS Practice:** I am not particularly well-versed in the syntax of CSS and using codepen.io doesn't help me autocomplete a property or element like it would in VS Code. So I had to go through the Mozilla documentation a lot more that I normally would. But I'll understand properties and syntax more as time goes on. CSS is extremely powerful, it's just a pain to learn IMO.
 ## Startup Notes
 You can now reach my startup using https://melvinwhitaker.com instead of the elastic IP address.
 Caddy is really useful in generating certificates to give to the user.
