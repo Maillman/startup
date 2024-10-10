@@ -1,0 +1,9 @@
+/* TODO: Change all <body> tags to <main> tags */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
