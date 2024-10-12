@@ -23,6 +23,11 @@ main form:not(#login-form) {
     flex-direction: column;
     width: 100%;
     margin: 10px 0%;
+    padding: 0px 10%;
+}
+
+main form textarea {
+    resize: none;
 }
 
 @media (max-width: 605px) {
