@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="main.css">
     <title>Home Page</title>
     <style>
-        .login-form {
+        #login-form {
             margin: 1rem 10px;
             border: thin solid #dee2e6;
             border-radius: 1rem;
@@ -21,10 +21,10 @@
             text-align: center;
 
         }
-        .login-form h1 {
+        #login-form h1 {
             margin: 0 0 1rem;
         }
-        .login-form input {
+        #login-form input {
             margin: 5px 0;
         }
     </style>
@@ -43,7 +43,7 @@
     </nav>
 </header>
 <main>
-    <form class="a-flex login-form">      <!-- Replace <form> with <form action="login.php" method="post"> in time -->
+    <form id="login-form" class="a-flex">      <!-- Replace <form> with <form action="login.php" method="post"> in time -->
         <h1>Sign In</h1>
         <p>
             <input type="text" id="username" name="username" placeholder="Username" class="form-control" size="60%" required>

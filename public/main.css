@@ -17,6 +17,14 @@ main div {
     width: 80%;
     border-radius: 0em !important;
 }
+
+main form:not(#login-form) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 10px 0%;
+}
+
 @media (max-width: 605px) {
     main {
         margin-top: calc(240px - 36vw);
