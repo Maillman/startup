@@ -1,4 +1,3 @@
-/* TODO: Change all <body> tags to <main> tags */
 main {
     display: flex;
     justify-content: center;
@@ -6,4 +5,15 @@ main {
     flex-direction: column;
     height: 100vh;
     margin: 0;
+}
+main div {
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 20px;
+    margin: 10px 0%;
+    width: 80%;
+    border-radius: 0em !important;
+}
+main div.card:hover {
+    background-color: #d2d2d2;
 }
