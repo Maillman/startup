@@ -1,3 +1,7 @@
+:root {
+    --main-bg-color: white;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -15,5 +19,14 @@ main div {
     border-radius: 0em !important;
 }
 main div.card:hover {
-    background-color: #d2d2d2;
+    animation: darkenCard 0.5s forwards;
+}
+
+@keyframes darkenCard {
+    0% {
+        background-color: var(--main-bg-color);
+    }
+    100% {
+        background-color: lch(from var(--main-bg-color) calc(l - 5) c h);
+    }
 }
