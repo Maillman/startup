@@ -11,6 +11,21 @@
         />
         <link rel="stylesheet" href="main.css">
         <title>Home Page</title>
+        <style>
+            main div.card:hover {
+                cursor: pointer;
+                animation: darkenCard 0.5s forwards;
+            }
+
+            @keyframes darkenCard {
+                0% {
+                    background-color: var(--main-bg-color);
+                }
+                100% {
+                    background-color: lch(from var(--main-bg-color) calc(l - 5) c h);
+                }
+            }
+        </style>
     </head>
     <header>
         <nav class="navbar navbar-expand-sm bg-light">

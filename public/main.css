@@ -11,22 +11,15 @@ main {
     margin: 0;
 }
 main div {
-    cursor: pointer;
     border: 1px solid black;
     padding: 20px;
     margin: 10px 0%;
     width: 80%;
     border-radius: 0em !important;
 }
-main div.card:hover {
-    animation: darkenCard 0.5s forwards;
-}
-
-@keyframes darkenCard {
-    0% {
-        background-color: var(--main-bg-color);
-    }
-    100% {
-        background-color: lch(from var(--main-bg-color) calc(l - 5) c h);
+@media (max-width: 605px) {
+    main {
+        margin-top: calc(240px - 36vw);
+        margin-bottom: calc(180px - 25vw);
     }
 }
