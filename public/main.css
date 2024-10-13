@@ -7,9 +7,12 @@ main {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
-    margin: 0;
+    min-height: 100vh;
+    margin: 0px 10%;
+    height: 120%;
+    width: 80%;
 }
+
 main div {
     border: 1px solid black;
     padding: 20px;
@@ -28,11 +31,4 @@ main form:not(#login-form) {
 
 main form textarea {
     resize: none;
-}
-
-@media (max-width: 605px) {
-    main {
-        margin-top: calc(240px - 36vw);
-        margin-bottom: calc(180px - 25vw);
-    }
 }
