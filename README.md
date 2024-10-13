@@ -35,3 +35,14 @@ For this deliverable I built out the structure of my application using HTML.
 - [X] **Images** - Added a placeholder image for now, unsure if I will need an image in the future.
 - [x] **DB/Login** - Input box and submit button for login. The discussion and thread pages will have conversations that pull from the database.
 - [x] **WebSocket** - Thread comments will update in real-time.
+## CSS deliverable
+
+For this deliverable I properly styled the application into its final appearance.
+
+- [x] **Header, footer, and main content body**
+- [x] **Responsive to window resizing** - My app looks great on all window sizes and devices
+- [x] **Navigation elements** - I used Bootstrap to make a responsive and easy-looking navigation bar at the top.
+- [x] **Application elements** - Used good contrast and whitespace
+- [x] **Application text content** - Consistent fonts
+- [x] **Application images** - I've stylized the placeholder image, but I'm unsure if it will stay.
+- [ ] **Application color** - It's pretty basic right now but I have a plan to give a unique color scheme for the application, I just need to make sure it looks good first.
