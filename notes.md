@@ -116,7 +116,7 @@ element.style.color = "green";
 
 
 **What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?**
-<p>,<ol>,<ul>,<h2>,<h1>,<h3>
+p, ol, ul, h2, h1, h3
 **How do you declare the document type to be html?**
 <!doctype html>
 
