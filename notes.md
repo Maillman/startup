@@ -28,3 +28,191 @@ Honestly, CSS seems to be coming to me much harder than anything else. For some 
 You can now reach my startup using https://melvinwhitaker.com instead of the elastic IP address.
 Caddy is really useful in generating certificates to give to the user.
 I also realize how important it is to have Vim, especially when SSH'ing into my server.
+
+## Midterm Notes
+
+Midterm Questions
+**In the following code, what does the link element do?**
+It is used to define the relationship between the current document and an external resource.
+
+**In the following code,  what does a div tag do?**
+It serves as a container for other HTML elements and is one of the most commonly used tags for structuring web pages.
+
+**In the following code, what is the difference between the #title and .grid selector?**
+The # symbol is used to select an element with a specific id attribute. An ID must be unique within a page, meaning that only one element should have a specific ID.ID selectors have a higher specificity than class selectors. This means that if an element has both an ID and a class, styles defined with the ID selector will take precedence over those defined with the class selector.
+The . symbol is used to select elements with a specific class attribute. Multiple elements can share the same class. You can apply the same class to multiple elements, allowing for consistent styling across those elements. Class selectors have lower specificity than ID selectors. This means that if both an ID and a class are applied to the same element, styles from the ID will override styles from the class.
+
+**In the following code, what is the difference between padding and margin?**
+Padding is the space between the content of an element and its border. It is inside the element's border.
+Margin is the space outside an element's border, separating it from other elements. It is outside the element's border.
+
+**Given this HTML and this CSS how will the images be displayed using flex?**
+
+**What does the following padding CSS do?**
+
+**What does the following code using arrow syntax function declaration do?**
+
+**What does the following code using map with an array output?**
+
+**What does the following code output using getElementByID and addEventListener?**
+
+**What does the following line of Javascript do using a # selector?**
+
+**Which of the following are true? (mark all that are true about the DOM)**
+The **Document Object Model (DOM)** is a programming interface for web documents. It represents the structure of a document as a tree of objects, allowing programs to manipulate the content, structure, and styles of web pages. Here are some key truths about the DOM:
+
+### 1. **Tree Structure**
+- The DOM represents the document as a hierarchical tree structure, where each node is an object representing a part of the document (e.g., elements, text, attributes).
+- The root of the tree is the `document` object, and the branches are elements, text nodes, and attributes.
+
+### 2. **Dynamic Interaction**
+- The DOM allows for dynamic changes to the content and structure of a web page. JavaScript can be used to add, remove, or modify elements and their attributes at runtime.
+- Changes made through the DOM are immediately reflected in the displayed web page.
+
+### 3. **Language-Independent**
+- The DOM is a language-independent interface, meaning it can be used with various programming languages, but is most commonly manipulated using JavaScript in web development.
+  
+### 4. **Events Handling**
+- The DOM supports event handling, allowing developers to create interactive web pages. You can listen for events (like clicks, key presses, or form submissions) and respond with JavaScript functions.
+
+### 5. **Standardized Interface**
+- The DOM is standardized by the World Wide Web Consortium (W3C) and the Web Hypertext Application Technology Working Group (WHATWG), ensuring consistency across different web browsers.
+  
+### 6. **Access and Manipulation**
+- You can access elements in the DOM using various methods (like `getElementById`, `getElementsByClassName`, `querySelector`, etc.) and manipulate their properties (like `innerHTML`, `style`, `classList`, etc.).
+
+### 7. **Support for CSS Styles**
+- The DOM allows you to manipulate CSS styles directly via JavaScript. You can change styles dynamically based on user interactions or other conditions.
+
+### 8. **Document Object Model Levels**
+- The DOM has different levels, including the Core DOM (the basic model), the HTML DOM (the model specific to HTML documents), and the XML DOM (for XML documents).
+
+**By default, the HTML span element has a default CSS display property value of:** 
+The default CSS display value of the HTML <span> element is inline.
+
+**How would you use CSS to change all the div elements to have a background color of red?**
+div {
+  background-color = red;
+}
+
+**How would you display an image with a hyperlink in HTML?**
+<a href="https://www.example.com">
+  <img src="image.jpg" alt="Description of the image">
+</a>
+
+**In the CSS box model, what is the ordering of the box layers starting at the inside and working out?**
+[ Content ] → [ Padding ] → [ Border ] → [ Margin ]
+
+**Given the following HTML, what CSS would you use to set the text "trouble" to green and leave the "double" text unaffected?**
+
+**What will the following code output when executed using a for loop and console.log?**
+
+**How would you use JavaScript to select an element with the id of “byu” and change the text color of that element to green?**
+// Select the element with the ID "byu"
+let element = document.getElementById("byu");
+
+// Change the text color to green
+element.style.color = "green";
+
+
+**What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?**
+<p>,<ol>,<ul>,<h2>,<h1>,<h3>
+**How do you declare the document type to be html?**
+<!doctype html>
+
+**What is valid javascript syntax for if, else, for, while, switch statements?**
+if (condition) {
+  // Code to run if the condition is true
+} else if (anotherCondition) {
+  // Code to run if the second condition is true
+} else {
+  // Code to run if all conditions are false
+}
+for (initialization; condition; increment) {
+  // Code to run in each iteration
+}
+while (condition) {
+  // Code to run as long as the condition is true
+}
+switch (expression) {
+  case value1:
+    // Code to run if expression === value1
+    break;
+  case value2:
+    // Code to run if expression === value2
+    break;
+  default:
+    // Code to run if none of the cases match
+}
+
+**What is the correct syntax for creating a javascript object?**
+Object literal syntax: { key: value }
+new Object(): let obj = new Object();
+Constructor function: function ConstructorName() { this.property = value; }
+Class syntax (ES6): class ClassName { constructor() { ... } }
+Object.create(): let obj = Object.create(proto);
+The object literal syntax is the most commonly used due to its simplicity.
+
+
+**Is it possible to add new properties to javascript objects?**
+Yes; using dot notation, bracket notation, and Object.defineProperty()
+
+**If you want to include JavaScript on an HTML page, which tag do you use?**
+<script></script>
+
+**Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?**
+
+**Which of the following correctly describes JSON?**
+JSON (JavaScript Object Notation) is a type of lightweight data-interchangeable format that is often provided when an HTTP protocol is used.
+
+**What does the console command chmod, pwd, cd, ls, vim, nano, mkdir, mv, rm, man, ssh, ps, wget, sudo do?**
+chmod: Changes the file permissions. You can set the read, write, and execute permissions for the owner, group, and others (e.g., chmod 755 file).
+
+pwd: Stands for "print working directory." It shows the current directory you are in.
+
+cd: Stands for "change directory." It allows you to navigate to a different directory (e.g., cd /path/to/directory).
+
+ls: Lists the contents of a directory. Variations like ls -la can give more detailed output, including hidden files.
+
+vim: A text editor used to create or edit files in the terminal. It's quite powerful but has a steeper learning curve than other editors.
+
+nano: Another text editor, simpler than vim, often easier for beginners to use for editing text files.
+
+mkdir: Stands for "make directory." It is used to create new directories (e.g., mkdir new_folder).
+
+mv: Moves or renames files and directories. For example, mv file1 /new/location/ moves file1, and mv file1 newname renames file1.
+
+rm: Removes (deletes) files or directories. rm -r allows you to delete directories and their contents recursively.
+
+man: Stands for "manual." It shows the manual or help documentation for other commands (e.g., man ls will show the manual for ls).
+
+ssh: Stands for "Secure Shell." It allows you to connect securely to a remote machine over a network (e.g., ssh user@hostname).
+
+ps: Displays a snapshot of the current processes running on the system. ps aux shows a detailed list of all processes.
+
+wget: A command-line utility for downloading files from the web. For example, wget http://example.com/file downloads the file from that URL.
+
+sudo: Stands for "superuser do." It allows you to execute a command with elevated (administrator or root) privileges (e.g., sudo apt update).
+
+
+**Which of the following console command creates a remote shell session?**
+ssh
+
+**Which of the following is true when the -la parameter is specified for the ls console command?**
+ls -la shows a detailed long-format listing of all files, including hidden ones, in the directory.
+
+**Which of the following is true for the domain name banana.fruit.bozo.click, which is the top level domain, which is a subdomain, which is a root domain?**
+Top level domain = .click
+Root domain = bozo.click
+Subdomain = banana.fruit.bozo.click
+
+**Is a web certificate is necessary to use HTTPS?**
+Yes, an SSL certificate is necessary for an HTTPS web address
+
+**Can a DNS A record can point to an IP address or another A record?**
+A DNS A record can only point to an IP address but not another A record.
+
+**Port 443, 80, 22 is reserved for which protocol?**
+Port 443 is reserved for the HTTPS protocol (Hypertext Transfer Protocol Secure), port 80 is for HTTP (Hypertext Transfer Protocol), and port 22 is for SSH (Secure Shell) protocol.
+ 
+**What will the following code using Promises output when executed?**
