@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './home/home';
+import { Application } from './application/application';
 
 export default function App() {
     return (
@@ -22,6 +23,7 @@ export default function App() {
         </header>
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/application" element={<Application />} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer class="navbar bg-dark">
