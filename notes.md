@@ -34,6 +34,13 @@ I also realize how important it is to have Vim, especially when SSH'ing into my 
 
 **React Reactivity:** This is probably the single biggest useful aspect of React that I'm definitely going to use in my startup. I want to be able to show the text being encrypted/decrypted in real-time which will make the user experience so much better! I just hope I don't get lost in the sauce to badly...
 
+**Startup React:** Getting switched over to React using Vite was a bit of a struggle, there was a little bit of some pain there. However, things are now going very smoothly.
+One thing to note, the way React handles CSS and HTML is different from what you see in their original formats. You cannot just copy and paste the HTML into a component and expect to be done there.
+
+Here are some things I have found I needed to address when I converted regular HTML to JSX/React:
+- Every tag must be closed in JSX. For example, <**br**> in HTML is fine as it is. But in JSX, you need <**br/**>.
+- Using in-line CSS styling in HTML won't work if you try to import it as it is into JSX. **style="text-align: right; font-style: italic;"** in HTML turns into **style={{ textAlign: 'right', fontStyle: 'italic' }}** in JSX.
+
 ## Midterm Notes
 
 Midterm Questions
