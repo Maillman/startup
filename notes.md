@@ -29,6 +29,11 @@ You can now reach my startup using https://melvinwhitaker.com instead of the ela
 Caddy is really useful in generating certificates to give to the user.
 I also realize how important it is to have Vim, especially when SSH'ing into my server.
 
+## React Notes
+**React Components:** It's extremely useful that React breaks code down into components and allows those components to be reused. When I finished the header and had to copy and paste the code for each HTML, I was questioning if there was a better way to do this and React is the answer to that question. I'm grateful other people had to go through the pain and trouble of making this so I could use this for my startup, even if it is wierd that you can find HTML, CSS, and Javascript all in one file in such a wierd manner.
+
+**React Reactivity:** This is probably the single biggest useful aspect of React that I'm definitely going to use in my startup. I want to be able to show the text being encrypted/decrypted in real-time which will make the user experience so much better! I just hope I don't get lost in the sauce to badly...
+
 ## Midterm Notes
 
 Midterm Questions
