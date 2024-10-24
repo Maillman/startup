@@ -20,7 +20,7 @@ export function Application() {
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} required/>
                 </span>
                 <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..."></textarea>
-                <textarea cols="40" rows="8" disabled>Encrypted/Decrypted Cipher Text</textarea>
+                <textarea cols="40" rows="8" disabled placeholder="Encrypted/Decrypted Cipher Text"></textarea>
                 <span className="container-fluid d-flex flex-wrap align-items-center" style={{ padding: '10px 0px' }}>
                     <button className="btn btn-secondary">Decrypt</button><button className="btn btn-secondary">Encrypt</button>
                 </span>

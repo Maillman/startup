@@ -1,4 +1,4 @@
-main div.card:hover {
+.discussion div.card:hover {
     cursor: pointer;
     animation: darkenCard 0.5s forwards;
 }

@@ -3,7 +3,7 @@ import './discussion.css';
 
 export function Discussion({ setInitateThread }) {
     return (
-        <main>
+        <main className="discussion">
             <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '0px 10%' }}>
                 <h1>Discussions</h1>
                 <button className="btn btn-dark" onClick={setInitateThread} style={{ float: 'right' }}>Create a new discussion</button>
