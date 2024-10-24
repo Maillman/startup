@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './home/home';
 import { Application } from './application/application';
+import { Login } from './login/login';
 
 export default function App() {
     return (
@@ -23,12 +24,13 @@ export default function App() {
         </header>
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/application" element={<Application />} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer class="navbar bg-dark">
             <div class="container-fluid ">
-                <span class="text-muted">Cipher Application's GitHub</span>
+                <span class="text-secondary">Cipher Application's GitHub</span>
             </div>
             <br/>
             <div class="container-fluid ">
