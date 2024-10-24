@@ -5,6 +5,8 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './home/home';
 import { Application } from './application/application';
 import { Login } from './login/login';
+import { Discussion } from './discussion/discussion';
+import { Thread } from './thread/thread';
 
 export default function App() {
     return (
@@ -26,6 +28,8 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/application" element={<Application />} />
+            <Route path="/discussion" element={<Discussion />} />
+            <Route path="/thread" element={<Thread />} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer class="navbar bg-dark">
