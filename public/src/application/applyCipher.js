@@ -1,3 +1,23 @@
+const { testCipher, caesarCipher } = require('./cipher.js');
+
+/**
+ * Applies the cipher function to each character in the input text.
+ * @param {string} text - The input text to be transformed.
+ * @param {CipherFunction} cipherFunction - The cipher function to apply.
+ * @returns {string} - The transformed text.
+ */
+const applyCipher = (text, cipherFunction) => {
+    return text.split('').map((char, index) => {
+        const isUpperCase = char === char.toUpperCase();
+        const transformedChar = cipherFunction(index, char)
+        return isUpperCase ? transformedChar.toUpperCase() : transformedChar;
+    }).join('');
+};
+
+module.exports = applyCipher;
+
+
+/*
 import {alphabet} from './cipher.js';
 
 export function applyCipher(input, result, cipher, original) {
@@ -18,3 +38,4 @@ export function applyCipher(input, result, cipher, original) {
 function splitAlphabeticText(input){
     return input.toLowerCase().split('');
 }
+*/
