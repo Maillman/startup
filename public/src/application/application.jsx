@@ -1,12 +1,19 @@
-import React from "react";
-import { caesarCipher } from "./cipher";
+import React, { useEffect } from "react";
+import { caesarCipher, vigenèreCipher, findShift } from "./cipher";
 import applyCipher from "./applyCipher";
 
 export function Application() {
+    const originalKey = 'key'.split('').map((c) => findShift(c));
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
-    const [cipher, setCipher] = React.useState(() => (c) => caesarCipher(c, 3));
-
+    const [key, setKey] = React.useState(originalKey);
+    const [cipher, setCipher] = React.useState(() => (c) => vigenèreCipher(c, key));
+    
+    useEffect(() => {
+        setCipher(() => (c) => vigenèreCipher(c, key));
+    }, [key]);
+    
     function changeCipherText(e) {
+        setKey(originalKey);
         const convertText = applyCipher(e.target.value, cipher);
         console.log(convertText);
         updateCipherText(convertText);
