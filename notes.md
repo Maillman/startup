@@ -40,6 +40,8 @@ One thing to note, the way React handles CSS and HTML is different from what you
 Here are some things I have found I needed to address when I converted regular HTML to JSX/React:
 - Every tag must be closed in JSX. For example, <**br**> in HTML is fine as it is. But in JSX, you need <**br/**>.
 - Using in-line CSS styling in HTML won't work if you try to import it as it is into JSX. **style="text-align: right; font-style: italic;"** in HTML turns into **style={{ textAlign: 'right', fontStyle: 'italic' }}** in JSX.
+- 
+In case you're wondering about the differences between HTML and JSX, [W3Schools](https://www.w3schools.com/react/react_jsx.asp) provides a good overview.
 
 ## Midterm Notes
 
