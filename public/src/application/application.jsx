@@ -4,15 +4,16 @@ import applyCipher from "./applyCipher";
 
 export function Application() {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
+    const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('key');
-    const [cipher, setCipher] = React.useState(() => (c, index) => vigenèreCipher(index, c, key));
-    
-    // useEffect(() => {
-    //     setCipher(() => (c) => vigenèreCipher(c, key));
-    // }, [key]);
+    const [cipher, setCipher] = React.useState(() => (c, index, key) => vigenèreCipher(c, index, key));
+    useEffect(() => {
+        changeCipherText({ target: { value: plainText } });
+    }, [key]);
     
     function changeCipherText(e) {
-        const convertText = applyCipher(e.target.value, cipher);
+        updatePlainText(e.target.value);
+        const convertText = applyCipher(e.target.value, cipher, key);
         console.log(convertText);
         updateCipherText(convertText);
     }
@@ -30,23 +31,22 @@ export function Application() {
             //     setCipher(() => baconCipher);
             //     break;
             case 'Caesar Cipher':
-                setCipher(() => (c) => caesarCipher(c, key[0])); // Assuming key[0] is the shift for Caesar Cipher
+                setCipher(() => (c, index, key) => caesarCipher(c, parseInt(key))); // Assuming key is the shift for Caesar Cipher
                 break;
             case 'Vigenère Cipher':
-                setCipher(() => (c) => vigenèreCipher(c, key));
+                setCipher(() => (c, index, key) => vigenèreCipher(c, index, key));
                 break;
             // case 'A1Z26 Cipher':
             //     setCipher(() => a1z26Cipher);
             //     break;
             default:
-                setCipher(() => (c) => vigenèreCipher(c, key));
+                setCipher(() => (c, index, key) => vigenèreCipher(c, index, key));;
                 break;
         }
     }
 
     function changeKey(e) {
-        const newKey = e.target.value.split('').map((c) => findShift(c));
-        setKey(newKey);
+        setKey(e.target.value);
     }
 
     return (
@@ -67,7 +67,7 @@ export function Application() {
                     </select>
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>
                 </span>
-                <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..." onChange={(e) => changeCipherText(e)}></textarea>
+                <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..." onChange={(e) => changeCipherText(e)} value={plainText}></textarea>
                 <textarea cols="40" rows="8" disabled placeholder={cipherText}></textarea>
                 <span className="container-fluid d-flex flex-wrap align-items-center" style={{ padding: '10px 0px' }}>
                     <button className="btn btn-secondary">Decrypt</button><button className="btn btn-secondary">Encrypt</button>
