@@ -5,9 +5,9 @@
  * @returns {string} - The transformed text.
  */
 const applyCipher = (text, cipherFunction) => {
-    return text.split('').map((char) => {
+    return text.split('').map((char, index) => {
         const isUpperCase = char === char.toUpperCase();
-        const transformedChar = cipherFunction(char)
+        const transformedChar = cipherFunction(char, index)
         return isUpperCase ? transformedChar.toUpperCase() : transformedChar;
     }).join('');
 };
