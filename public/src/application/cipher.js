@@ -1,3 +1,5 @@
+const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
 /**
  * @callback CipherFunction
  * @param {number} index - The index of the character in the string.
@@ -9,7 +11,16 @@
  * Example implementation of CipherFunction.
  * @type {CipherFunction}
  */
-const testCipherFunction = (index, c) => {
+const testCipher = (index, c) => {
     // Your transformation logic here
     return c.toUpperCase(); // Example transformation
 };
+const caesarCipher = (index, c, shift) => {
+    // Your transformation logic here
+    return alphabet[(index+shift+alphabet.length)%alphabet.length]; // Example transformation
+};
+//Export the function for testing
+module.exports = {
+    testCipher,
+    caesarCipher
+}

@@ -1,4 +1,4 @@
-const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+import {alphabet} from './cipher.js';
 
 export function applyCipher(input, result, cipher, original) {
     cipherText = splitAlphabeticText(input);
