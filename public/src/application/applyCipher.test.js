@@ -1,5 +1,5 @@
-const applyCipher = require('./applyCipher');
-const { testCipher, caesarCipher } = require('./cipher');
+import applyCipher from './applyCipher';
+import { testCipher, caesarCipher } from './cipher';
 
 test('transforms text to uppercase using testCipherFunction', () => {
     expect(applyCipher('input', testCipher)).toBe('INPUT');

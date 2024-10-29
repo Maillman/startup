@@ -19,8 +19,8 @@ const caesarCipher = (index, c, shift) => {
     // Your transformation logic here
     return alphabet[(index+shift+alphabet.length)%alphabet.length]; // Example transformation
 };
-//Export the function for testing
-module.exports = {
+//Export the functions for testing
+export {
     testCipher,
     caesarCipher
 }

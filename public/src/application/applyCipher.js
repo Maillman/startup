@@ -1,5 +1,3 @@
-const { testCipher, caesarCipher } = require('./cipher.js');
-
 /**
  * Applies the cipher function to each character in the input text.
  * @param {string} text - The input text to be transformed.
@@ -14,7 +12,7 @@ const applyCipher = (text, cipherFunction) => {
     }).join('');
 };
 
-module.exports = applyCipher;
+export default applyCipher;
 
 
 /*

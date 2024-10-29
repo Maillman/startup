@@ -1,6 +1,17 @@
 import React from "react";
+import { testCipher, caesarCipher } from "./cipher";
+import applyCipher from "./applyCipher";
 
 export function Application() {
+    const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
+    const [cipher, setCipher] = React.useState(() => (index, c) => caesarCipher(index, c, 3));
+
+    function changeCipherText(e) {
+        const convertText = applyCipher(e.target.value, cipher);
+        console.log(convertText);
+        updateCipherText(convertText);
+    }
+
     return (
         <main>
             <form>
@@ -19,8 +30,8 @@ export function Application() {
                     </select>
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} required/>
                 </span>
-                <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..."></textarea>
-                <textarea cols="40" rows="8" disabled placeholder="Encrypted/Decrypted Cipher Text"></textarea>
+                <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..." onChange={(e) => changeCipherText(e)}></textarea>
+                <textarea cols="40" rows="8" disabled placeholder={cipherText}></textarea>
                 <span className="container-fluid d-flex flex-wrap align-items-center" style={{ padding: '10px 0px' }}>
                     <button className="btn btn-secondary">Decrypt</button><button className="btn btn-secondary">Encrypt</button>
                 </span>

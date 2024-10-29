@@ -1,4 +1,4 @@
-const { testCipher, caesarCipher } = require('./cipher.js');
+const { testCipher, caesarCipher } = './cipher.js';
 
 test('transforms character to uppercase', () => {
     expect(testCipher(0, 'a')).toBe('A');
