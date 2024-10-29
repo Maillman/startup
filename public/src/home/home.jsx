@@ -1,11 +1,11 @@
 import React from 'react';
-
+import Image from '/assets/placeholder.jpg';
 
 export function Home() {
     return(
         <main>
             <div className="card container-fluid">
-                <span id="picture" className="picture-box"><img width="60%" src="assets/placeholder.jpg" alt="random" /></span>
+                <span id="picture" className="picture-box"><img width="60%" src={Image} alt="random" /></span>
                 <p>
                     Have you ever been on the internet, perhaps on an online forum discussing a puzzle solution, when you suddenly get hit with the "gur vasbezngvba vf va gur gnfx". Or you're watching your favorite kids show containing a big mystery element when you spot some text in the credits looking like this: "judylwb idoov".
                     <br/><br/>
