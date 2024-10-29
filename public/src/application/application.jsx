@@ -1,10 +1,10 @@
 import React from "react";
-import { testCipher, caesarCipher } from "./cipher";
+import { caesarCipher } from "./cipher";
 import applyCipher from "./applyCipher";
 
 export function Application() {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
-    const [cipher, setCipher] = React.useState(() => (index, c) => caesarCipher(index, c, 3));
+    const [cipher, setCipher] = React.useState(() => (c) => caesarCipher(c, 3));
 
     function changeCipherText(e) {
         const convertText = applyCipher(e.target.value, cipher);

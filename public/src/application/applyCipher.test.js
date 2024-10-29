@@ -7,7 +7,7 @@ test('transforms text to uppercase using testCipherFunction', () => {
 
 test('transforms text using caesarCipher with a shift of 3', () => {
     const shift = 3;
-    const caesarCipherWithShift = (index, c) => caesarCipher(index, c, shift);
+    const caesarCipherWithShift = (c) => caesarCipher(c, shift);
     expect(applyCipher('ABC', caesarCipherWithShift)).toBe('DEF');
 });
 

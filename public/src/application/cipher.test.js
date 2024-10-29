@@ -1,19 +1,19 @@
 const { testCipher, caesarCipher } = './cipher.js';
 
 test('transforms character to uppercase', () => {
-    expect(testCipher(0, 'a')).toBe('A');
-    expect(testCipher(1, 'b')).toBe('B');
-    expect(testCipher(2, 'c')).toBe('C');
+    expect(testCipher('a')).toBe('A');
+    expect(testCipher('b')).toBe('B');
+    expect(testCipher('c')).toBe('C');
 });
 
 test('handles non-alphabetic characters', () => {
-    expect(testCipher(0, '1')).toBe('1');
-    expect(testCipher(1, '!')).toBe('!');
+    expect(testCipher('1')).toBe('1');
+    expect(testCipher('!')).toBe('!');
 });
 
 test('caesar cipher shifts characters', () => {
-    expect(caesarCipher(0, 'a', 1)).toBe('b');
-    expect(caesarCipher(1, 'b', 2)).toBe('d');
-    expect(caesarCipher(2, 'c', 3)).toBe('f');
-    expect(caesarCipher(25, 'z', 1)).toBe('a');
+    expect(caesarCipher('a', 1)).toBe('b');
+    expect(caesarCipher('b', 2)).toBe('d');
+    expect(caesarCipher('c', 3)).toBe('f');
+    expect(caesarCipher('z', 1)).toBe('a');
 });
