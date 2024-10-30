@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
-import { caesarCipher, vigenèreCipher, findShift } from "./cipher";
+import * as Cipher from './cipher.js';
 import applyCipher from "./applyCipher";
 
+const { 
+    atbashCipher,
+    caesarCipher,
+    vigenèreCipher 
+} = Cipher;
 export function Application() {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
@@ -21,9 +26,9 @@ export function Application() {
     function handleCipherChange(e) {
         const selectedCipher = e.target.value;
         switch (selectedCipher) {
-            // case 'Atbash Cipher':
-            //     setCipher(() => atbashCipher);
-            //     break;
+            case 'Atbash Cipher':
+                setCipher(() => (c, index, key) => atbashCipher(c));
+                break;
             // case 'Affine Cipher':
             //     setCipher(() => affineCipher);
             //     break;

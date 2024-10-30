@@ -1,4 +1,4 @@
-const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
 /**
  * @callback CipherFunction
@@ -11,33 +11,28 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz';
  * Example implementation of CipherFunction.
  * @type {CipherFunction}
  */
-const testCipher = (c) => {
-    init: () => {
-        console.log('init');
-    }
+export const testCipher = (c) => {
     // Your transformation logic here
     return c.toUpperCase(); // Example transformation
 };
-const caesarCipher = (c, shift) => {
-    // Your transformation logic here
-    if (alphabet.indexOf(c) === -1) {
-        return c;
-    }
-    return alphabet[(alphabet.indexOf(c)+shift+alphabet.length)%alphabet.length]; // Example transformation
+export const caesarCipher = (c, shift) => {
+    return handleCipher(c, alphabet[(alphabet.indexOf(c)+shift+alphabet.length)%alphabet.length]);
 };
-const vigenèreCipher = (c, index, key) => {
+export const vigenèreCipher = (c, index, key) => {
     let keyIndex = index % key.length;
     let shift = findShift(key[keyIndex]);
     return caesarCipher(c, 0-shift);
 };
-const findShift = (key) => {
+export const findShift = (key) => {
     return alphabet.indexOf(key ? key.toLowerCase() : 0);
 };
-//Export the functions for testing
-export {
-    alphabet,
-    testCipher,
-    caesarCipher,
-    vigenèreCipher,
-    findShift
+export const atbashCipher = (c) => {
+    return handleCipher(c, alphabet[alphabet.length-(alphabet.indexOf(c)+1)]);
+};
+
+const handleCipher = (c, value) => {
+    if (alphabet.indexOf(c) === -1) {
+        return c;
+    }
+    return value;
 }
