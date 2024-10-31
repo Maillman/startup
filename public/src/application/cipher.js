@@ -16,6 +16,7 @@ export const testCipher = (c) => {
     return c.toUpperCase(); // Example transformation
 };
 export const caesarCipher = (c, shift) => {
+    shift = shift ? shift : 0;
     return handleCipher(c, alphabet[(alphabet.indexOf(c)+shift+alphabet.length)%alphabet.length]);
 };
 export const vigenèreCipher = (c, index, key) => {
