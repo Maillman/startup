@@ -11,7 +11,7 @@ export function Application() {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('key');
-    const [cipher, setCipher] = React.useState(() => (c, index, key) => vigenèreCipher(c, index, key));
+    const [cipher, setCipher] = React.useState(() => (c, index, key) => atbashCipher(c));
     useEffect(() => {
         changeCipherText({ target: { value: plainText } });
     }, [key]);
@@ -20,7 +20,7 @@ export function Application() {
         updatePlainText(e.target.value);
         const convertText = applyCipher(e.target.value, cipher, key);
         console.log(convertText);
-        updateCipherText(convertText);
+        updateCipherText(convertText ? convertText : 'Encrypted/Decrypted Cipher Text');
     }
 
     function handleCipherChange(e) {

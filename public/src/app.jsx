@@ -7,9 +7,14 @@ import { Application } from './application/application';
 import { Login } from './login/login';
 import { Discussion } from './discussion/discussion';
 import { Thread } from './thread/thread';
+import { AuthState } from './login/authState';
 
 export default function App() {
     const [initiateThread, setInitiateThread] = useState(false);
+    const [logout, setLogout] = useState(false);
+    const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
+    const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = useState(currentAuthState);
 
     return (
         <BrowserRouter>
@@ -18,7 +23,8 @@ export default function App() {
                 <ul className="navbar-nav">
                     <h1 className="navbar-brand">Cipher Application</h1>
                     <li className="nav-item"><NavLink className="nav-link" to='/'>Home</NavLink></li>
-                    <li className="nav-item"><NavLink className="nav-link" to='/login'>Login</NavLink></li>
+                    {authState === AuthState.Authenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login' onClick={() => setLogout(true)}>Logout</NavLink></li> : null}
+                    {authState === AuthState.Unauthenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login'>Login</NavLink></li> : null}
                     <li className="nav-item"><NavLink className="nav-link" to='/application'>Cipher Application</NavLink></li>
                     <li className="nav-item"><NavLink className="nav-link" to='/discussion'>Discussions</NavLink></li>
                     <li className="nav-item"><NavLink className="nav-link" to='/thread'>Thread</NavLink></li>
@@ -29,7 +35,17 @@ export default function App() {
         {(initiateThread) ? <Navigate to='/thread'/> : null}
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element=
+                {<Login 
+                    userName={userName} 
+                    authState={authState} 
+                    onAuthChange={(userName, authState) => {
+                        setUserName(userName);
+                        setAuthState(authState);
+                        setLogout(false);
+                    }}
+                    logout={logout}
+                />} />
             <Route path="/application" element={<Application />} />
             <Route path="/discussion" element={<Discussion setInitateThread={() => setInitiateThread(true)}/>} />
             <Route path="/thread" element={<Thread setInitateThread={() => setInitiateThread(false)}/>} />
