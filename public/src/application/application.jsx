@@ -4,17 +4,18 @@ import applyCipher from "./applyCipher";
 
 const { 
     atbashCipher,
+    baconCipher,
     caesarCipher,
     vigenèreCipher 
 } = Cipher;
 export function Application() {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
-    const [key, setKey] = React.useState('key');
+    const [key, setKey] = React.useState('a');
     const [cipher, setCipher] = React.useState(() => (c, index, key) => atbashCipher(c));
     useEffect(() => {
         changeCipherText({ target: { value: plainText } });
-    }, [key]);
+    }, [key, cipher]);
     
     function changeCipherText(e) {
         updatePlainText(e.target.value);
@@ -32,9 +33,9 @@ export function Application() {
             // case 'Affine Cipher':
             //     setCipher(() => affineCipher);
             //     break;
-            // case 'Bacon Cipher':
-            //     setCipher(() => baconCipher);
-            //     break;
+            case 'Bacon Cipher':
+                setCipher(() => (c, index, key) => baconCipher(c));
+                break;
             case 'Caesar Cipher':
                 setCipher(() => (c, index, key) => caesarCipher(c, parseInt(key))); // Assuming key is the shift for Caesar Cipher
                 break;

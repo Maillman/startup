@@ -29,6 +29,11 @@ export const findShift = (key) => {
 export const atbashCipher = (c) => {
     return handleCipher(c, alphabet[alphabet.length-(alphabet.indexOf(c)+1)]);
 };
+export const baconCipher = (c) => {
+    let baconIndex = alphabet.indexOf(c);
+    baconIndex = baconIndex >= 21 ? baconIndex-2 : baconIndex >= 9 ? baconIndex-1 : baconIndex;
+    return handleCipher(c, (baconIndex>>>0).toString(2).padStart(5,"0").replaceAll("0", "a").replaceAll("1", "b"));
+};
 
 const handleCipher = (c, value) => {
     if (alphabet.indexOf(c) === -1) {
