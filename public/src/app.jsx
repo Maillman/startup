@@ -19,15 +19,16 @@ export default function App() {
     return (
         <BrowserRouter>
         <header>
-            <nav className="navbar navbar-expand-sm bg-light">
-                <ul className="navbar-nav">
+            <nav className="navbar navbar-expand-sm bg-light" style={{paddingInline: "20px"}}>
+                <ul className="navbar-nav me-auto">
                     <h1 className="navbar-brand">Cipher Application</h1>
                     <li className="nav-item"><NavLink className="nav-link" to='/'>Home</NavLink></li>
-                    {authState === AuthState.Authenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login' onClick={() => setLogout(true)}>Logout</NavLink></li> : null}
-                    {authState === AuthState.Unauthenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login'>Login</NavLink></li> : null}
                     <li className="nav-item"><NavLink className="nav-link" to='/application'>Cipher Application</NavLink></li>
                     <li className="nav-item"><NavLink className="nav-link" to='/discussion'>Discussions</NavLink></li>
-                    <li className="nav-item"><NavLink className="nav-link" to='/thread'>Thread</NavLink></li>
+                </ul>
+                <ul className="navbar-nav">
+                    {authState === AuthState.Authenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login' onClick={() => setLogout(true)}>Logout</NavLink></li> : null}
+                    {authState === AuthState.Unauthenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login'>Login</NavLink></li> : null}
                 </ul>
                 <hr/>
             </nav>
