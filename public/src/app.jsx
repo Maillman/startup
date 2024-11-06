@@ -48,7 +48,7 @@ export default function App() {
                     logout={logout}
                 />} />
             <Route path="/application" element={<Application />} />
-            <Route path="/discussion" element={<Discussion setInitateThread={() => setInitiateThread(true)}/>} />
+            <Route path="/discussion" element={<Discussion setInitateThread={() => setTimeout(() => {setInitiateThread(true)}, 1000)}/>} />
             <Route path="/thread" element={<Thread setInitateThread={() => setInitiateThread(false)}/>} />
             <Route path="*" element={<Home />} />
         </Routes>

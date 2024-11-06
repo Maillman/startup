@@ -3,6 +3,48 @@
     animation: darkenCard 0.5s forwards;
 }
 
+.hide {
+    position: relative;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.hide :not(#selected > *) {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes moveSelected {
+    0% {
+        position: absolute;
+        top: var(--top, 15vh);
+    }
+    100% {
+        position: absolute;
+        top: 0;
+    }
+}
+
+.hide #selected {
+    z-index: 5;
+    animation: moveSelected 1s forwards;
+}
+
+.hide #selected > * {
+    z-index: 5;
+    opacity: 1;
+}
+
+.hide #placeholder {
+    right: 500%;
+}
+
 @keyframes darkenCard {
     0% {
         background-color: var(--main-bg-color);
