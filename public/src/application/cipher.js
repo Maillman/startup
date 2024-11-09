@@ -30,11 +30,25 @@ export const findShift = (key) => {
 export const atbashCipher = (c) => {
     return handleCipher(c, alphabet[alphabet.length-(alphabet.indexOf(c)+1)]);
 };
-export const baconCipher = (c) => {
+export const enBaconCipher = (c) => {
     let baconIndex = alphabet.indexOf(c);
     baconIndex = baconIndex >= 21 ? baconIndex-2 : baconIndex >= 9 ? baconIndex-1 : baconIndex;
     return handleCipher(c, (baconIndex>>>0).toString(2).padStart(5,"0").replaceAll("0", "a").replaceAll("1", "b"));
 };
+export const deBaconCipher = (c, index, text) => {
+    //console.log(c, index, text);
+    let baconBinary = text.replace(/[^ab]/g,"").replaceAll("a", "0").replaceAll("b", "1");
+    //console.log(text.replace(/[^abAB]/g,""), baconBinary);
+    let uindex = index+1 
+    if(uindex % 5 !== 0) {
+        return '';
+    }
+    let baconIndex = parseInt(baconBinary.slice(uindex-5, uindex), 2);
+    //console.log(baconBinary, baconIndex);
+    baconIndex = baconIndex >= 19 ? baconIndex+2 : baconIndex >= 8 ? baconIndex+1 : baconIndex;
+    //console.log(baconIndex, alphabet[baconIndex]);
+    return handleCipher(c, alphabet[baconIndex]);
+}
 
 const handleCipher = (c, value) => {
     if (alphabet.indexOf(c) === -1) {

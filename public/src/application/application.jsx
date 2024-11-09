@@ -5,7 +5,8 @@ import { CryptState } from "./cryptState.js";
 
 const { 
     atbashCipher,
-    baconCipher,
+    enBaconCipher,
+    deBaconCipher,
     caesarCipher,
     vigenèreCipher 
 } = Cipher;
@@ -16,17 +17,18 @@ export function Application() {
     const [cipher, setCipher] = React.useState(() => (c, index, key) => atbashCipher(c));
     const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
     useEffect(() => {
-        changeCipherText({ target: { value: plainText } });
-    }, [key, cipher]);
+        const convertText = applyCipher(plainText, cipher, key);
+        console.log(convertText);
+        updateCipherText(convertText ? convertText : 'Encrypted/Decrypted Cipher Text');
+    }, [plainText, key, cipher]);
     
     function changeCipherText(e) {
         updatePlainText(e.target.value);
-        const convertText = applyCipher(e.target.value, cipher, key);
-        console.log(convertText);
-        updateCipherText(convertText ? convertText : 'Encrypted/Decrypted Cipher Text');
+        const getCipher = document.querySelector('.form-select');
+        handleCipherChange(getCipher.value, cryptState, e.target.value);
     }
 
-    function handleCipherChange(cipher, state) {
+    function handleCipherChange(cipher, state, text) {
         const selectedCipher = cipher;
         switch (selectedCipher) {
             case 'Atbash Cipher':
@@ -36,7 +38,7 @@ export function Application() {
             //     setCipher(() => affineCipher);
             //     break;
             case 'Bacon Cipher':
-                setCipher(() => (c, index, key) => baconCipher(c));
+                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? enBaconCipher(c) : deBaconCipher(c, index, text.toLowerCase()));
                 break;
             case 'Caesar Cipher':
                 setCipher(() => (c, index, key) => caesarCipher(c, state==CryptState.Decrypted ? parseInt(key) : -1*parseInt(key))); // Assuming key is the shift for Caesar Cipher
@@ -62,14 +64,14 @@ export function Application() {
     function changeCryptState(state) {
         setCryptState(state);
         const getCipher = document.querySelector('.form-select');
-        handleCipherChange(getCipher.value, state);
+        handleCipherChange(getCipher.value, state, plainText);
     }
 
     return (
         <main>
             <form>
                 <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '10px 0px' }}>
-                    <select className="form-select" style={{ width: '200px' }} onChange={(e) => handleCipherChange(e.target.value, cryptState)}>
+                    <select className="form-select" style={{ width: '200px' }} onChange={(e) => handleCipherChange(e.target.value, cryptState, plainText)}>
                         <optgroup label="Alphabetical Ciphers">
                             <option>Atbash Cipher</option>
                             <option disabled>Affine Cipher</option>
@@ -86,7 +88,8 @@ export function Application() {
                 <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..." onChange={(e) => changeCipherText(e)} value={plainText}></textarea>
                 <textarea cols="40" rows="8" disabled placeholder={cipherText}></textarea>
                 <span className="container-fluid d-flex flex-wrap align-items-center" style={{ padding: '10px 0px' }}>
-                    <button className="btn btn-secondary" disabled={cryptState==CryptState.Decrypted} onClick={() => changeCryptState(CryptState.Decrypted)}>Decrypt</button><button className="btn btn-secondary" disabled={cryptState==CryptState.Encrypted} onClick={() => changeCryptState(CryptState.Encrypted)}>Encrypt</button>
+                    <button className="btn btn-secondary" disabled={cryptState==CryptState.Decrypted} onClick={() => changeCryptState(CryptState.Decrypted)}>Decrypt</button>
+                    <button className="btn btn-secondary" disabled={cryptState==CryptState.Encrypted} onClick={() => changeCryptState(CryptState.Encrypted)}>Encrypt</button>
                 </span>
             </form>
         </main>

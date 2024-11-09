@@ -1,7 +1,8 @@
 import { 
     testCipher,
     caesarCipher,
-    baconCipher,
+    enBaconCipher,
+    deBaconCipher,
     atbashCipher,
     vigenèreCipher } from './cipher';
 
@@ -43,13 +44,40 @@ test('viègenere cipher shifts characters', () => {
     expect(vigenèreCipher('e', 4, 'abcdefghi')).toBe('a');
 });
 
-test('bacon cipher transforms characters', () => {
-    expect(baconCipher('a')).toBe('aaaaa');
-    expect(baconCipher('b')).toBe('aaaab');
-    expect(baconCipher('c')).toBe('aaaba');
-    expect(baconCipher('i')).toBe('abaaa');
-    expect(baconCipher('j')).toBe('abaaa');
-    expect(baconCipher('u')).toBe('baabb');
-    expect(baconCipher('v')).toBe('baabb');
-    expect(baconCipher('z')).toBe('babbb');
+test('enbacon cipher transforms characters', () => {
+    expect(enBaconCipher('a')).toBe('aaaaa');
+    expect(enBaconCipher('b')).toBe('aaaab');
+    expect(enBaconCipher('c')).toBe('aaaba');
+    expect(enBaconCipher('i')).toBe('abaaa');
+    expect(enBaconCipher('j')).toBe('abaaa');
+    expect(enBaconCipher('u')).toBe('baabb');
+    expect(enBaconCipher('v')).toBe('baabb');
+    expect(enBaconCipher('z')).toBe('babbb');
+});
+
+test('debacon cipher transforms characters', () => {
+    expect(deBaconCipher('a', 4, 'aaaaa')).toBe('a');
+    expect(deBaconCipher('b', 4, 'aaaab')).toBe('b');
+    expect(deBaconCipher('a', 4, 'aaaba')).toBe('c');
+    expect(deBaconCipher('a', 4, 'abaaa')).toBe('j');
+    expect(deBaconCipher('b', 4, 'abaab')).toBe('k');
+    expect(deBaconCipher('b', 4, 'baabb')).toBe('v');
+    expect(deBaconCipher('a', 4, 'babaa')).toBe('w');
+    expect(deBaconCipher('b', 4, 'babbb')).toBe('z');
+});
+
+test('debacon cipher handles invalid characters', () => {
+    expect(deBaconCipher('a', 0, 'aaaaa')).toBe('');
+    expect(deBaconCipher('a', 1, 'aabaa')).toBe('');
+    expect(deBaconCipher('a', 2, 'babba')).toBe('');
+    expect(deBaconCipher('b', 5, 'aabbb')).toBe('');
+});
+
+test('debacon cipher transforms further characters', () => {
+    expect(deBaconCipher('a', 9, 'aabbbaaaaa')).toBe('a');
+    expect(deBaconCipher('b', 9, 'aaaaaabaaa')).toBe('j');
+    expect(deBaconCipher('b', 9, 'aaaaabaabb')).toBe('v');
+    expect(deBaconCipher('b', 9, 'babbbbabbb')).toBe('z');
+    expect(deBaconCipher('a', 14, 'babbbbabbbaaaaa')).toBe('a');
+    expect(deBaconCipher('a', 14, 'aaaaaaaaaababbb')).toBe('z');
 });
