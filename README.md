@@ -46,3 +46,14 @@ For this deliverable I properly styled the application into its final appearance
 - [x] **Application text content** - Consistent fonts
 - [x] **Application images** - I've stylized the placeholder image, but I'm unsure if it will stay.
 - [ ] **Application color** - It's pretty basic right now but I have a plan to give a unique color scheme for the application, I just need to make sure it looks good first.
+## React deliverable
+
+For this deliverable I converted my startup frontend over to React and added javascript for functionality.
+
+- [X] **Components** - Home, login, application, discussion, and thread are all components.
+  - [X] **Login** - This component is simply mocked.
+  - [X] **Discussion & Thread** - Added CSS animation when a discussion div is clicked that routes to the thread component (removed from the navigation bar). Both components of which will be replaced by database and WebSocket data.
+  - [X] **Application Logic** - Added Javascript to allow encryption/decryption of plain text using specific ciphers.
+- [X] **Router** - Routing between each of the components.
+- [X] **Hooks** - The plain-text, cipher-text, encryption/decryption state, key, and cipher all operate with `UseState`.
+- [X] **Icon** - Added a favicon.ico, although it may change in the future.
