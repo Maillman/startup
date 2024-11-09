@@ -5,7 +5,9 @@ export function Discussion({ setInitateThread }) {
     const [discussion, setDiscussion] = useState([
         "Discussion #1: Click here to go to the Thread page... (Database data)",
         "Discussion #2: Click here to go to the Thread page... (Database data)",
-        "Discussion #3: Click here to go to the Thread page... (Database data)"
+        "Discussion #3: Click here to go to the Thread page... (Database data)",
+        "Discussion #4: Click here to go to the Thread page... (Database data)",
+        "Discussion #5: Click here to go to the Thread page... (Database data)",
     ]);
     const [hideElement, setHideElement] = useState(false);
     const [indexSelected, setIndexSelected] = useState(-1);
@@ -31,14 +33,24 @@ export function Discussion({ setInitateThread }) {
         //const pickedDiscussion = document.querySelector('#selected');
         //const rect = pickedDiscussion.getBoundingClientRect();
         //pickedDiscussion.style.setProperty('--top', `${rect.top}px`);
-    }
-    useEffect(() => {
+        const docDiscussion = document.querySelector('.discussion');
         const pickedDiscussion = document.querySelector('#selected');
         if(pickedDiscussion!=null){
             const rect = pickedDiscussion.getBoundingClientRect();
-            pickedDiscussion.style.setProperty('--top', `${rect.top}px`);
+            const disccussionRect = docDiscussion.getBoundingClientRect();
+            console.log(rect.top);
+            console.log(disccussionRect.top);
+            pickedDiscussion.style.setProperty('--top', `${rect.top - (disccussionRect.top > 0 ? disccussionRect.top : 0)}px`);
         }
-    }, [hideElement])
+    }
+    // useEffect(() => {
+    //     const pickedDiscussion = document.querySelector('#selected');
+    //     if(pickedDiscussion!=null){
+    //         const rect = pickedDiscussion.getBoundingClientRect();
+    //         console.log(rect.top);
+    //         pickedDiscussion.style.setProperty('--top', `${rect.top}px`);
+    //     }
+    // });
     return (
         <main className={`${hideElement ? 'hide' : 'discussion'}`}>
             <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '0px 10%' }}>
