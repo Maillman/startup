@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import * as Cipher from './cipher.js';
 import applyCipher from "./applyCipher";
+import { CryptState } from "./cryptState.js";
 
 const { 
     atbashCipher,
@@ -13,6 +14,7 @@ export function Application() {
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('a');
     const [cipher, setCipher] = React.useState(() => (c, index, key) => atbashCipher(c));
+    const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
     useEffect(() => {
         changeCipherText({ target: { value: plainText } });
     }, [key, cipher]);
@@ -24,8 +26,8 @@ export function Application() {
         updateCipherText(convertText ? convertText : 'Encrypted/Decrypted Cipher Text');
     }
 
-    function handleCipherChange(e) {
-        const selectedCipher = e.target.value;
+    function handleCipherChange(cipher, state) {
+        const selectedCipher = cipher;
         switch (selectedCipher) {
             case 'Atbash Cipher':
                 setCipher(() => (c, index, key) => atbashCipher(c));
@@ -37,10 +39,12 @@ export function Application() {
                 setCipher(() => (c, index, key) => baconCipher(c));
                 break;
             case 'Caesar Cipher':
-                setCipher(() => (c, index, key) => caesarCipher(c, parseInt(key))); // Assuming key is the shift for Caesar Cipher
+                setCipher(() => (c, index, key) => caesarCipher(c, state==CryptState.Decrypted ? parseInt(key) : -1*parseInt(key))); // Assuming key is the shift for Caesar Cipher
                 break;
             case 'Vigenère Cipher':
-                setCipher(() => (c, index, key) => vigenèreCipher(c, index, key));
+                setCipher(() => (c, index, key) => vigenèreCipher(c, index, state==CryptState.Decrypted ? key : key.split('').map(
+                    (char) => Cipher.alphabet[(-1*Cipher.alphabet.indexOf(char))+Cipher.alphabet.length]
+                ).join(''))); // Assuming key is the keyword for Vigenère Cipher
                 break;
             // case 'A1Z26 Cipher':
             //     setCipher(() => a1z26Cipher);
@@ -55,20 +59,26 @@ export function Application() {
         setKey(e.target.value);
     }
 
+    function changeCryptState(state) {
+        setCryptState(state);
+        const getCipher = document.querySelector('.form-select');
+        handleCipherChange(getCipher.value, state);
+    }
+
     return (
         <main>
             <form>
                 <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '10px 0px' }}>
-                    <select className="form-select" style={{ width: '200px' }} onChange={handleCipherChange}>
+                    <select className="form-select" style={{ width: '200px' }} onChange={(e) => handleCipherChange(e.target.value, cryptState)}>
                         <optgroup label="Alphabetical Ciphers">
                             <option>Atbash Cipher</option>
-                            <option>Affine Cipher</option>
+                            <option disabled>Affine Cipher</option>
                             <option>Bacon Cipher</option>
                             <option>Caesar Cipher</option>
                             <option>Vigenère Cipher</option>
                         </optgroup>
                         <optgroup label="Numerical Ciphers">
-                            <option>A1Z26 Cipher</option>
+                            <option disabled>A1Z26 Cipher</option>
                         </optgroup>
                     </select>
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>
@@ -76,7 +86,7 @@ export function Application() {
                 <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..." onChange={(e) => changeCipherText(e)} value={plainText}></textarea>
                 <textarea cols="40" rows="8" disabled placeholder={cipherText}></textarea>
                 <span className="container-fluid d-flex flex-wrap align-items-center" style={{ padding: '10px 0px' }}>
-                    <button className="btn btn-secondary">Decrypt</button><button className="btn btn-secondary">Encrypt</button>
+                    <button className="btn btn-secondary" disabled={cryptState==CryptState.Decrypted} onClick={() => changeCryptState(CryptState.Decrypted)}>Decrypt</button><button className="btn btn-secondary" disabled={cryptState==CryptState.Encrypted} onClick={() => changeCryptState(CryptState.Encrypted)}>Encrypt</button>
                 </span>
             </form>
         </main>
