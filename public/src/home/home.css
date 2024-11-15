@@ -1,0 +1,22 @@
+#picture {
+    opacity: 1;
+}
+
+#fetched-picture {
+    animation: fadeOutIn 1.5s forwards ease-in-out;
+}
+
+@keyframes fadeOutIn {
+    0% {
+        opacity: 1;
+    }
+    20% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

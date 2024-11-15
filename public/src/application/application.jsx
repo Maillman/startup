@@ -44,7 +44,7 @@ export function Application() {
                 setCipher(() => (c, index, key) => caesarCipher(c, state==CryptState.Decrypted ? parseInt(key) : -1*parseInt(key))); // Assuming key is the shift for Caesar Cipher
                 break;
             case 'Vigenère Cipher':
-                setCipher(() => (c, index, key) => vigenèreCipher(c, index, state==CryptState.Decrypted ? key : key.split('').map(
+                setCipher(() => (c, index, key) => vigenèreCipher(c, index, state==CryptState.Decrypted ? key.toLowerCase() : key.toLowerCase().split('').map(
                     (char) => Cipher.alphabet[(-1*Cipher.alphabet.indexOf(char))+Cipher.alphabet.length]
                 ).join(''))); // Assuming key is the keyword for Vigenère Cipher
                 break;
