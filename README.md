@@ -50,6 +50,7 @@ For this deliverable I properly styled the application into its final appearance
 
 For this deliverable I converted my startup frontend over to React and added javascript for functionality.
 
+- [X] **Bundled using Vite** - done!
 - [X] **Components** - Home, login, application, discussion, and thread are all components.
   - [X] **Login** - This component is simply mocked.
   - [X] **Discussion & Thread** - Added CSS animation when a discussion div is clicked that routes to the thread component (removed from the navigation bar). Both components of which will be replaced by database and WebSocket data.
