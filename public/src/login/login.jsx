@@ -7,7 +7,20 @@ import { AuthState } from './authState';
 export function Login({ userName, authState, onAuthChange, logout }) {
     useEffect(() => {
         if (logout) {
-            localStorage.removeItem('userName');
+            //Change localStorage to an api fetch call to logout the user
+            //localStorage.removeItem('userName');
+            fetch('/api/auth/logout',{
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({token: localStorage.getItem('token')})
+            })
+            .then((response) => response?.status === 200 ? response.json() : null)
+            .then((data) => {
+                console.log(data);
+                localStorage.removeItem('token');
+            })
             onAuthChange(userName, AuthState.Unauthenticated);
         }
     });

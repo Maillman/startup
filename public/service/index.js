@@ -42,7 +42,8 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', async (req, res) => {
     const user = Object.values(users).find((u) => u.token === req.body.token);
     if (user) {
-        delete users.token;
+        console.log("Deleting token for user: ", user.username);
+        delete user.token;
     }
     res.status(204).send();
 });
