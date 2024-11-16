@@ -1,32 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-export function Thread({ setInitateThread }) {
-    const [challenge, setChallenge] = useState(null);
-
+export function Thread({ setInitateThread, challenge }) {
     useEffect(() => {
         setInitateThread();
     }, [setInitateThread]);
     
-    //Get the challenge from the backend
-    useEffect(() => {
-        fetch('/api/challenge',{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then((response) => response.json())
-        .then((challenge) => {
-            console.log(challenge);
-            console.log(`Challenge: ${challenge.challenge}`);
-            console.log(`Time: ${challenge.time}`);
-            //If there is no challenge or the last challenge was more than 24 (86400000 milliseconds) hours ago, create a new challenge
-            if(!challenge.challenge || new Date().getTime() - 86400000 > challenge.time){
-                updateChallenge();
-            }
-            setChallenge(challenge.challenge);
-        });
-    }, []);
 
     return (
         <main>
@@ -44,17 +22,4 @@ export function Thread({ setInitateThread }) {
             <hr/>
         </main>
     );
-}
-
-function updateChallenge() {
-    fetch('/api/challenge', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ challenge: 'This is a challenge', time: new Date().getTime() })
-    })
-    .then((data) => {
-        console.log(data);
-    });
 }

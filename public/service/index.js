@@ -1,6 +1,10 @@
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+require('dotenv').config();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -62,6 +66,36 @@ apiRouter.put('/challenge', async (req, res) => {
     console.log(stored_challenge);
     res.status(204).send();
 });
+
+//Generate a quote
+apiRouter.get('/quote', async (_req, res) => {
+    getJSONQuote().then((quote) => {
+        res.send(quote);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+});
+async function getJSONQuote() {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const prompt = 
+    `
+    Generate a quote from a random movie / tv show in pop fiction. The title should be included.
+    Also include any related keywords associated with the quote (such as who said it). Finally, give a brief one-sentence context behind the quote.
+    It should be formatted as such in JSON:
+    {
+        "Title": "TITLEHERE",
+        "Keywords": ["WORD1","WORD2",...]",
+        "Quote": "QUOTEHERE",
+        "Context": "CONTEXTHERE"
+    }
+    `;
+
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    return result.response.text();
+}
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

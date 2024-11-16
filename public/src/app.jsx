@@ -1,7 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import fetchRetry from 'fetch-retry';
 import { Home } from './home/home';
 import { Application } from './application/application';
 import { Login } from './login/login';
@@ -9,12 +10,39 @@ import { Discussion } from './discussion/discussion';
 import { Thread } from './thread/thread';
 import { AuthState } from './login/authState';
 
+const fetch = fetchRetry(window.fetch);
+
 export default function App() {
     const [initiateThread, setInitiateThread] = useState(false);
+    const [challenge, setChallenge] = useState(null);
     const [logout, setLogout] = useState(false);
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = useState(currentAuthState);
+
+    //Get the challenge from the backend
+    useEffect(() => {
+        fetch('/api/challenge',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((response) => response.json())
+        .then((challenge) => {
+            console.log(challenge);
+            console.log(`Challenge: ${challenge.challenge}`);
+            console.log(`Time: ${challenge.time}`);
+            //If there is no challenge or the last challenge was more than 24 (86400000 milliseconds) hours ago, create a new challenge
+            if(!challenge.challenge || new Date().getTime() - 86400000 > challenge.time){
+                updateChallenge();
+            }
+            setChallenge(challenge.challenge);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }, []);
 
     return (
         <BrowserRouter>
@@ -49,7 +77,7 @@ export default function App() {
                 />} />
             <Route path="/application" element={<Application />} />
             <Route path="/discussion" element={<Discussion setInitateThread={() => setTimeout(() => {setInitiateThread(true)}, 1000)}/>} />
-            <Route path="/thread" element={<Thread setInitateThread={() => setInitiateThread(false)}/>} />
+            <Route path="/thread" element={<Thread setInitateThread={() => setInitiateThread(false)} challenge={challenge}/>} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer className="navbar bg-dark">
@@ -63,4 +91,31 @@ export default function App() {
         </footer>
         </BrowserRouter>
     );
+}
+
+function updateChallenge() {
+    fetch('/api/quote',{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        retries: 3,
+        retryDelay: 1000
+    })
+    .then((response) => response.json())
+    .then((quote) => {
+        fetch('/api/challenge', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ challenge: quote.quote, time: new Date().getTime() })
+        })
+        .then((data) => {
+            console.log(data);
+        });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
