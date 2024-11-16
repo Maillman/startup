@@ -5,6 +5,7 @@ const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 let users = {};
+let stored_challenge = {};
 
 app.use(express.json());
 
@@ -45,6 +46,20 @@ apiRouter.delete('/auth/logout', async (req, res) => {
         console.log("Deleting token for user: ", user.username);
         delete user.token;
     }
+    res.status(204).send();
+});
+
+//Get the challenge
+apiRouter.get('/challenge', async (_req, res) => {
+    console.log(stored_challenge);
+    res.send({stored_challenge});
+});
+
+//Update the challenge
+apiRouter.put('/challenge', async (req, res) => {
+    stored_challenge.time = req.body.time;
+    stored_challenge.challenge = req.body.challenge;
+    console.log(stored_challenge);
     res.status(204).send();
 });
 

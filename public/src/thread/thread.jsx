@@ -4,7 +4,32 @@ export function Thread({ setInitateThread }) {
     useEffect(() => {
         setInitateThread();
     }, [setInitateThread]);
-
+    //Create a challenge if time is greater than 24 hours since the last challenge
+    useEffect(() => {
+        fetch('/api/challenge',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((response) => response.json())
+        .then((challenge) => {
+            console.log(challenge);
+            console.log(`Challenge: ${challenge}`);
+            if(!challenge.challenge){
+                fetch('/api/challenge',{
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({challenge: 'This is a challenge', time: new Date().getTime()})
+                })
+                .then((data) => {
+                    console.log(data);
+                });
+            }
+        });
+    }, []);
     return (
         <main>
             <div className="card">
