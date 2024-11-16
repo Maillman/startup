@@ -99,23 +99,24 @@ function updateChallenge() {
         headers: {
             'Content-Type': 'application/json',
         },
-        retries: 3,
-        retryDelay: 1000
+        retryOn: [503],
+        retries: 5,
+        retryDelay: 500
     })
     .then((response) => response.json())
-    .then((quote) => {
+    .then((data) => {
+        console.log(data);
+        let numQuotes = data.Quotes.length;
+        let quote = data.Quotes[Math.floor(Math.sqrt(Math.random() * Math.pow(numQuotes, 2)))]; //Get a random quote, favoring the last quotes.
         fetch('/api/challenge', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ challenge: quote.quote, time: new Date().getTime() })
+            body: JSON.stringify({ challenge: quote, time: new Date().getTime() })
         })
         .then((data) => {
             console.log(data);
         });
     })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
 }

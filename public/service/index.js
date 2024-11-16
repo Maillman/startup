@@ -67,34 +67,45 @@ apiRouter.put('/challenge', async (req, res) => {
     res.status(204).send();
 });
 
-//Generate a quote
+//Generate 10 random quotes
 apiRouter.get('/quote', async (_req, res) => {
-    getJSONQuote().then((quote) => {
-        res.send(quote);
+    console.log("Getting quotes");
+    getJSONQuotes().then((quotes) => {
+        res.send(quotes);
     })
     .catch((error) => {
         console.log(error);
+        res.status(503).send({error: 'Failed to generate quote'});
     });
 });
-async function getJSONQuote() {
+async function getJSONQuotes() {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = 
     `
-    Generate a quote from a random movie / tv show in pop fiction. The title should be included.
+    Pick 10 random relevant movies, tv shows, and video games. Generate a quote from each of them. The title should be included.
     Also include any related keywords associated with the quote (such as who said it). Finally, give a brief one-sentence context behind the quote.
     It should be formatted as such in JSON:
     {
-        "Title": "TITLEHERE",
-        "Keywords": ["WORD1","WORD2",...]",
-        "Quote": "QUOTEHERE",
-        "Context": "CONTEXTHERE"
+        "Quotes": [
+            {
+                "Title": "TITLEHERE",
+                "Keywords": ["WORD1","WORD2",...]",
+                "Quote": "QUOTEHERE",
+                "Context": "CONTEXTHERE"
+            },
+            ...
+        ]
     }
     `;
-
+    model.generationConfig.temperature = 2.0;
     const result = await model.generateContent(prompt);
-    console.log(result.response.text());
-    return result.response.text();
+    let JSONtext = result.response.text();
+    JSONtext = JSONtext.replaceAll("`", "");
+    JSONtext = JSONtext.replace("json", "");
+    console.log(JSONtext);
+    console.log("Succeeded!");
+    return JSONtext;
 }
 
 app.listen(port, () => {
