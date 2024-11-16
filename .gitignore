@@ -1,2 +1,3 @@
 deployReact.sh
 node_modules
+.env
