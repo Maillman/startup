@@ -1,16 +1,23 @@
 import React, { useEffect } from "react";
 
 export function Thread({ setInitateThread, challenge }) {
+    const [title, setTitle] = React.useState('Discussion Thread');
+    const [configuredChallenge, configureChallenge] = React.useState('This is a discussion thread for the challenge!');
     useEffect(() => {
         setInitateThread();
     }, [setInitateThread]);
-    
+    useEffect(() => {
+        if(challenge){
+            setTitle(challenge.Title);
+            configureChallenge(challenge.Quote);
+        }
+    }, [challenge]);
 
     return (
         <main>
             <div className="card">
-                <h2>Discussion Thread</h2>
-                <p>{challenge}</p>
+                <h2>{title}</h2>
+                <p>{configuredChallenge}</p>
             </div>
             <div className="card">
                 <p>A reply to the discussion would appear here! (Websocket Data)</p>
