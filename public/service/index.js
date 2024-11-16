@@ -52,7 +52,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 //Get the challenge
 apiRouter.get('/challenge', async (_req, res) => {
     console.log(stored_challenge);
-    res.send({stored_challenge});
+    res.send(stored_challenge);
 });
 
 //Update the challenge

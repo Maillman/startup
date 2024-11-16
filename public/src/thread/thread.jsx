@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export function Thread({ setInitateThread }) {
+    const [challenge, setChallenge] = useState(null);
+
     useEffect(() => {
         setInitateThread();
     }, [setInitateThread]);
-    //Create a challenge if time is greater than 24 hours since the last challenge
+    
+    //Get the challenge from the backend
     useEffect(() => {
         fetch('/api/challenge',{
             method: 'GET',
@@ -15,33 +18,21 @@ export function Thread({ setInitateThread }) {
         .then((response) => response.json())
         .then((challenge) => {
             console.log(challenge);
-            console.log(`Challenge: ${challenge}`);
-            if(!challenge.challenge){
-                fetch('/api/challenge',{
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({challenge: 'This is a challenge', time: new Date().getTime()})
-                })
-                .then((data) => {
-                    console.log(data);
-                });
+            console.log(`Challenge: ${challenge.challenge}`);
+            console.log(`Time: ${challenge.time}`);
+            //If there is no challenge or the last challenge was more than 24 (86400000 milliseconds) hours ago, create a new challenge
+            if(!challenge.challenge || new Date().getTime() - 86400000 > challenge.time){
+                updateChallenge();
             }
+            setChallenge(challenge.challenge);
         });
     }, []);
+
     return (
         <main>
             <div className="card">
                 <h2>Discussion Thread</h2>
-                <p>This is some example text. A person who wants to post a new discussion would have their post displayed here!</p>
-                <p>
-                    Random Cipher Text:<br/>
-                    LQ BGXQL KLW VEMBX<br/>
-                    IEH KVOB IMM WMWPDE<br/>
-                    P BMVOWPD QHHIGI<br/>
-                    AU ANDZB KS LCKQ HMIGI
-                </p>
+                <p>{challenge}</p>
             </div>
             <div className="card">
                 <p>A reply to the discussion would appear here! (Websocket Data)</p>
@@ -53,4 +44,17 @@ export function Thread({ setInitateThread }) {
             <hr/>
         </main>
     );
+}
+
+function updateChallenge() {
+    fetch('/api/challenge', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ challenge: 'This is a challenge', time: new Date().getTime() })
+    })
+    .then((data) => {
+        console.log(data);
+    });
 }
