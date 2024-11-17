@@ -38,7 +38,7 @@ export function Application() {
             //     setCipher(() => affineCipher);
             //     break;
             case 'Bacon Cipher':
-                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? enBaconCipher(c) : deBaconCipher(c, index, text.toLowerCase()));
+                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deBaconCipher(c, index, text.toLowerCase()): enBaconCipher(c));
                 break;
             case 'Caesar Cipher':
                 setCipher(() => (c, index, key) => caesarCipher(c, state==CryptState.Decrypted ? parseInt(key) : -1*parseInt(key))); // Assuming key is the shift for Caesar Cipher

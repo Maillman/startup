@@ -58,3 +58,12 @@ For this deliverable I converted my startup frontend over to React and added jav
 - [X] **Router** - Routing between each of the components.
 - [X] **Hooks** - The plain-text, cipher-text, encryption/decryption state, key, and cipher all operate with `UseState`.
 - [X] **Icon** - Added a favicon.ico, although it may change in the future.
+## Service Deliverable
+For this deliverable I added backend endpoints that stores and retrieves decrypting challenges in the thread page.
+- [X] **Node.js/Express HTTP service** - done!
+- [X] **Static middleware for frontend** - done!
+- [X] **Calls to third party endpoints** - Done!
+  - [X] Calls picsum.photos for the placeholder photo on the home page
+  - [X] Calls the Gemini API for generating quotes for the challenges!
+- [X] **Backend service endpoints** - Placeholders for login that stores the current user on the server. Endpoints for challenges.
+- [X] **Frontend calls service endpoints** - I used the fetch function to call the backend service endpoints.

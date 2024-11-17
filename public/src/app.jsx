@@ -9,9 +9,17 @@ import { Login } from './login/login';
 import { Discussion } from './discussion/discussion';
 import { Thread } from './thread/thread';
 import { AuthState } from './login/authState';
+import applyCipher from "./application/applyCipher";
+import * as Cipher from './application/cipher';
 
 const fetch = fetchRetry(window.fetch);
 
+const { 
+    atbashCipher,
+    enBaconCipher,
+    caesarCipher,
+    vigenèreCipher 
+} = Cipher;
 export default function App() {
     const [initiateThread, setInitiateThread] = useState(false);
     const [challenge, setChallenge] = useState(null);
@@ -117,6 +125,41 @@ function updateChallenge() {
         })
         .then((data) => {
             console.log(data);
+            storeChallenge(quote);
         });
+    })
+}
+
+function storeChallenge(challenge){
+    const title = challenge.Title;
+    //Step 1: Pick a random cipher to encrypt the challenge.
+    const setOfCiphers = [
+        (c, index, key) => atbashCipher(c),
+        (c, index, key) => enBaconCipher(c),
+        (c, index, key) => caesarCipher(c, -1*parseInt(key)),
+        (c, index, key) => vigenèreCipher(c, index, key.toLowerCase().split('').map(
+            (char) => Cipher.alphabet[(-1*Cipher.alphabet.indexOf(char))+Cipher.alphabet.length]
+        ).join(''))
+    ];
+    let index = Math.floor(Math.random() * setOfCiphers.length)
+    let cipher = setOfCiphers[index];
+    let name = ["Atbash", "Bacon", "Caesar", "Vigenère"][index];
+    let key = index==2 ? Math.floor(Math.random() * 26) : index==3 ? challenge.Keywords[Math.floor(Math.random() * challenge.Keywords.length)] : null;
+    //Step 2: Encrypt the challenge with the cipher.
+    console.log(challenge.Quote);
+    const convertText = applyCipher(challenge.Quote, cipher, key);
+    console.log(convertText);
+    //Step 3: Create hints to the user to decrypt the challenge.
+    let hints = [];
+    hints.push(`A related word is ${challenge.Keywords[Math.floor(Math.random() * challenge.Keywords.length)]}.`);
+    hints.push(challenge.Context);
+    hints.push(`The challenge is encrypted using a ${name} cipher.`);
+    //Step 4: Store created challenge in the backend.
+    fetch('/api/challenge/discussion', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: title, encryptedtext: convertText, hints: hints })
     })
 }

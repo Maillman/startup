@@ -1,23 +1,39 @@
 import React, { useEffect } from "react";
 
-export function Thread({ setInitateThread, challenge }) {
-    const [title, setTitle] = React.useState('Discussion Thread');
-    const [configuredChallenge, configureChallenge] = React.useState('This is a discussion thread for the challenge!');
+export function Thread({ setInitateThread }) {
+    const [id, setId] = React.useState(0);
+    const [title, setTitle] = React.useState('Challenge Title');
+    const [configuredChallenge, setConfiguredChallenge] = React.useState('Configured Challenge');
+    const [hints, setHints] = React.useState(['Hint 1', 'Hint 2', 'Hint 3']);
+    
     useEffect(() => {
         setInitateThread();
     }, [setInitateThread]);
     useEffect(() => {
-        if(challenge){
-            setTitle(challenge.Title);
-            configureChallenge(challenge.Quote);
-        }
-    }, [challenge]);
+        fetch('/api/challenge/discussion', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setId(data.id);
+            setTitle(data.title);
+            setConfiguredChallenge(data.encryptedtext);
+            setHints(data.hints);
+        });
+    }, []);
 
     return (
         <main>
             <div className="card">
-                <h2>{title}</h2>
-                <p>{configuredChallenge}</p>
+                <h2>Challenge #{id}: {title}</h2>
+                <p>Cipher Text: <br/>{configuredChallenge}</p>
+                {hints.map((hint, index) => (
+                    <p key={index}>Hint #{index+1}: {hint}</p>
+                ))}
             </div>
             <div className="card">
                 <p>A reply to the discussion would appear here! (Websocket Data)</p>

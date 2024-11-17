@@ -6,6 +6,7 @@
 - [ ] Color?
 - [ ] Figure out what the main page is for.
 - [ ] Stop Thread from being loaded twice.
+- [ ] I'm afraid I might be feature creeping. Don't feature creep.
 ## Git Notes
 Resolving conflicts is pretty hard. I would recommend trying to avoid doing such things. Always pull first, make the changes and push. I'd honestly would rather resolve the conflicts on GitHub and not on VS Code.
 Github Copilot is extremely powerful, make sure to renew my Github Student Education plan to maintain access to that feature.
@@ -47,6 +48,19 @@ One thing to note, the way React handles CSS and HTML is different from what you
 Here are some things I have found I needed to address when I converted regular HTML to JSX/React:
 - Every tag must be closed in JSX. For example, <**br**> in HTML is fine as it is. But in JSX, you need <**br/**>.
 - Using in-line CSS styling in HTML won't work if you try to import it as it is into JSX. **style="text-align: right; font-style: italic;"** in HTML turns into **style={{ textAlign: 'right', fontStyle: 'italic' }}** in JSX.
+
+## Service Notes
+**Startup Service:** Holy crap did I take more time on this than I needed to. I'm to the point where I now feel like I'm feature creeping. I'm making fetches to three different services:
+
+1. Several from the frontend to the backend for logging in and out, and to get and store challenges.
+2. One from the frontend to picsum.photos for placeholder pictures.
+3. One from the backend to Gemini-1.5-Flash to generate the quotes for the challenges.
+
+Getting Gemini to work took longer than I wanted, and I honestly should have been fine with only having the first two. Regardless, here we are now with a fully working quote generator for my challenges!
+
+**Gemini API:** Finding out you can access the Gemini API by getting an API key for free was the lifesaver for me and I would honestly recommend it to anyone who's task isn't servicible by an existing free API.
+
+It's a little slow and the model does get overloaded, so you have to make several fetches to the API before Gemini can actually give you a response. But if your application doesn't need a speedy response, then Gemini is definitely the way to go! 
 
 In case you're wondering about the differences between HTML and JSX, [W3Schools](https://www.w3schools.com/react/react_jsx.asp) provides a good overview.
 

@@ -7,9 +7,10 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-
+let challengeid = 1;
 let users = {};
 let stored_challenge = {};
+let stored_discussion_challenge = {};
 
 app.use(express.json());
 
@@ -64,6 +65,22 @@ apiRouter.put('/challenge', async (req, res) => {
     stored_challenge.time = req.body.time;
     stored_challenge.challenge = req.body.challenge;
     console.log(stored_challenge);
+    res.status(204).send();
+});
+
+//Get the challenge used for discussion
+apiRouter.get('/challenge/discussion', async (_req, res) => {
+    console.log(stored_discussion_challenge);
+    res.send(stored_discussion_challenge);
+});
+
+//Update the challenge used for discussion
+apiRouter.put('/challenge/discussion', async (req, res) => {
+    stored_discussion_challenge.id = challengeid++;
+    stored_discussion_challenge.title = req.body.title;
+    stored_discussion_challenge.encryptedtext = req.body.encryptedtext;
+    stored_discussion_challenge.hints = req.body.hints;
+    console.log(stored_discussion_challenge);
     res.status(204).send();
 });
 
