@@ -1,57 +1,94 @@
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 const express = require('express');
-const uuid = require('uuid');
 const app = express();
 require('dotenv').config();
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const DB = require('./database.js');
 
+const authCookieName = 'token';
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
+// The service port may be set on the command line
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
+
+// Store the challenge in memory
 let challengeid = 1;
-let users = {};
 let stored_challenge = {};
 let stored_discussion_challenge = {};
 
+// JSON body parsing using built-in middleware
 app.use(express.json());
 
-var apiRouter = express.Router();
-app.use('/api', apiRouter);
+// Use the cookie parser middleware for tracking authentication tokens
+app.use(cookieParser());
 
 //Add the Express middleware to serve static files from the the public directory.
 app.use(express.static('public'));
 
+// Trust headers that are forwarded from the proxy so we can determine IP addresses
+app.set('trust proxy', true);
+
+// Router for service endpoints
+var apiRouter = express.Router();
+app.use('/api', apiRouter);
+
+
+// setAuthCookie in the HTTP response
+function setAuthCookie(res, token) {
+    res.cookie(authCookieName, token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict'
+    });
+}
+
+
 //CreateAuth a new user
 apiRouter.post('/auth', async (req, res) => {
-    const user = users[req.body.username];
-    if(user){
+    if(await DB.getUser(req.body.username)) {
         res.status(409).send({error: 'User already exists'});
     } else {
-        const user = {username: req.body.username, password: req.body.password, token: uuid.v4()};
-        users[user.username] = user;
-        console.log(users);
-        res.send({token: user.token})
+        const user = await DB.createUser(req.body.username, req.body.password);
+        console.log(user);
+
+        // Set the cookie
+        setAuthCookie(res, user.token);
+
+        res.send({id: user._id})
     }
 });
 
 //GetAuth login an existing user
 apiRouter.post('/auth/login', async (req, res) => {
-    const user = users[req.body.username];
-    if(user && user.password === req.body.password){
-        user.token = uuid.v4();
-        res.send({token: user.token});
+    const user = await DB.getUser(req.body.username);
+    if(user && await bcrypt.compare(req.body.password, user.password)){
+        setAuthCookie(res, user.token);
+        res.send({id: user._id});
     } else {
         res.status(401).send({error: 'Invalid username or password'});
     }
 });
 
 //DeleteAuth logout a user
-apiRouter.delete('/auth/logout', async (req, res) => {
-    const user = Object.values(users).find((u) => u.token === req.body.token);
-    if (user) {
-        console.log("Deleting token for user: ", user.username);
-        delete user.token;
-    }
+apiRouter.delete('/auth/logout', async (_req, res) => {
+    res.clearCookie(authCookieName);
     res.status(204).send();
+});
+
+// secureApiRouter verifies credentials for endpoints
+const secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
+secureApiRouter.use(async (req, res, next) => {
+    const token = req.cookies[authCookieName];
+    const user = await DB.getUserByToken(token);
+    if(user) {
+        next();
+    } else {
+        res.status(401).send({error: 'Invalid token'});
+    }
 });
 
 //Get the challenge
