@@ -3,31 +3,36 @@ import { CreateDiscussion } from './createDiscussion.jsx';
 import './discussion.css';
 
 export function Discussion({ setInitateThread }) {
-    const [discussion, setDiscussion] = useState([
-        "Discussion #1: Click here to go to the Thread page... (Database data)",
-        "Discussion #2: Click here to go to the Thread page... (Database data)",
-        "Discussion #3: Click here to go to the Thread page... (Database data)",
-        "Discussion #4: Click here to go to the Thread page... (Database data)",
-        "Discussion #5: Click here to go to the Thread page... (Database data)",
-    ]);
+    const [discussion, setDiscussion] = useState([]);
+    const [divDiscussion, setDivDiscussion] = useState([]);
     const [hideElement, setHideElement] = useState(false);
     const [indexSelected, setIndexSelected] = useState(-1);
     const [displayModal, setDisplayModal] = useState(null);
+    //Get all discussions from the database
+    useEffect(() => {
+        fetch('/api/discussion')
+            .then((response) => response.json())
+            .then((data) => {
+                const newDiscussion = data.map((discussion, index) => (
+                    discussion.title
+                ));
+                const divDiscussion = data.map((discussion, index) => (
+                    <>
+                        <h2>{discussion.title}</h2>
+                        <p>{discussion.body}</p>
+                    </>
+                ));
+                setDiscussion(newDiscussion);
+                setDivDiscussion(divDiscussion);
+            });
+    }, []);
     const handleClick = (index) => {
         setInitateThread();
         const discuss = [...discussion];
         discuss.splice(index+1, 0, "PLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDER")
         discuss[index] = (
             <>
-                <h2>Discussion Thread</h2>
-                <p>This is some example text. A person who wants to post a new discussion would have their post displayed here!</p>
-                <p>
-                    Random Cipher Text:<br/>
-                    LQ BGXQL KLW VEMBX<br/>
-                    IEH KVOB IMM WMWPDE<br/>
-                    P BMVOWPD QHHIGI<br/>
-                    AU ANDZB KS LCKQ HMIGI
-                </p>
+                {divDiscussion[index]}
             </>
         );
         setHideElement(true);

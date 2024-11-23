@@ -63,5 +63,7 @@ module.exports = {
     getUser,
     getUserByToken,
     createUser,
-    createDiscussion
+    createDiscussion,
+    getDiscussions,
+    getDiscussion
 }
