@@ -29,8 +29,8 @@ main form:not(#login-form) {
     padding: 0px 10%;
 }
 
-main form textarea {
-    resize: none;
+textarea {
+    resize: none !important;
 }
 
 header {

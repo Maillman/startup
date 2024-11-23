@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { CreateDiscussion } from './createDiscussion.jsx';
 import './discussion.css';
 
 export function Discussion({ setInitateThread }) {
@@ -11,6 +12,7 @@ export function Discussion({ setInitateThread }) {
     ]);
     const [hideElement, setHideElement] = useState(false);
     const [indexSelected, setIndexSelected] = useState(-1);
+    const [displayModal, setDisplayModal] = useState(null);
     const handleClick = (index) => {
         setInitateThread();
         const discuss = [...discussion];
@@ -43,19 +45,12 @@ export function Discussion({ setInitateThread }) {
             pickedDiscussion.style.setProperty('--top', `${rect.top - (disccussionRect.top > 0 ? disccussionRect.top : 0)}px`);
         }
     }
-    // useEffect(() => {
-    //     const pickedDiscussion = document.querySelector('#selected');
-    //     if(pickedDiscussion!=null){
-    //         const rect = pickedDiscussion.getBoundingClientRect();
-    //         console.log(rect.top);
-    //         pickedDiscussion.style.setProperty('--top', `${rect.top}px`);
-    //     }
-    // });
     return (
         <main className={`${hideElement ? 'hide' : 'discussion'}`}>
             <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '0px 10%' }}>
                 <h1>Discussions</h1>
-                <button className="btn btn-dark" onClick={setInitateThread} style={{ float: 'right' }}>Create a new discussion</button>
+                <button className="btn btn-dark" onClick={() => {setDisplayModal(true)}} style={{ float: 'right' }}>Create a new discussion</button>
+                <CreateDiscussion show={displayModal} onHide={() => setDisplayModal(null)} />
             </span>
             {discussion.map((discussion, index) => (
                 <div onClick={() => handleClick(index)} onMouseEnter={!hideElement ? () => setIndexSelected(index) : null} key={index} className="card" id={`${index==indexSelected ? 'selected' : index-1==indexSelected ? 'placeholder' : ''}`}>
