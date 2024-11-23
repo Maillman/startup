@@ -1,10 +1,23 @@
 import React, { useEffect } from "react";
+import { useParams } from 'react-router-dom';
 
 export function Thread({ setInitateThread }) {
+    const { threadId } = useParams();
     const [id, setId] = React.useState(0);
     const [title, setTitle] = React.useState('Challenge Title');
     const [configuredChallenge, setConfiguredChallenge] = React.useState('Configured Challenge');
     const [hints, setHints] = React.useState(['Hint 1', 'Hint 2', 'Hint 3']);
+    const challenge = (
+        <>
+            <div className="card">
+                <h2>Challenge #{id}: {title}</h2>
+                <p>Cipher Text: <br/>{configuredChallenge}</p>
+                {hints.map((hint, index) => (
+                    <p key={index}>Hint #{index+1}: {hint}</p>
+                ))}
+            </div>
+        </>
+    );
     
     useEffect(() => {
         setInitateThread();

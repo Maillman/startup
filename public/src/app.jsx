@@ -21,7 +21,7 @@ const {
     vigenèreCipher 
 } = Cipher;
 export default function App() {
-    const [initiateThread, setInitiateThread] = useState(false);
+    const [initiateThread, setInitiateThread] = useState(null);
     const [challenge, setChallenge] = useState(null);
     const [logout, setLogout] = useState(false);
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
@@ -69,7 +69,7 @@ export default function App() {
                 <hr/>
             </nav>
         </header>
-        {(initiateThread) ? <Navigate to='/thread'/> : null}
+        {(initiateThread) ? <Navigate to={`/thread/${initiateThread}`}/> : null}
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element=
@@ -84,8 +84,8 @@ export default function App() {
                     logout={logout}
                 />} />
             <Route path="/application" element={<Application />} />
-            <Route path="/discussion" element={<Discussion setInitateThread={() => setTimeout(() => {setInitiateThread(true)}, 1000)}/>} />
-            <Route path="/thread" element={<Thread setInitateThread={() => setInitiateThread(false)} challenge={challenge}/>} />
+            <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {setInitiateThread(id)}, 1000)}/>} />
+            <Route path="/thread/:id" element={<Thread setInitateThread={() => setInitiateThread(null)} challenge={challenge}/>} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer className="navbar bg-dark">

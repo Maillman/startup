@@ -4,7 +4,6 @@ import './discussion.css';
 
 export function Discussion({ setInitateThread }) {
     const [discussion, setDiscussion] = useState([]);
-    const [divDiscussion, setDivDiscussion] = useState([]);
     const [hideElement, setHideElement] = useState(false);
     const [indexSelected, setIndexSelected] = useState(-1);
     const [displayModal, setDisplayModal] = useState(null);
@@ -13,26 +12,28 @@ export function Discussion({ setInitateThread }) {
         fetch('/api/discussion')
             .then((response) => response.json())
             .then((data) => {
-                const newDiscussion = data.map((discussion, index) => (
-                    discussion.title
-                ));
-                const divDiscussion = data.map((discussion, index) => (
-                    <>
-                        <h2>{discussion.title}</h2>
-                        <p>{discussion.body}</p>
-                    </>
-                ));
-                setDiscussion(newDiscussion);
-                setDivDiscussion(divDiscussion);
+                const discussions = data.map((discussion, index) => {
+                    return {
+                        display: discussion.title,
+                        div: (
+                            <>
+                                <h2>{discussion.title}</h2>
+                                <p>{discussion.body}</p>
+                            </>
+                        ),
+                        id: discussion._id
+                    };
+            }   );
+                setDiscussion(discussions);
             });
     }, []);
     const handleClick = (index) => {
-        setInitateThread();
+        setInitateThread(discussion[index].id);
         const discuss = [...discussion];
         discuss.splice(index+1, 0, "PLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDER")
-        discuss[index] = (
+        discuss[index].display = (
             <>
-                {divDiscussion[index]}
+                {discussion[index].div}
             </>
         );
         setHideElement(true);
@@ -59,7 +60,7 @@ export function Discussion({ setInitateThread }) {
             </span>
             {discussion.map((discussion, index) => (
                 <div onClick={() => handleClick(index)} onMouseEnter={!hideElement ? () => setIndexSelected(index) : null} key={index} className="card" id={`${index==indexSelected ? 'selected' : index-1==indexSelected ? 'placeholder' : ''}`}>
-                    {discussion}
+                    {discussion.display}
                 </div>
             ))}
             <hr/>
