@@ -91,6 +91,29 @@ secureApiRouter.use(async (req, res, next) => {
     }
 });
 
+//Store a new discussion
+apiRouter.post('/discussion', async (req, res) => {
+    const discussion = await DB.createDiscussion(req.body.title, req.body.body);
+    console.log(discussion);
+    res.send({id: discussion._id});
+});
+
+//Get all discussions
+apiRouter.get('/discussion', async (_req, res) => {
+    const discussions = await DB.getDiscussions();
+    res.send(discussions);
+});
+
+//Get a specific discussion
+apiRouter.get('/discussion/:id', async (req, res) => {
+    const discussion = await DB.getDiscussion(req.params.id);
+    if(discussion) {
+        res.send(discussion);
+    } else {
+        res.status(404).send({error: 'Discussion not found'});
+    }
+});
+
 //Get the challenge
 apiRouter.get('/challenge', async (_req, res) => {
     console.log(stored_challenge);

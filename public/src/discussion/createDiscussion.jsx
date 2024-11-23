@@ -6,7 +6,21 @@ import Modal from 'react-bootstrap/Modal';
 export function CreateDiscussion(props) {
     function storeDiscussion() {
         // Send the new discussion to the backend to be stored in the database
-        
+        fetch('/api/discussion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: document.getElementById('discTitle').value,
+                body: document.getElementById('discBody').value
+            })
+        }).then((response) => {
+            if(response.ok) {
+                // Reload the page to show the new discussion
+                window.location.reload();
+            }
+        });
         // Close the modal
         props.onHide();
     }

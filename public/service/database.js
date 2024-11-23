@@ -41,8 +41,27 @@ async function createUser(username, password) {
     return user;
 }
 
+async function createDiscussion(title, body) {
+    const discussion = {
+        title: title,
+        body: body
+    }
+    await discussionsCollection.insertOne(discussion);
+
+    return discussion;
+}
+
+async function getDiscussions() {
+    return discussionsCollection.find().toArray();
+}
+
+async function getDiscussion(id) {
+    return discussionsCollection.findOne({ _id: id });
+}
+
 module.exports = {
     getUser,
     getUserByToken,
-    createUser
+    createUser,
+    createDiscussion
 }
