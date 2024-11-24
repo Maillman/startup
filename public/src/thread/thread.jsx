@@ -8,40 +8,6 @@ export function Thread({ setInitateThread, selectedDiscussion }) {
     useEffect(() => {
         setInitateThread();
     }, [setInitateThread]);
-    // MOVE THIS CODE
-    const [id, setId] = React.useState(0);
-    const [title, setTitle] = React.useState('Challenge Title');
-    const [configuredChallenge, setConfiguredChallenge] = React.useState('Configured Challenge');
-    const [hints, setHints] = React.useState(['Hint 1', 'Hint 2', 'Hint 3']);
-//    const challenge = (
-//        <>
-//            <div className="card">
-//                <h2>Challenge #{id}: {title}</h2>
-//                <p>Cipher Text: <br/>{configuredChallenge}</p>
-//                {hints.map((hint, index) => (
-//                    <p key={index}>Hint #{index+1}: {hint}</p>
-//                ))}
-//            </div>
-//       </>
-//    );
-    
-    useEffect(() => {
-        fetch('/api/challenge/discussion', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            setId(data.id);
-            setTitle(data.title);
-            setConfiguredChallenge(data.encryptedtext);
-            setHints(data.hints);
-        });
-    }, []);
-    // MOVE THIS CODE
     
     //Get discussion by id.
     useEffect(() => {

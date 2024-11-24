@@ -135,6 +135,7 @@ function updateChallenge() {
 }
 
 function storeChallenge(challenge){
+    let id;
     const title = challenge.Title;
     //Step 1: Pick a random cipher to encrypt the challenge.
     const setOfCiphers = [
@@ -166,4 +167,20 @@ function storeChallenge(challenge){
         },
         body: JSON.stringify({ title: title, encryptedtext: convertText, hints: hints })
     })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        id = data.id;
+        //Step 5: Create a discussion thread for the challenge.
+        fetch('/api/discussion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: `Challenge #${id}: ${title}`,
+                body: `Cipher Text: \n${convertText}\n\n${hints.map((hint, index) => (`Hint #${index+1}: ${hint}`)).join('\n')}`
+            })
+        });
+    });
 }

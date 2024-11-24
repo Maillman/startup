@@ -142,7 +142,7 @@ apiRouter.put('/challenge/discussion', async (req, res) => {
     stored_discussion_challenge.encryptedtext = req.body.encryptedtext;
     stored_discussion_challenge.hints = req.body.hints;
     console.log(stored_discussion_challenge);
-    res.status(204).send();
+    res.send(stored_discussion_challenge);
 });
 
 //Generate 10 random quotes

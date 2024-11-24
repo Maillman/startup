@@ -33,6 +33,10 @@ textarea {
     resize: none !important;
 }
 
+p {
+    white-space: pre-wrap;
+}
+
 header {
     z-index: 10;
 }
