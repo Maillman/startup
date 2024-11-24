@@ -106,6 +106,7 @@ apiRouter.get('/discussion', async (_req, res) => {
 
 //Get a specific discussion
 apiRouter.get('/discussion/:id', async (req, res) => {
+    console.log(req.params.id);
     const discussion = await DB.getDiscussion(req.params.id);
     if(discussion) {
         res.send(discussion);

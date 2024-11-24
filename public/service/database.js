@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const config = require('./dbConfig.json');
@@ -56,7 +56,7 @@ async function getDiscussions() {
 }
 
 async function getDiscussion(id) {
-    return discussionsCollection.findOne({ _id: id });
+    return discussionsCollection.findOne({ _id: ObjectId.createFromHexString(id) });
 }
 
 module.exports = {

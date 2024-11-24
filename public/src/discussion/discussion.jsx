@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CreateDiscussion } from './createDiscussion.jsx';
 import './discussion.css';
 
-export function Discussion({ setInitateThread }) {
+export function Discussion({ setInitateThread, setSelectedDiscussion }) {
     const [discussion, setDiscussion] = useState([]);
     const [hideElement, setHideElement] = useState(false);
     const [indexSelected, setIndexSelected] = useState(-1);
@@ -15,6 +15,8 @@ export function Discussion({ setInitateThread }) {
                 const discussions = data.map((discussion, index) => {
                     return {
                         display: discussion.title,
+                        title: discussion.title,
+                        body: discussion.body,
                         div: (
                             <>
                                 <h2>{discussion.title}</h2>
@@ -28,6 +30,7 @@ export function Discussion({ setInitateThread }) {
             });
     }, []);
     const handleClick = (index) => {
+        setSelectedDiscussion(discussion[index]);
         setInitateThread(discussion[index].id);
         const discuss = [...discussion];
         discuss.splice(index+1, 0, "PLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDERPLACEHOLDER")

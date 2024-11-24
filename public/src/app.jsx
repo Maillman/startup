@@ -27,6 +27,10 @@ export default function App() {
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = useState(currentAuthState);
+    const [selectedDiscussion, setSelectedDiscussion] = useState({
+        title: 'Discussion Title',
+        body: 'Body Text'
+    });
 
     //Get the challenge from the backend
     useEffect(() => {
@@ -84,8 +88,8 @@ export default function App() {
                     logout={logout}
                 />} />
             <Route path="/application" element={<Application />} />
-            <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {setInitiateThread(id)}, 1000)}/>} />
-            <Route path="/thread/:id" element={<Thread setInitateThread={() => setInitiateThread(null)} challenge={challenge}/>} />
+            <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {setInitiateThread(id)}, 1000)} setSelectedDiscussion={(discussion) => setSelectedDiscussion(discussion)}/>} />
+            <Route path="/thread/:threadId" element={<Thread setInitateThread={() => setInitiateThread(null)} challenge={challenge} selectedDiscussion={selectedDiscussion}/>} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer className="navbar bg-dark">
