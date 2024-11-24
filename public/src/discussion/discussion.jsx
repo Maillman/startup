@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { CreateDiscussion } from './createDiscussion.jsx';
 import './discussion.css';
+import { MessageDialog } from '../login/messageDialog.jsx';
+
 
 export function Discussion({ setInitateThread, setSelectedDiscussion }) {
     const [discussion, setDiscussion] = useState([]);
     const [hideElement, setHideElement] = useState(false);
     const [indexSelected, setIndexSelected] = useState(-1);
     const [displayModal, setDisplayModal] = useState(null);
+    const [displayError, setDisplayError] = useState(null);
     //Get all discussions from the database
     useEffect(() => {
         fetch('/api/discussion')
@@ -59,7 +62,8 @@ export function Discussion({ setInitateThread, setSelectedDiscussion }) {
             <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '0px 10%' }}>
                 <h1>Discussions</h1>
                 <button className="btn btn-dark" onClick={() => {setDisplayModal(true)}} style={{ float: 'right' }}>Create a new discussion</button>
-                <CreateDiscussion show={displayModal} onHide={() => setDisplayModal(null)} />
+                <CreateDiscussion show={displayModal} onHide={() => setDisplayModal(null)} onError={(message) => setDisplayError(message)} />
+                <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
             </span>
             {discussion.map((discussion, index) => (
                 <div onClick={() => handleClick(index)} onMouseEnter={!hideElement ? () => setIndexSelected(index) : null} key={index} className="card" id={`${index==indexSelected ? 'selected' : index-1==indexSelected ? 'placeholder' : ''}`}>

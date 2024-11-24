@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -19,6 +19,10 @@ export function CreateDiscussion(props) {
             if(response.ok) {
                 // Reload the page to show the new discussion
                 window.location.reload();
+            }else{
+                response.json().then((data) => {
+                    props.onError(`⚠ Error: ${data.error}`);
+                });
             }
         });
         // Close the modal

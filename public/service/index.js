@@ -77,27 +77,6 @@ apiRouter.delete('/auth/logout', async (_req, res) => {
     res.status(204).send();
 });
 
-// secureApiRouter verifies credentials for endpoints
-const secureApiRouter = express.Router();
-apiRouter.use(secureApiRouter);
-
-secureApiRouter.use(async (req, res, next) => {
-    const token = req.cookies[authCookieName];
-    const user = await DB.getUserByToken(token);
-    if(user) {
-        next();
-    } else {
-        res.status(401).send({error: 'Invalid token'});
-    }
-});
-
-//Store a new discussion
-apiRouter.post('/discussion', async (req, res) => {
-    const discussion = await DB.createDiscussion(req.body.title, req.body.body);
-    console.log(discussion);
-    res.send({id: discussion._id});
-});
-
 //Get all discussions
 apiRouter.get('/discussion', async (_req, res) => {
     const discussions = await DB.getDiscussions();
@@ -185,6 +164,31 @@ async function getJSONQuotes() {
     console.log("Succeeded!");
     return JSONtext;
 }
+
+
+
+// secureApiRouter verifies credentials for endpoints
+const secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
+secureApiRouter.use(async (req, res, next) => {
+    const token = req.cookies[authCookieName];
+    console.log(token);
+    const user = await DB.getUserByToken(token);
+    console.log(user);
+    if(user) {
+        next();
+    } else {
+        res.status(401).send({error: 'Invalid token'});
+    }
+});
+
+//Store a new discussion
+secureApiRouter.post('/discussion', async (req, res) => {
+    const discussion = await DB.createDiscussion(req.body.title, req.body.body);
+    console.log(discussion);
+    res.send({id: discussion._id});
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

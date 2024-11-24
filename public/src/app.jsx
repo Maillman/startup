@@ -176,6 +176,7 @@ function storeChallenge(challenge){
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Cookie': 'token=3767390d-81db-4640-a171-e86594008ee7',
             },
             body: JSON.stringify({
                 title: `Challenge #${id}: ${title}`,
