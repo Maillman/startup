@@ -8,6 +8,8 @@
 - [ ] Stop Thread from being loaded twice.
 - [ ] I'm afraid I might be feature creeping. Don't feature creep.
 - [ ] Successive backoff on the Gemini API.
+- [ ] Add replies to discussion in database.
+- [ ] Fix bug where the cookie is stored and website still asks for a login
 ## Git Notes
 Resolving conflicts is pretty hard. I would recommend trying to avoid doing such things. Always pull first, make the changes and push. I'd honestly would rather resolve the conflicts on GitHub and not on VS Code.
 Github Copilot is extremely powerful, make sure to renew my Github Student Education plan to maintain access to that feature.
@@ -50,6 +52,13 @@ Here are some things I have found I needed to address when I converted regular H
 - Every tag must be closed in JSX. For example, <**br**> in HTML is fine as it is. But in JSX, you need <**br/**>.
 - Using in-line CSS styling in HTML won't work if you try to import it as it is into JSX. **style="text-align: right; font-style: italic;"** in HTML turns into **style={{ textAlign: 'right', fontStyle: 'italic' }}** in JSX.
 
+In case you're wondering about the differences between HTML and JSX, [W3Schools](https://www.w3schools.com/react/react_jsx.asp) provides a good overview.
+
+After finishing my React deliverable, there are a couple more things I want to note down.
+- People said getting Jest tests to work for my startup would take a while... it didn't! It was a little picky with my wording but it was fine and helped me easily debug my low-level code, which I still plan on using once I add more ciphers.
+- CSS animations are horrendous to work with, I don't know why '> *' selectors work the way they do. Also, trying to make an element's position absolute while inside another container when grabbing the position ignores the container altogether has got to be the craziest thing I've seen so far!
+
+
 ## Service Notes
 **Startup Service:** Holy crap did I take more time on this than I needed to. I'm to the point where I now feel like I'm feature creeping. I'm making fetches to three different services:
 
@@ -63,11 +72,11 @@ Getting Gemini to work took longer than I wanted, and I honestly should have bee
 
 It's a little slow and the model does get overloaded, so you have to make several fetches to the API before Gemini can actually give you a response. But if your application doesn't need a speedy response, then Gemini is definitely the way to go! 
 
-In case you're wondering about the differences between HTML and JSX, [W3Schools](https://www.w3schools.com/react/react_jsx.asp) provides a good overview.
+## Database/Login Notes
+**Startup Database/Login:** Nothing much I want to say here. Probably just remember that if you want to find an object by it's id in the mongoDB database, you'll need to call it like such: 
+ - _id: ObjectId.createFromHexString(id)
 
-After finishing my React deliverable, there are a couple more things I want to note down.
-- People said getting Jest tests to work for my startup would take a while... it didn't! It was a little picky with my wording but it was fine and helped me easily debug my low-level code, which I still plan on using once I add more ciphers.
-- CSS animations are horrendous to work with, I don't know why '> *' selectors work the way they do. Also, trying to make an element's position absolute while inside another container when grabbing the position ignores the container altogether has got to be the craziest thing I've seen so far!
+One thing that confuses me is the fact that you have to put your endpoints that don't require authentication above the enpoints that do, despite me explicitly calling secureAPIRouter on the endpoints that do need authentication and APIrouter on endpoints that don't. Not sure why that's the case.
 
 ## Midterm Notes
 

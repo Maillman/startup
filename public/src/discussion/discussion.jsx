@@ -44,9 +44,6 @@ export function Discussion({ setInitateThread, setSelectedDiscussion }) {
         );
         setHideElement(true);
         setDiscussion(discuss);
-        //const pickedDiscussion = document.querySelector('#selected');
-        //const rect = pickedDiscussion.getBoundingClientRect();
-        //pickedDiscussion.style.setProperty('--top', `${rect.top}px`);
         const docDiscussion = document.querySelector('.discussion');
         const pickedDiscussion = document.querySelector('#selected');
         if(pickedDiscussion!=null){

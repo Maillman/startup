@@ -59,11 +59,22 @@ For this deliverable I converted my startup frontend over to React and added jav
 - [X] **Hooks** - The plain-text, cipher-text, encryption/decryption state, key, and cipher all operate with `UseState`.
 - [X] **Icon** - Added a favicon.ico, although it may change in the future.
 ## Service Deliverable
+
 For this deliverable I added backend endpoints that stores and retrieves decrypting challenges in the thread page.
-- [X] **Node.js/Express HTTP service** - done!
-- [X] **Static middleware for frontend** - done!
+
+- [X] **Node.js/Express HTTP service** - Done!
+- [X] **Static middleware for frontend** - Done!
 - [X] **Calls to third party endpoints** - Done!
   - [X] Calls picsum.photos for the placeholder photo on the home page
   - [X] Calls the Gemini API for generating quotes for the challenges!
 - [X] **Backend service endpoints** - Placeholders for login that stores the current user on the server. Endpoints for challenges.
 - [X] **Frontend calls service endpoints** - I used the fetch function to call the backend service endpoints.
+## DB/Login Deliverable
+
+For this deliverable I allowed users who are logged in to create discussions. I stored the discussions in the database.
+- [X] **MongoDB Atlas database created** - Done!
+- [X] **Stores data in MongoDB** - Done!
+- [X] **User registration** - Creates a new account in the database.
+- [X] **Use MongoDB to store credentials** - Stores both users and discussions.
+- [X] **Restricts functionality** - Users cannot create a discussion until they have logged in.
+- [ ] **Associate users with discussions or replies** - I didn't have enough time to this. Replying is unavailable at the moment.
