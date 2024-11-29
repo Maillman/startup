@@ -29,7 +29,8 @@ export default function App() {
     const [authState, setAuthState] = useState(currentAuthState);
     const [selectedDiscussion, setSelectedDiscussion] = useState({
         title: 'Discussion Title',
-        body: 'Body Text'
+        body: 'Body Text',
+        author: 'Author'
     });
 
     //Get the challenge from the backend
@@ -174,16 +175,26 @@ function storeChallenge(challenge){
         console.log(data);
         id = data.id;
         //Step 5: Create a discussion thread for the challenge.
+        document.cookie = `token=3767390d-81db-4640-a171-e86594008ee7`;
         fetch('/api/discussion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Cookie': 'token=3767390d-81db-4640-a171-e86594008ee7',
             },
             body: JSON.stringify({
                 title: `Challenge #${id}: ${title}`,
                 body: `Cipher Text: \n${convertText}\n\n${hints.map((hint, index) => (`Hint #${index+1}: ${hint}`)).join('\n')}`
             })
+        })
+        .then((response) => {
+            if(response.ok) {
+                console.log('Challenge created');
+                document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }else{
+                response.json().then((data) => {
+                    console.log(`⚠ Error: ${data.error}`);
+                });
+            }
         });
     });
 }

@@ -41,10 +41,11 @@ async function createUser(username, password) {
     return user;
 }
 
-async function createDiscussion(title, body) {
+async function createDiscussion(title, body, author) {
     const discussion = {
         title: title,
-        body: body
+        body: body,
+        author: author
     }
     await discussionsCollection.insertOne(discussion);
 
@@ -59,12 +60,16 @@ async function getDiscussion(id) {
     return discussionsCollection.findOne({ _id: ObjectId.createFromHexString(id) });
 }
 
-async function addReply(id, reply) {
+async function addReply(id, reply, author) {
     const discussion = await discussionsCollection.findOne({ _id: ObjectId.createFromHexString(id) });
     if (discussion.replies === undefined) {
         discussion.replies = [];
     }
-    discussion.replies.push(reply);
+    const store_reply = {
+        reply: reply,
+        author: author
+    }
+    discussion.replies.push(store_reply);
     await discussionsCollection.updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: { replies: discussion.replies } });
 }
 

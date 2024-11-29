@@ -24,6 +24,7 @@ export function Thread({ setInitateThread, selectedDiscussion }) {
             let discussion = {
                 title: data.title,
                 body: data.body,
+                author: data.author,
                 replies: data.replies
             }
             setDiscussion(discussion);
@@ -55,6 +56,7 @@ export function Thread({ setInitateThread, selectedDiscussion }) {
     return (
         <main>
             <div className="card">
+                <p className="text-secondary" style={{fontStyle: 'italic'}}>{discussion.author}</p>
                 <h2>{discussion.title}</h2>
                 <p>{discussion.body}</p>
             </div>
@@ -62,7 +64,8 @@ export function Thread({ setInitateThread, selectedDiscussion }) {
             discussion.replies && discussion.replies.map((reply, index) => {
                 return (
                     <div key={index} className="card">
-                        <p>{reply}</p>
+                        <p className="text-secondary" style={{fontStyle: 'italic'}}>{reply.author}</p>
+                        <p>{reply.reply}</p>
                     </div>);})
             }
             <form>

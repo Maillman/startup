@@ -20,8 +20,10 @@ export function Discussion({ setInitateThread, setSelectedDiscussion }) {
                         display: discussion.title,
                         title: discussion.title,
                         body: discussion.body,
+                        author: discussion.author,
                         div: (
                             <>
+                                <p className="text-secondary" style={{fontStyle: 'italic'}}>{discussion.author}</p>
                                 <h2>{discussion.title}</h2>
                                 <p>{discussion.body}</p>
                             </>

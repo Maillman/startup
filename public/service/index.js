@@ -185,16 +185,20 @@ secureApiRouter.use(async (req, res, next) => {
 
 //Store a new discussion
 secureApiRouter.post('/discussion', async (req, res) => {
-    const discussion = await DB.createDiscussion(req.body.title, req.body.body);
+    const token = req.cookies[authCookieName];
+    const user = await DB.getUserByToken(token);
+    const discussion = await DB.createDiscussion(req.body.title, req.body.body, user.username);
     console.log(discussion);
     res.send({id: discussion._id});
 });
 
 //Store a reply to a discussion
 secureApiRouter.post('/discussion/:id/reply', async (req, res) => {
+    const token = req.cookies[authCookieName];
+    const user = await DB.getUserByToken(token);
     const discussion = await DB.getDiscussion(req.params.id);
     if(discussion) {
-        await DB.addReply(req.params.id, req.body.reply);
+        await DB.addReply(req.params.id, req.body.reply, user.username);
         res.status(204).send();
     } else {
         res.status(404).send({error: 'Discussion not found'});
