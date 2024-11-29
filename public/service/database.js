@@ -59,11 +59,21 @@ async function getDiscussion(id) {
     return discussionsCollection.findOne({ _id: ObjectId.createFromHexString(id) });
 }
 
+async function addReply(id, reply) {
+    const discussion = await discussionsCollection.findOne({ _id: ObjectId.createFromHexString(id) });
+    if (discussion.replies === undefined) {
+        discussion.replies = [];
+    }
+    discussion.replies.push(reply);
+    await discussionsCollection.updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: { replies: discussion.replies } });
+}
+
 module.exports = {
     getUser,
     getUserByToken,
     createUser,
     createDiscussion,
     getDiscussions,
-    getDiscussion
+    getDiscussion,
+    addReply
 }

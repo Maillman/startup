@@ -2,13 +2,13 @@
 ## Startup TODO:
 - [ ] Add Affine and A1Z26 Ciphers.
 - [ ] Finish Thread side CSS animation.
-- [ ] Make a new component for users creating a new thread.
+- [X] Make a new component for users creating a new thread.
 - [ ] Color?
 - [ ] Figure out what the main page is for.
 - [ ] Stop Thread from being loaded twice.
 - [ ] I'm afraid I might be feature creeping. Don't feature creep.
-- [ ] Successive backoff on the Gemini API.
-- [ ] Add replies to discussion in database.
+- [X] Successive backoff on the Gemini API.
+- [X] Add replies to discussion in database.
 - [ ] Fix bug where the cookie is stored and website still asks for a login
 ## Git Notes
 Resolving conflicts is pretty hard. I would recommend trying to avoid doing such things. Always pull first, make the changes and push. I'd honestly would rather resolve the conflicts on GitHub and not on VS Code.

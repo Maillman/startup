@@ -113,7 +113,9 @@ function updateChallenge() {
         },
         retryOn: [503],
         retries: 5,
-        retryDelay: 500
+        retryDelay: function(attempt, error, response) {
+            return Math.pow(2, attempt) * 500; // 500, 1000, 2000, 4000, 8000
+          }
     })
     .then((response) => response.json())
     .then((data) => {

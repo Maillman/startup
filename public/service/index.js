@@ -190,6 +190,17 @@ secureApiRouter.post('/discussion', async (req, res) => {
     res.send({id: discussion._id});
 });
 
+//Store a reply to a discussion
+secureApiRouter.post('/discussion/:id/reply', async (req, res) => {
+    const discussion = await DB.getDiscussion(req.params.id);
+    if(discussion) {
+        await DB.addReply(req.params.id, req.body.reply);
+        res.status(204).send();
+    } else {
+        res.status(404).send({error: 'Discussion not found'});
+    }
+});
+
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
     res.sendFile('index.html', { root: 'public' });
