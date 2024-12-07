@@ -7,24 +7,29 @@ class EventMessage {
   }
 
 class ReplyNotifier {
-    replies = [];
+    reply = null;
     handlers = [];
     constructor() {
+        this.establishConnection();
+    }
+
+    establishConnection() {
         let port = window.location.port;
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
+        const threadId = window.location.pathname.split('/')[2];
+        this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws/${threadId}`);
         this.socket.onopen = (event) => {
-          this.receiveEvent(new EventMessage('Startup', 'Connection', { msg: 'connected' }));
-        };
-        this.socket.onclose = (event) => {
-          this.receiveEvent(new EventMessage('Startup', 'Connection', { msg: 'disconnected' }));
-        };
-        this.socket.onmessage = async (msg) => {
-          try {
-            const event = JSON.parse(await msg.data.text());
-            this.receiveEvent(event);
-          } catch {}
-        };
+            this.receiveEvent(new EventMessage('Startup', 'Connection', { msg: 'connected' }));
+          };
+          this.socket.onclose = (event) => {
+            this.receiveEvent(new EventMessage('Startup', 'Connection', { msg: 'disconnected' }));
+          };
+          this.socket.onmessage = async (msg) => {
+            try {
+              const event = JSON.parse(await msg.data.text());
+              this.receiveEvent(event);
+            } catch {}
+          };
     }
 
     addHandler(handler) {
@@ -41,13 +46,12 @@ class ReplyNotifier {
     }
 
     receiveEvent(event) {
-        this.replies.push(event);
-
-        this.replies.forEach((e) => {
+        if (event.type === 'reply'){
+            this.reply = event;
             this.handlers.forEach((handler) => {
-              handler(e);
+                handler(this.reply);
             });
-        });
+        }
     }
 }
 

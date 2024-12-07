@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { ReplNotifier } from './replyNotifier.js';
 
-export function Thread({ setInitateThread, selectedDiscussion }) {
+export function Thread({ setInitateThread, selectedDiscussion, userName }) {
     const { threadId } = useParams();
     const [discussion, setDiscussion] = React.useState(selectedDiscussion);
     const [replyText, setReplyText] = React.useState('');
@@ -57,10 +57,21 @@ export function Thread({ setInitateThread, selectedDiscussion }) {
         });
         // Send the reply to the websocket
         console.log("Sending the reply through WebSocket", reply);
-        ReplNotifier.broadcastEvent('TestWebsocket', 'reply', {reply: reply});
+        ReplNotifier.broadcastEvent(userName, 'reply', {reply: reply});
         document.getElementById('reply').value = '';
         setReplyText('');
     }
+
+    //Open and close the websocket connection
+    useEffect(() => {
+        if (ReplNotifier.socket.readyState === WebSocket.CLOSED) {
+            ReplNotifier.establishConnection();
+        }
+        return () => {
+            ReplNotifier.socket.close();
+        };
+    }, []);
+
     //Websocket Replies
     useEffect(() => {
         ReplNotifier.addHandler(handleReplies);

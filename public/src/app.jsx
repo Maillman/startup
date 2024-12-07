@@ -90,7 +90,7 @@ export default function App() {
                 />} />
             <Route path="/application" element={<Application />} />
             <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {setInitiateThread(id)}, 1000)} setSelectedDiscussion={(discussion) => setSelectedDiscussion(discussion)}/>} />
-            <Route path="/thread/:threadId" element={<Thread setInitateThread={() => setInitiateThread(null)} challenge={challenge} selectedDiscussion={selectedDiscussion}/>} />
+            <Route path="/thread/:threadId" element={<Thread setInitateThread={() => setInitiateThread(null)} challenge={challenge} selectedDiscussion={selectedDiscussion} userName={userName}/>} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer className="navbar bg-dark">

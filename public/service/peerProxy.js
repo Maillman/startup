@@ -15,15 +15,19 @@ function peerProxy(httpServer) {
   // Keep track of all the connections so we can forward messages
   let connections = [];
 
-  wss.on('connection', (ws) => {
-    const connection = { id: uuid.v4(), alive: true, ws: ws };
+  wss.on('connection', (ws, req) => {
+    console.log('Establish connection from ', req.url);
+    const threadId = req.url.split('/')[2];
+    const connection = { id: uuid.v4(), alive: true, ws: ws, threadId: threadId };
     connections.push(connection);
     console.log('New connection:', connection.id);
     console.log('All connections:', connections);
-    // Forward messages to everyone except the sender
+    // Forward messages to everyone in the same thread
     ws.on('message', function message(data) {
       connections.forEach((c) => {
-        c.ws.send(data);
+        if (c.threadId === connection.threadId){
+          c.ws.send(data);
+        }
       });
     });
 
