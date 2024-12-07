@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { ReplNotifier } from './replyNotifier.js';
+import { MessageDialog } from '../login/messageDialog.jsx';
 
 export function Thread({ setInitateThread, selectedDiscussion, userName }) {
     const { threadId } = useParams();
     const [discussion, setDiscussion] = React.useState(selectedDiscussion);
     const [replyText, setReplyText] = React.useState('');
+    const [displayError, setDisplayError] = React.useState(null);
 
     useEffect(() => {
         setInitateThread();
@@ -47,19 +49,17 @@ export function Thread({ setInitateThread, selectedDiscussion, userName }) {
         }).then((response) => {
             if(response.ok) {
                 // Reload the page to show the new discussion
-                //window.location.reload();
-                console.log("Success");
+                // Send the reply to the websocket
+                console.log("Sending the reply through WebSocket", reply);
+                ReplNotifier.broadcastEvent(userName, 'reply', {reply: reply});
+                document.getElementById('reply').value = '';
+                setReplyText('');
             } else {
                 response.json().then((data) => {
-                    console.log(`⚠ Error: ${data.error}`);
+                    setDisplayError(`⚠ Error: ${data.error}`);
                 });
             }
         });
-        // Send the reply to the websocket
-        console.log("Sending the reply through WebSocket", reply);
-        ReplNotifier.broadcastEvent(userName, 'reply', {reply: reply});
-        document.getElementById('reply').value = '';
-        setReplyText('');
     }
 
     //Open and close the websocket connection
@@ -114,6 +114,7 @@ export function Thread({ setInitateThread, selectedDiscussion, userName }) {
             <form>
                 <textarea style={{ border: '1px solid black', padding: '20px' }} id="reply" name="reply" rows="2" placeholder="Reply to the discussion..." onChange={(e) => setReplyText(e.target.value)}></textarea>
                 <button type="button" className="btn btn-dark" onClick={sendReply} disabled={!replyText}>Send</button>
+                <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
             </form>
             <hr/>
         </main>

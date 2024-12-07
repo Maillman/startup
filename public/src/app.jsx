@@ -57,6 +57,11 @@ export default function App() {
         });
     }, []);
 
+    function logoutUser() {
+        localStorage.removeItem('userName');
+        setLogout(true);
+    }
+
     return (
         <BrowserRouter>
         <header>
@@ -68,7 +73,7 @@ export default function App() {
                     <li className="nav-item"><NavLink className="nav-link" to='/discussion'>Discussions</NavLink></li>
                 </ul>
                 <ul className="navbar-nav">
-                    {authState === AuthState.Authenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login' onClick={() => setLogout(true)}>Logout</NavLink></li> : null}
+                    {authState === AuthState.Authenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login' onClick={() => logoutUser()}>Logout</NavLink></li> : null}
                     {authState === AuthState.Unauthenticated ? <li className="nav-item"><NavLink className="nav-link" to='/login'>Login</NavLink></li> : null}
                 </ul>
                 <hr/>

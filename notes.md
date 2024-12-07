@@ -9,7 +9,7 @@
 - [ ] I'm afraid I might be feature creeping. Don't feature creep.
 - [X] Successive backoff on the Gemini API.
 - [X] Add replies to discussion in database.
-- [ ] Fix bug where the cookie is stored and website still asks for a login
+- [X] Fix bug where the cookie is stored and website still asks for a login
 ## Git Notes
 Resolving conflicts is pretty hard. I would recommend trying to avoid doing such things. Always pull first, make the changes and push. I'd honestly would rather resolve the conflicts on GitHub and not on VS Code.
 Github Copilot is extremely powerful, make sure to renew my Github Student Education plan to maintain access to that feature.
