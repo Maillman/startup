@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { ReplNotifier } from './replyNotifier.js';
 
 export function Thread({ setInitateThread, selectedDiscussion }) {
     const { threadId } = useParams();
     const [discussion, setDiscussion] = React.useState(selectedDiscussion);
+    const [replyText, setReplyText] = React.useState('');
 
     useEffect(() => {
         setInitateThread();
@@ -45,14 +47,44 @@ export function Thread({ setInitateThread, selectedDiscussion }) {
         }).then((response) => {
             if(response.ok) {
                 // Reload the page to show the new discussion
-                window.location.reload();
+                //window.location.reload();
+                console.log("Success");
             } else {
                 response.json().then((data) => {
                     console.log(`⚠ Error: ${data.error}`);
                 });
             }
         });
+        // Send the reply to the websocket
+        console.log("Sending the reply through WebSocket", reply);
+        ReplNotifier.broadcastEvent('TestWebsocket', 'reply', {reply: reply});
+        document.getElementById('reply').value = '';
+        setReplyText('');
     }
+    //Websocket Replies
+    useEffect(() => {
+        ReplNotifier.addHandler(handleReplies);
+
+        return () => {
+            ReplNotifier.removeHandler(handleReplies);
+        };
+    }, []);
+
+    function handleReplies(event) {
+        console.log(event);
+        if(event.type === 'reply') {
+            setDiscussion((prev) => {
+                if (prev.replies === undefined) {
+                    prev.replies = [];
+                }
+                return {
+                    ...prev,
+                    replies: [ ...prev.replies, {author: event.from, reply: event.value.reply}]
+                }
+            });
+        }
+    }
+
     return (
         <main>
             <div className="card">
@@ -69,8 +101,8 @@ export function Thread({ setInitateThread, selectedDiscussion }) {
                     </div>);})
             }
             <form>
-                <textarea style={{ border: '1px solid black', padding: '20px' }} id="reply" name="reply" rows="2" placeholder="Reply to the discussion..." required></textarea>
-                <button className="btn btn-dark" onClick={sendReply}>Send</button>
+                <textarea style={{ border: '1px solid black', padding: '20px' }} id="reply" name="reply" rows="2" placeholder="Reply to the discussion..." onChange={(e) => setReplyText(e.target.value)}></textarea>
+                <button type="button" className="btn btn-dark" onClick={sendReply} disabled={!replyText}>Send</button>
             </form>
             <hr/>
         </main>
