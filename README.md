@@ -82,7 +82,7 @@ For this deliverable I allowed users who are logged in to create discussions. I 
 
 For this deliverable I used webSocket to update the replies to a thread on the frontend in realtime.
 
-- [x] **Backend listens for WebSocket connection** - done!
-- [x] **Frontend makes WebSocket connection** - done!
-- [x] **Data sent over WebSocket connection** - done!
-- [x] **WebSocket data displayed** - All replies to any thread display in realtime, no thread recieves replies that shouldn't. Users are also now associated with discussions and replies. Finally finished. Way cool! 🎉🎉🎉
+- [X] **Backend listens for WebSocket connection** - done!
+- [X] **Frontend makes WebSocket connection** - done!
+- [X] **Data sent over WebSocket connection** - done!
+- [X] **WebSocket data displayed** - All replies to any thread display in realtime, no thread recieves replies that shouldn't. Users are also now associated with discussions and replies. Finally finished. Way cool! 🎉🎉🎉

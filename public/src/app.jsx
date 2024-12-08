@@ -87,6 +87,7 @@ export default function App() {
                     userName={userName} 
                     authState={authState} 
                     onAuthChange={(userName, authState) => {
+                        localStorage.setItem('userName', userName);
                         setUserName(userName);
                         setAuthState(authState);
                         setLogout(false);
