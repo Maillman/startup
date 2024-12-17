@@ -265,3 +265,88 @@ A DNS A record can only point to an IP address but not another A record.
 Port 443 is reserved for the HTTPS protocol (Hypertext Transfer Protocol Secure), port 80 is for HTTP (Hypertext Transfer Protocol), and port 22 is for SSH (Secure Shell) protocol.
  
 **What will the following code using Promises output when executed?**
+
+## Final Notes
+**What is the default port for HTTP/HTTPS/SSH?**
+Port 443 is reserved for the HTTPS protocol (Hypertext Transfer Protocol Secure), port 80 is for HTTP (Hypertext Transfer Protocol), and port 22 is for SSH (Secure Shell) protocol.
+
+**What does an HTTP status code in the range of 300/400/500 indicate?**
+In HTTP status codes, a code in the 300 range indicates a redirection, a 400 range signifies a client error (issue with the user's request), and a 500 range indicates a server error (problem on the server side).
+
+**What does the HTTP header content-type allow you to do?**
+The HTTP header "Content-Type" allows a server to inform the client about the media type of the data being sent.
+
+**What does a “Secure cookie”/”Http-only cookie”/”Same-site cookie” do? https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies**
+- A cookie with the Secure attribute is only sent to the server with an encrypted request over the HTTPS protocol. It's never sent with unsecured HTTP (except on localhost), which means man-in-the-middle attackers can't access it easily. Insecure sites (with http: in the URL) can't set cookies with the Secure attribute. However, don't assume that Secure prevents all access to sensitive information in cookies. For example, someone with access to the client's hard disk (or JavaScript if the HttpOnly attribute isn't set) can read and modify the information.
+- A cookie with the HttpOnly attribute can't be accessed by JavaScript, for example using Document.cookie; it can only be accessed when it reaches the server. Cookies that persist user sessions for example should have the HttpOnly attribute set — it would be really insecure to make them available to JavaScript. This precaution helps mitigate cross-site scripting (XSS) attacks.
+- A cookie with the Same-site attribute is a cookie with the security feature that prevents a website's cookie from being sent along with requests to different websites, essentially limiting its usage to the same domain, thus helping to mitigate the risk of Cross-Site Request Forgery (CSRF) attacks and other cross-site vulnerabilities by controlling when a cookie is included in cross-site requests. 
+
+**Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /api/document?**
+
+**Given the following Express service code: What does the following front end JavaScript that performs a fetch return?**
+
+**Given the following MongoDB query, select all of the matching documents {name:Mark}**
+
+**How should user passwords be stored?**
+It should be hashed and stored in the backend.
+
+**Assuming the following node.js websocket code in the back end, and the following front end websocket code, what will the front end log to the console?**
+
+**What is the websocket protocol intended to provide?**
+The WebSocket protocol enables full-duplex interaction between a web browser and a web server making it possible to open a two-way interactive communication session between the browser and server.
+
+**What do the following acronyms stand for? JSX, JS, AWS, NPM, NVM**
+
+JSX: JavaScript XML
+- A syntax extension for JavaScript used in React to write HTML-like code directly within JavaScript.
+
+JS: JavaScript
+- A programming language used for web development to make web pages interactive.
+
+AWS: Amazon Web Services
+- A cloud platform providing services like computing power, storage, and databases.
+
+NPM: Node Package Manager
+- A package manager for JavaScript, primarily used to install libraries and tools for Node.js.
+
+NVM: Node Version Manager
+- A tool to manage multiple versions of Node.js on the same system.
+
+**Assuming an HTML document with a body element. What text content will the following React component generate?  The react component will use parameters.**
+
+**Given a set of React components that include each other, what will be generated**
+
+**What does a React component with React.useState do?**
+A React component with React.useState allows you to add state to your functional components. When the state changes, React re-renders the component to reflect the updated data.
+
+**What are React Hooks used for?**
+React Hooks are functions that let you "hook into" React state and lifecycle features from within function components. They were introduced in React 16.8 as a way to add state and other React features to functional components without having to convert them to class components.
+
+**What does the State Hook/Context Hook/Ref Hook/Effect Hook/Performance Hook do? https://react.dev/reference/react/hooks**
+
+**State Hooks** - Lets a component “remember” information like user input. For example, a form component can use state to store the input value, while an image gallery component can use state to store the selected image index.
+
+**Context Hooks** - Lets a component receive information from distant parents without passing it as props. For example, your app’s top-level component can pass the current UI theme to all components below, no matter how deep.
+
+**Ref Hooks** - Lets a component hold some information that isn’t used for rendering, like a DOM node or a timeout ID. Unlike with state, updating a ref does not re-render your component. Refs are an “escape hatch” from the React paradigm. They are useful when you need to work with non-React systems, such as the built-in browser APIs.
+
+**Effect Hooks** - Lets a component connect to and synchronize with external systems. This includes dealing with network, browser DOM, animations, widgets written using a different UI library, and other non-React code.
+
+**Performance Hooks** - A common way to optimize re-rendering performance is to skip unnecessary work. For example, you can tell React to reuse a cached calculation or to skip a re-render if the data has not changed since the previous render.
+
+**Given React Router code, select statements that are true.**
+
+**What does the package.json file do?**
+A "package.json" file acts as a manifest for a Node.js project, storing crucial metadata like the project's name, version, description, dependencies (other packages required to run the project), and scripts, allowing the npm package manager to effectively identify and manage the project's components and dependencies across different environments.
+
+**What does the fetch function do?**
+The Fetch API provides a JavaScript interface for making HTTP requests and processing the responses. Fetch is the modern replacement for XMLHttpRequest.
+
+**What does node.js do?**
+Node.js is an open-source, cross-platform runtime environment that allows developers to execute JavaScript code on the server-side, enabling them to create web applications and server-side tools using the same language they use for client-side scripting, essentially letting you write JavaScript code that runs outside of a web browser, giving access to system functionalities like file system operations and network requests. 
+
+**What does pm2 do?**
+PM2, or Process Manager 2, is an open-source process manager that helps you manage Node.js applications.
+
+**What does Vite do?**
+Vite is a JavaScript build tool that helps developers build and develop front-end applications for the web.
