@@ -3,6 +3,8 @@ import {
     caesarCipher,
     enBaconCipher,
     deBaconCipher,
+    enAffineCipher,
+    deAffineCipher,
     atbashCipher,
     vigenèreCipher } from './cipher';
 
@@ -80,4 +82,34 @@ test('debacon cipher transforms further characters', () => {
     expect(deBaconCipher('b', 9, 'babbbbabbb')).toBe('z');
     expect(deBaconCipher('a', 14, 'babbbbabbbaaaaa')).toBe('a');
     expect(deBaconCipher('a', 14, 'aaaaaaaaaababbb')).toBe('z');
+});
+
+test('enaffine cipher transforms characters', () => {
+    // Simple shift
+    expect(enAffineCipher('a', [1, 1])).toBe('b');
+    expect(enAffineCipher('b', [1, 1])).toBe('c');
+    expect(enAffineCipher('c', [1, 1])).toBe('d');
+    // Should return the same character if a is not coprime with the alphabet length
+    expect(enAffineCipher('a', [2, 1])).toBe('a');
+    expect(enAffineCipher('b', [2, 1])).toBe('b');
+    expect(enAffineCipher('c', [2, 1])).toBe('c');
+    // Coprime Encipher
+    expect(enAffineCipher('a', [3, 1])).toBe('b');
+    expect(enAffineCipher('b', [3, 1])).toBe('e');
+    expect(enAffineCipher('c', [3, 1])).toBe('h');
+});
+
+test('deaffine cipher transforms characters', () => {
+    // Simple shift
+    expect(deAffineCipher('b', [1, 1])).toBe('a');
+    expect(deAffineCipher('c', [1, 1])).toBe('b');
+    expect(deAffineCipher('d', [1, 1])).toBe('c');
+    // Should return the same character if a is not coprime with the alphabet length
+    expect(deAffineCipher('a', [2, 1])).toBe('a');
+    expect(deAffineCipher('b', [2, 1])).toBe('b');
+    expect(deAffineCipher('c', [2, 1])).toBe('c');
+    // Coprime Decipher
+    expect(deAffineCipher('b', [3, 1])).toBe('a');
+    expect(deAffineCipher('e', [3, 1])).toBe('b');
+    expect(deAffineCipher('h', [3, 1])).toBe('c');
 });

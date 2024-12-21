@@ -48,11 +48,48 @@ export const deBaconCipher = (c, index, text) => {
     baconIndex = baconIndex >= 19 ? baconIndex+2 : baconIndex >= 8 ? baconIndex+1 : baconIndex;
     //console.log(baconIndex, alphabet[baconIndex]);
     return handleCipher(c, alphabet[baconIndex]);
-}
+};
+
+export const enAffineCipher = (c, numbers) => {
+    let a = numbers[0];
+    let b = numbers[1];
+    if(gcd(a, alphabet.length) !== 1) {
+        return c;
+    }
+    let encipher = alphabet[(a*(alphabet.indexOf(c))+b)%alphabet.length];
+    return handleCipher(c, encipher);
+};
+// the gcd function is used for the Affine Cipher
+function gcd(a, b) {
+    if(b == 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+};
+
+export const deAffineCipher = (c, numbers) => {
+    let a = numbers[0];
+    let b = numbers[1];
+    let inv = modInverse(a, alphabet.length);
+    if(inv == -1) {
+        return c;
+    }
+    let decipher = alphabet[(modInverse(a, alphabet.length)*(alphabet.indexOf(c)-b+alphabet.length))%alphabet.length];
+    return handleCipher(c, decipher);
+};
+
+function modInverse(a, m) {
+    for(let i = 1; i < m; i++) {
+        if((a*i)%m == 1) {
+            return i;
+        }
+    }
+    return -1;
+};
 
 const handleCipher = (c, value) => {
     if (alphabet.indexOf(c) === -1) {
         return c;
     }
     return value;
-}
+};
