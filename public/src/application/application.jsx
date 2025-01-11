@@ -7,6 +7,8 @@ const {
     atbashCipher,
     enBaconCipher,
     deBaconCipher,
+    enAffineCipher,
+    deAffineCipher,
     caesarCipher,
     vigenèreCipher 
 } = Cipher;
@@ -34,9 +36,9 @@ export function Application() {
             case 'Atbash Cipher':
                 setCipher(() => (c, index, key) => atbashCipher(c));
                 break;
-            // case 'Affine Cipher':
-            //     setCipher(() => affineCipher);
-            //     break;
+            case 'Affine Cipher':
+                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deAffineCipher(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num))) : enAffineCipher(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num))));
+                break;
             case 'Bacon Cipher':
                 setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deBaconCipher(c, index, text.toLowerCase()): enBaconCipher(c));
                 break;
@@ -74,7 +76,7 @@ export function Application() {
                     <select className="form-select" style={{ width: '200px' }} onChange={(e) => handleCipherChange(e.target.value, cryptState, plainText)}>
                         <optgroup label="Alphabetical Ciphers">
                             <option>Atbash Cipher</option>
-                            <option disabled>Affine Cipher</option>
+                            <option>Affine Cipher</option>
                             <option>Bacon Cipher</option>
                             <option>Caesar Cipher</option>
                             <option>Vigenère Cipher</option>
@@ -86,7 +88,7 @@ export function Application() {
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>
                 </span>
                 <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..." onChange={(e) => changeCipherText(e)} value={plainText}></textarea>
-                <textarea cols="40" rows="8" disabled placeholder={cipherText}></textarea>
+                <textarea cols="40" rows="8" disabled style={{ color: 'gray' }} value={cipherText}></textarea>
                 <span className="container-fluid d-flex flex-wrap align-items-center" style={{ padding: '10px 0px' }}>
                     <button className="btn btn-secondary" disabled={cryptState==CryptState.Decrypted} onClick={() => changeCryptState(CryptState.Decrypted)}>Decrypt</button>
                     <button className="btn btn-secondary" disabled={cryptState==CryptState.Encrypted} onClick={() => changeCryptState(CryptState.Encrypted)}>Encrypt</button>

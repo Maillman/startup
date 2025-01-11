@@ -49,11 +49,12 @@ export const deBaconCipher = (c, index, text) => {
     //console.log(baconIndex, alphabet[baconIndex]);
     return handleCipher(c, alphabet[baconIndex]);
 };
-
+//The 'numbers' array (tuple) is used to store the values of a and b for the Affine Cipher
 export const enAffineCipher = (c, numbers) => {
     let a = numbers[0];
     let b = numbers[1];
     if(gcd(a, alphabet.length) !== 1) {
+        // a is not coprime with b, simply return the character.
         return c;
     }
     let encipher = alphabet[(a*(alphabet.indexOf(c))+b)%alphabet.length];
@@ -72,6 +73,7 @@ export const deAffineCipher = (c, numbers) => {
     let b = numbers[1];
     let inv = modInverse(a, alphabet.length);
     if(inv == -1) {
+        // a is not coprime with b, simply return the character.
         return c;
     }
     let decipher = alphabet[(modInverse(a, alphabet.length)*(alphabet.indexOf(c)-b+alphabet.length))%alphabet.length];
