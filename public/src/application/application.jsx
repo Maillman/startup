@@ -10,7 +10,9 @@ const {
     enAffineCipher,
     deAffineCipher,
     caesarCipher,
-    vigenèreCipher 
+    vigenèreCipher,
+    enA1Z26Cipher,
+    deA1Z26Cipher,
 } = Cipher;
 export function Application() {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
@@ -50,9 +52,9 @@ export function Application() {
                     (char) => Cipher.alphabet[(-1*Cipher.alphabet.indexOf(char))+Cipher.alphabet.length]
                 ).join(''))); // Assuming key is the keyword for Vigenère Cipher
                 break;
-            // case 'A1Z26 Cipher':
-            //     setCipher(() => a1z26Cipher);
-            //     break;
+            case 'A1Z26 Cipher':
+                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deA1Z26Cipher(c, key) : enA1Z26Cipher(c, index, text, key));
+                break;
             default:
                 setCipher(() => (c, index, key) => vigenèreCipher(c, index, key));;
                 break;
@@ -82,7 +84,7 @@ export function Application() {
                             <option>Vigenère Cipher</option>
                         </optgroup>
                         <optgroup label="Numerical Ciphers">
-                            <option disabled>A1Z26 Cipher</option>
+                            <option>A1Z26 Cipher</option>
                         </optgroup>
                     </select>
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>

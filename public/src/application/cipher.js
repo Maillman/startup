@@ -3,7 +3,7 @@ export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 /**
  * @callback CipherFunction
  * @param {string} c - The character to be transformed.
- * @param {number} index - The index of the character in the input text.
+ * @param {array[number]} index - The index of the character in the input text. The first element is the current index, the second element is the number of non-alphabetic characters removed.
  * @returns {string} - The transformed character.
  */
 
@@ -20,7 +20,8 @@ export const caesarCipher = (c, shift) => {
     return handleCipher(c, alphabet[(alphabet.indexOf(c)+shift+alphabet.length)%alphabet.length]);
 };
 export const vigenèreCipher = (c, index, key) => {
-    let keyIndex = index % key.length;
+    // console.log("vigenere", c, index, key);
+    let keyIndex = (index[0]-index[1]) % key.length;
     let shift = findShift(key[keyIndex]);
     return caesarCipher(c, 0-shift);
 };
@@ -36,10 +37,10 @@ export const enBaconCipher = (c) => {
     return handleCipher(c, (baconIndex>>>0).toString(2).padStart(5,"0").replaceAll("0", "a").replaceAll("1", "b"));
 };
 export const deBaconCipher = (c, index, text) => {
-    //console.log(c, index, text);
+    // console.log("bacon", c, index, text);
     let baconBinary = text.replace(/[^ab]/g,"").replaceAll("a", "0").replaceAll("b", "1");
     //console.log(text.replace(/[^abAB]/g,""), baconBinary);
-    let uindex = index+1 
+    let uindex = index[0]-index[1]+1 
     if(uindex % 5 !== 0) {
         return '';
     }
@@ -78,6 +79,27 @@ export const deAffineCipher = (c, numbers) => {
     }
     let decipher = alphabet[(modInverse(a, alphabet.length)*(alphabet.indexOf(c)-b+alphabet.length))%alphabet.length];
     return handleCipher(c, decipher);
+};
+
+export const enA1Z26Cipher = (c, index, text, delimiter) => {
+    let next_index = index[0]+1;
+    // console.log("A1Z26", c, index, text[next_index], next_index);
+    let encipher = handleCipher(c, (alphabet.indexOf(c)+1).toString());
+    if(next_index < text.length && alphabet.indexOf(c) !== -1 && alphabet.indexOf(text[next_index].toLowerCase()) !== -1) {
+        encipher += delimiter;
+    }
+    return encipher;
+};
+
+export const deA1Z26Cipher = (c, delimiter) => {
+    if(c==delimiter) {
+        return '';
+    }
+    let findCharacter = alphabet[parseInt(c)-1];
+    if (alphabet.indexOf(findCharacter) === -1) {
+        return c;
+    }
+    return findCharacter;
 };
 
 function modInverse(a, m) {

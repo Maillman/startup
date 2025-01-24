@@ -8,12 +8,12 @@ import {alphabet} from './cipher.js';
  */
 const applyCipher = (text, cipherFunction, key) => {
     let remove = 0;
-    return text.split('').map((char, index) => {
+    return text.split(/(\d+|(?=.))/).filter(Boolean).map((char, index) => {
         if (alphabet.indexOf(char.toLowerCase()) === -1) {
             remove += 1;
         }
         const isUpperCase = char === char.toUpperCase();
-        const transformedChar = cipherFunction(char.toLowerCase(), index-remove, key)
+        const transformedChar = cipherFunction(char.toLowerCase(), [index, remove], key)
         return isUpperCase ? transformedChar.toUpperCase() : transformedChar;
     }).join('');
 };

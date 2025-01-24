@@ -1,6 +1,6 @@
 # Notes
 ## Startup TODO:
-- [ ] Add Affine and A1Z26 Ciphers.
+- [X] Add Affine and A1Z26 Ciphers.
 - [ ] Finish Thread side CSS animation.
 - [X] Make a new component for users creating a new thread.
 - [ ] Color?
