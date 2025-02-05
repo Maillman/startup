@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import fetchRetry from 'fetch-retry';
 import { Home } from './home/home';
 import { Application } from './application/application';
@@ -21,7 +21,6 @@ const {
     vigenèreCipher 
 } = Cipher;
 export default function App() {
-    const [initiateThread, setInitiateThread] = useState(null);
     const [challenge, setChallenge] = useState(null);
     const [logout, setLogout] = useState(false);
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
@@ -32,6 +31,8 @@ export default function App() {
         body: 'Body Text',
         author: 'Author'
     });
+
+    let navigate = useNavigate();
 
     //Get the challenge from the backend
     useEffect(() => {
@@ -63,7 +64,7 @@ export default function App() {
     }
 
     return (
-        <BrowserRouter>
+        <>
         <header>
             <nav className="navbar navbar-expand-sm bg-light" style={{paddingInline: "20px"}}>
                 <ul className="navbar-nav me-auto">
@@ -79,7 +80,7 @@ export default function App() {
                 <hr/>
             </nav>
         </header>
-        {(initiateThread) ? <Navigate to={`/thread/${initiateThread}`}/> : null}
+        {/*{(initiateThread) ? <Navigate to={`/thread/${initiateThread}`}/> : null}-->*/}
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element=
@@ -95,8 +96,8 @@ export default function App() {
                     logout={logout}
                 />} />
             <Route path="/application" element={<Application />} />
-            <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {setInitiateThread(id)}, 1000)} setSelectedDiscussion={(discussion) => setSelectedDiscussion(discussion)}/>} />
-            <Route path="/thread/:threadId" element={<Thread setInitateThread={() => setInitiateThread(null)} challenge={challenge} selectedDiscussion={selectedDiscussion} userName={userName}/>} />
+            <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {navigate(`/thread/${id}`)}, 1000)} setSelectedDiscussion={(discussion) => setSelectedDiscussion(discussion)}/>} />
+            <Route path="/thread/:threadId" element={<Thread challenge={challenge} selectedDiscussion={selectedDiscussion} userName={userName}/>} />
             <Route path="*" element={<Home />} />
         </Routes>
         <footer className="navbar bg-dark">
@@ -108,7 +109,7 @@ export default function App() {
                 <a href="https://github.com/Maillman/startup">GitHub</a><br/>
             </div>
         </footer>
-        </BrowserRouter>
+        </>
     );
 }
 

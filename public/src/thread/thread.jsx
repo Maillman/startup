@@ -3,15 +3,11 @@ import { useParams } from 'react-router-dom';
 import { ReplNotifier } from './replyNotifier.js';
 import { MessageDialog } from '../login/messageDialog.jsx';
 
-export function Thread({ setInitateThread, selectedDiscussion, userName }) {
+export function Thread({ selectedDiscussion, userName }) {
     const { threadId } = useParams();
     const [discussion, setDiscussion] = React.useState(selectedDiscussion);
     const [replyText, setReplyText] = React.useState('');
     const [displayError, setDisplayError] = React.useState(null);
-
-    useEffect(() => {
-        setInitateThread();
-    }, [setInitateThread]);
     
     //Get discussion by id.
     useEffect(() => {

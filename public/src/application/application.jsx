@@ -54,6 +54,7 @@ export function Application() {
                 break;
             case 'A1Z26 Cipher':
                 setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deA1Z26Cipher(c, key) : enA1Z26Cipher(c, index, text, key));
+                setKey('');
                 break;
             default:
                 setCipher(() => (c, index, key) => vigenèreCipher(c, index, key));;
