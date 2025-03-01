@@ -14,6 +14,15 @@
 - [x] Fix bug where the cookie is stored and website still asks for a login
 - [ ] Should I be more explicit with the preset key of any key automatically switched?
 - [ ] Show discussions in reverse order, newest first.
+- [x] Create a copy text button on the application page.
+- [ ] Split the current tests into more bite sized tests using describe blocks.
+
+The current list of cipher functions don't scale well. I should **refactor** the cipher functions to have several things:
+
+- [ ] The name of the cipher.
+- [ ] The encipher/decipher state.
+- [ ] The actual cipher function.
+- [ ] Group related cipher functions together.
 
 ## TODO Notes
 

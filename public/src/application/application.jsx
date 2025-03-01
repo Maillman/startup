@@ -14,7 +14,7 @@ const {
     enA1Z26Cipher,
     deA1Z26Cipher,
 } = Cipher;
-export function Application() {
+export function Application({ setToolTipOpen }) {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('a');
@@ -72,6 +72,11 @@ export function Application() {
         handleCipherChange(getCipher.value, state, plainText);
     }
 
+    function copyToClipboard() {
+        navigator.clipboard.writeText(cipherText);
+        setToolTipOpen(true);
+    }
+
     return (
         <main>
             <form>
@@ -91,7 +96,10 @@ export function Application() {
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>
                 </span>
                 <textarea cols="40" rows="8" placeholder="Text to encrypt or decrypt..." onChange={(e) => changeCipherText(e)} value={plainText}></textarea>
-                <textarea cols="40" rows="8" disabled style={{ color: 'gray' }} value={cipherText}></textarea>
+                <span className="d-flex flex-row-reverse align-items-end" style={{ padding: '0px' }}>
+                    <textarea className="col" cols="40" rows="8" disabled style={{ color: 'gray' }} value={cipherText}></textarea>
+                    <button type="button" className="btn btn-dark copy-text-button" disabled={!plainText} style={{ position: 'absolute', borderRadius: '3px', padding: '2px 7px' }} onClick={() => copyToClipboard()} onMouseLeave={() => setTimeout(() => {setToolTipOpen(false)}, 250)}>&#10697;</button>
+                </span>
                 <span className="container-fluid d-flex flex-wrap align-items-center" style={{ padding: '10px 0px' }}>
                     <button className="btn btn-secondary" disabled={cryptState==CryptState.Decrypted} onClick={() => changeCryptState(CryptState.Decrypted)}>Decrypt</button>
                     <button className="btn btn-secondary" disabled={cryptState==CryptState.Encrypted} onClick={() => changeCryptState(CryptState.Encrypted)}>Encrypt</button>

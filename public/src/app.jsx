@@ -1,5 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip } from "react-tooltip";
 import { useState, useEffect } from 'react';
 import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import fetchRetry from 'fetch-retry';
@@ -26,6 +28,7 @@ export default function App() {
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = useState(currentAuthState);
+    const [toolTipOpen, setToolTipOpen] = useState(false);
     const [selectedDiscussion, setSelectedDiscussion] = useState({
         title: 'Discussion Title',
         body: 'Body Text',
@@ -81,6 +84,7 @@ export default function App() {
             </nav>
         </header>
         {/*{(initiateThread) ? <Navigate to={`/thread/${initiateThread}`}/> : null}-->*/}
+        <Tooltip anchorSelect=".copy-text-button" place="top" isOpen={toolTipOpen}>Copied to clipboard</Tooltip>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element=
@@ -95,7 +99,7 @@ export default function App() {
                     }}
                     logout={logout}
                 />} />
-            <Route path="/application" element={<Application />} />
+            <Route path="/application" element={<Application setToolTipOpen={(open) => {setToolTipOpen(open)}}/>} />
             <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {navigate(`/thread/${id}`)}, 1000)} setSelectedDiscussion={(discussion) => setSelectedDiscussion(discussion)}/>} />
             <Route path="/thread/:threadId" element={<Thread challenge={challenge} selectedDiscussion={selectedDiscussion} userName={userName}/>} />
             <Route path="*" element={<Home />} />
