@@ -1,5 +1,9 @@
 export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 /**
+ * A Cipher function interface for any cipher function to implement.
+ * Any cipher function must have a name, an encryptFunction, and a
+ * decryptFunction. Note the `static` keywords that must be applied
+ * to all the fields in the interface that must be implemented.
  * @interface CipherFunction
  */
 export class CipherFunction {
@@ -7,7 +11,7 @@ export class CipherFunction {
      * the name of the cipher function
      * @type {string}
      */
-    name;
+    static name;
     /**
      * The function in it's encryption state.
      * @param {string} c - The character to be transformed.
@@ -16,28 +20,28 @@ export class CipherFunction {
      * @param {any} key - The key to use for the cipher function, if any.
      * @returns {string} - The transformed character.
      */
-    encryptFunction(c, index, key) {}
+    static encryptFunction(c, index, key) {}
     /**
- * The function in it's decryption state.
- * @param {string} c - The character to be transformed.
- * @param {array[number]} index - The index of the character in the input text. The first element is the current index,
- * the second element is the number of non-alphabetic characters removed.
- * @param {any} key - The key to use for the cipher function, if any.
- * @returns {string} - The transformed character.
- */
-    decryptFunction(c, index, key) {}
+     * The function in it's decryption state.
+     * @param {string} c - The character to be transformed.
+     * @param {array[number]} index - The index of the character in the input text. The first element is the current index,
+     * the second element is the number of non-alphabetic characters removed.
+     * @param {any} key - The key to use for the cipher function, if any.
+     * @returns {string} - The transformed character.
+     */
+    static decryptFunction(c, index, key) {}
 }
 
 /**
  * @implements CipherFunction
  */
 export class ExampleCipher {
-    name = "Example Cipher";
-    encryptFunction(c) {
+    static name = "Example Cipher";
+    static encryptFunction(c) {
         // Your transformation logic here
         return c.toUpperCase(); // Example transformation
     }
-    decryptFunction(c) {
+    static decryptFunction(c) {
         // Your transformation logic here
         return c.toLowerCase(); // Example transformation
     }
