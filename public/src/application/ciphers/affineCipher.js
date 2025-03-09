@@ -1,29 +1,47 @@
-import { CipherFunction } from "./cipher";
+import { CipherFunction, alphabet, handleCipher } from "./iCipher";
 
 /**
  * @implements {CipherFunction}
  */
 export class AffineCipher {
     static name = "Affine Cipher";
+
     static encryptFunction(c, numbers) {
         let a = numbers[0];
         let b = numbers[1];
-        if(gcd(a, alphabet.length) !== 1) {
+        if(this.gcd(a, alphabet.length) !== 1) {
             // a is not coprime with b, simply return the character.
             return c;
         }
         let encipher = alphabet[(a*(alphabet.indexOf(c))+b)%alphabet.length];
         return handleCipher(c, encipher);
     };
+
+    static gcd(a, b) {
+        if(b == 0) {
+            return a;
+        }
+        return this.gcd(b, a % b);
+    };
+
     static decryptFunction(c, numbers) {
         let a = numbers[0];
         let b = numbers[1];
-        let inv = modInverse(a, alphabet.length);
+        let inv = this.modInverse(a, alphabet.length);
         if(inv == -1) {
             // a is not coprime with b, simply return the character.
             return c;
         }
-        let decipher = alphabet[(modInverse(a, alphabet.length)*(alphabet.indexOf(c)-b+alphabet.length))%alphabet.length];
+        let decipher = alphabet[(inv*(alphabet.indexOf(c)-b+alphabet.length))%alphabet.length];
         return handleCipher(c, decipher);
+    };
+
+    static modInverse(a, m) {
+        for(let i = 1; i < m; i++) {
+            if((a*i)%m == 1) {
+                return i;
+            }
+        }
+        return -1;
     };
 }
