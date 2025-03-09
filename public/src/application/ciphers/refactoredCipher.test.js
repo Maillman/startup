@@ -3,6 +3,7 @@ import { AffineCipher } from "./affineCipher";
 import { CaesarCipher } from "./caesarCipher";
 import { AtbashCipher } from "./atbashCipher";
 import { BaconCipher } from "./baconCipher";
+import { VigenèreCipher } from "./vigenèreCipher";
 
 test('transforms character to uppercase', () => {
     expect(ExampleCipher.encryptFunction('a')).toBe('A');
@@ -111,4 +112,13 @@ test('bacon cipher decryption transforms further characters', () => {
     expect(BaconCipher.decryptFunction('b', [9, 0], 'babbbbabbb')).toBe('z');
     expect(BaconCipher.decryptFunction('a', [14, 0], 'babbbbabbbaaaaa')).toBe('a');
     expect(BaconCipher.decryptFunction('a', [14, 0], 'aaaaaaaaaababbb')).toBe('z');
+});
+
+test('vigenère cipher shifts characters', () => {
+    expect(VigenèreCipher.encryptFunction('a', [0, 0], 'a')).toBe('a');
+    expect(VigenèreCipher.encryptFunction('a', [1, 0], 'a')).toBe('a');
+    expect(VigenèreCipher.encryptFunction('c', [2, 0], 'key')).toBe('e');
+    expect(VigenèreCipher.decryptFunction('z', [0, 0], 'b')).toBe('y');
+    expect(VigenèreCipher.decryptFunction('z', [1, 0], 'ba')).toBe('z');
+    expect(VigenèreCipher.decryptFunction('e', [4, 0], 'abcdefghi')).toBe('a');
 });
