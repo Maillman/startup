@@ -1,4 +1,3 @@
-export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 /**
  * A Cipher function interface for any cipher function to implement.
  * Any cipher function must have a name, an encryptFunction, and a
@@ -7,7 +6,7 @@ export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
  * helper methods to any cipher function must also be `static`.
  * @interface CipherFunction
  */
-export class CipherFunction {
+export class iCipherFunction {
     /**
      * the name of the cipher function
      * @type {string}
@@ -36,7 +35,23 @@ export class CipherFunction {
 }
 
 /**
- * @implements CipherFunction
+ * A base cipher function class that implements the iCipherFunction interface.
+ * Contains the `alphabet` string and the `handleCipher` method.
+ * @implements {iCipherFunction}
+ */
+export class CipherFunction {
+    static alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    
+    static handleCipher(c, value) {
+        if (this.alphabet.indexOf(c) === -1) {
+            return c;
+        }
+        return value;
+    };
+}
+
+/**
+ * @implements {iCipherFunction}
  */
 export class ExampleCipher {
     static name = "Example Cipher";
@@ -51,10 +66,3 @@ export class ExampleCipher {
         return c.toLowerCase(); // Example transformation
     }
 }
-
-export const handleCipher = (c, value) => {
-    if (alphabet.indexOf(c) === -1) {
-        return c;
-    }
-    return value;
-};

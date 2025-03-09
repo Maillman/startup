@@ -1,9 +1,10 @@
-import { CipherFunction, alphabet, handleCipher } from "./iCipher";
+import { iCipherFunction, CipherFunction } from "./iCipher";
 
 /**
- * @implements {CipherFunction}
+ * @extends {CipherFunction}
+ * @implements {iCipherFunction}
  */
-export class CaesarCipher {
+export class CaesarCipher extends CipherFunction {
     static name = "Caesar Cipher";
 
     static encryptFunction(c, shift) {
@@ -16,6 +17,6 @@ export class CaesarCipher {
     
     static caesarCipher(c, shift) {
         shift = shift ? shift : 0;
-        return handleCipher(c, alphabet[(alphabet.indexOf(c)+shift+alphabet.length)%alphabet.length]);
+        return this.handleCipher(c, this.alphabet[(this.alphabet.indexOf(c)+shift+this.alphabet.length)%this.alphabet.length]);
     };
 }
