@@ -2,6 +2,7 @@ import { ExampleCipher } from "./iCipher";
 import { AffineCipher } from "./affineCipher";
 import { CaesarCipher } from "./caesarCipher";
 import { AtbashCipher } from "./atbashCipher";
+import { BaconCipher } from "./baconCipher";
 
 test('transforms character to uppercase', () => {
     expect(ExampleCipher.encryptFunction('a')).toBe('A');
@@ -72,4 +73,42 @@ test('atbash cipher transforms characters', () => {
     expect(AtbashCipher.encryptFunction('b')).toBe('y');
     expect(AtbashCipher.decryptFunction('c')).toBe('x');
     expect(AtbashCipher.decryptFunction('z')).toBe('a');
+});
+
+test('bacon cipher encryption transforms characters', () => {
+    expect(BaconCipher.encryptFunction('a')).toBe('aaaaa');
+    expect(BaconCipher.encryptFunction('b')).toBe('aaaab');
+    expect(BaconCipher.encryptFunction('c')).toBe('aaaba');
+    expect(BaconCipher.encryptFunction('i')).toBe('abaaa');
+    expect(BaconCipher.encryptFunction('j')).toBe('abaaa');
+    expect(BaconCipher.encryptFunction('u')).toBe('baabb');
+    expect(BaconCipher.encryptFunction('v')).toBe('baabb');
+    expect(BaconCipher.encryptFunction('z')).toBe('babbb');
+});
+
+test('bacon cipher decryption transforms characters', () => {
+    expect(BaconCipher.decryptFunction('a', [4, 0], 'aaaaa')).toBe('a');
+    expect(BaconCipher.decryptFunction('b', [4, 0], 'aaaab')).toBe('b');
+    expect(BaconCipher.decryptFunction('a', [4, 0], 'aaaba')).toBe('c');
+    expect(BaconCipher.decryptFunction('a', [4, 0], 'abaaa')).toBe('j');
+    expect(BaconCipher.decryptFunction('b', [4, 0], 'abaab')).toBe('k');
+    expect(BaconCipher.decryptFunction('b', [4, 0], 'baabb')).toBe('v');
+    expect(BaconCipher.decryptFunction('a', [4, 0], 'babaa')).toBe('w');
+    expect(BaconCipher.decryptFunction('b', [4, 0], 'babbb')).toBe('z');
+});
+
+test('bacon cipher decryption handles invalid characters', () => {
+    expect(BaconCipher.decryptFunction('a', [0, 0], 'aaaaa')).toBe('');
+    expect(BaconCipher.decryptFunction('a', [1, 0], 'aabaa')).toBe('');
+    expect(BaconCipher.decryptFunction('a', [2, 0], 'babba')).toBe('');
+    expect(BaconCipher.decryptFunction('b', [5, 0], 'aabbb')).toBe('');
+});
+
+test('bacon cipher decryption transforms further characters', () => {
+    expect(BaconCipher.decryptFunction('a', [9, 0], 'aabbbaaaaa')).toBe('a');
+    expect(BaconCipher.decryptFunction('b', [9, 0], 'aaaaaabaaa')).toBe('j');
+    expect(BaconCipher.decryptFunction('b', [9, 0], 'aaaaabaabb')).toBe('v');
+    expect(BaconCipher.decryptFunction('b', [9, 0], 'babbbbabbb')).toBe('z');
+    expect(BaconCipher.decryptFunction('a', [14, 0], 'babbbbabbbaaaaa')).toBe('a');
+    expect(BaconCipher.decryptFunction('a', [14, 0], 'aaaaaaaaaababbb')).toBe('z');
 });
