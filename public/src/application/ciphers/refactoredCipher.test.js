@@ -4,6 +4,7 @@ import { CaesarCipher } from "./caesarCipher";
 import { AtbashCipher } from "./atbashCipher";
 import { BaconCipher } from "./baconCipher";
 import { VigenèreCipher } from "./vigenèreCipher";
+import { A1Z26Cipher } from "./A1Z26Cipher";
 
 test('transforms character to uppercase', () => {
     expect(ExampleCipher.encryptFunction('a')).toBe('A');
@@ -121,4 +122,27 @@ test('vigenère cipher shifts characters', () => {
     expect(VigenèreCipher.decryptFunction('z', [0, 0], 'b')).toBe('y');
     expect(VigenèreCipher.decryptFunction('z', [1, 0], 'ba')).toBe('z');
     expect(VigenèreCipher.decryptFunction('e', [4, 0], 'abcdefghi')).toBe('a');
+});
+
+test('A1Z26 cipher encryption transforms characters', () => {
+    expect(A1Z26Cipher.encryptFunction('a', [0, 0], "a", "-")).toBe('1');
+    expect(A1Z26Cipher.encryptFunction('b', [0, 0], "b", "-")).toBe('2');
+    expect(A1Z26Cipher.encryptFunction('c', [0, 0], "c", "-")).toBe('3');
+    expect(A1Z26Cipher.encryptFunction('z', [0, 0], "z", "-")).toBe('26');
+});
+
+test('A1Z26 cipher encryption transforms characters with delimiter', () => {
+    expect(A1Z26Cipher.encryptFunction('a', [0, 0], "apple", ".")).toBe('1.');
+    expect(A1Z26Cipher.encryptFunction('b', [0, 0], "bee", ".")).toBe('2.');
+    expect(A1Z26Cipher.encryptFunction('c', [0, 0], "cat", ".")).toBe('3.');
+    expect(A1Z26Cipher.encryptFunction('z', [0, 0], "zebra", ".")).toBe('26.');
+});
+
+test('A1Z26 cipher decryption transforms characters', () => {
+    expect(A1Z26Cipher.decryptFunction('1', "-")).toBe('a');
+    expect(A1Z26Cipher.decryptFunction('2', "-")).toBe('b');
+    expect(A1Z26Cipher.decryptFunction('3', "-")).toBe('c');
+    expect(A1Z26Cipher.decryptFunction('26', "-")).toBe('z');
+    expect(A1Z26Cipher.decryptFunction('-', "-")).toBe('');
+    expect(A1Z26Cipher.decryptFunction('.', "-")).toBe('.');
 });
