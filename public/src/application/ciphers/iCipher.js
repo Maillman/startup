@@ -3,7 +3,8 @@ export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
  * A Cipher function interface for any cipher function to implement.
  * Any cipher function must have a name, an encryptFunction, and a
  * decryptFunction. Note the `static` keywords that must be applied
- * to all the fields in the interface that must be implemented.
+ * to all the fields in the interface that must be implemented. Any
+ * helper methods to any cipher function must also be `static`.
  * @interface CipherFunction
  */
 export class CipherFunction {
@@ -12,6 +13,7 @@ export class CipherFunction {
      * @type {string}
      */
     static name;
+
     /**
      * The function in it's encryption state.
      * @param {string} c - The character to be transformed.
@@ -21,6 +23,7 @@ export class CipherFunction {
      * @returns {string} - The transformed character.
      */
     static encryptFunction(c, index, key) {}
+
     /**
      * The function in it's decryption state.
      * @param {string} c - The character to be transformed.
@@ -37,12 +40,21 @@ export class CipherFunction {
  */
 export class ExampleCipher {
     static name = "Example Cipher";
+
     static encryptFunction(c) {
         // Your transformation logic here
         return c.toUpperCase(); // Example transformation
     }
+
     static decryptFunction(c) {
         // Your transformation logic here
         return c.toLowerCase(); // Example transformation
     }
 }
+
+export const handleCipher = (c, value) => {
+    if (alphabet.indexOf(c) === -1) {
+        return c;
+    }
+    return value;
+};
