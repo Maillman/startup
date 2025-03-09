@@ -1,4 +1,4 @@
-import { iCipherFunction, CipherFunction } from "./iCipher";
+import { iCipherFunction, CipherFunction } from "../core/iCipher";
 
 /**
  * @extends {CipherFunction}

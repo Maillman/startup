@@ -1,10 +1,10 @@
-import { ExampleCipher } from "./iCipher";
-import { AffineCipher } from "./affineCipher";
-import { CaesarCipher } from "./caesarCipher";
-import { AtbashCipher } from "./atbashCipher";
-import { BaconCipher } from "./baconCipher";
-import { VigenèreCipher } from "./vigenèreCipher";
-import { A1Z26Cipher } from "./A1Z26Cipher";
+import { ExampleCipher } from "../core/iCipher";
+import { AffineCipher } from "../ciphers/affineCipher";
+import { CaesarCipher } from "../ciphers/caesarCipher";
+import { AtbashCipher } from "../ciphers/atbashCipher";
+import { BaconCipher } from "../ciphers/baconCipher";
+import { VigenèreCipher } from "../ciphers/vigenèreCipher";
+import { A1Z26Cipher } from "../ciphers/A1Z26Cipher";
 
 test('transforms character to uppercase', () => {
     expect(ExampleCipher.encryptFunction('a')).toBe('A');
