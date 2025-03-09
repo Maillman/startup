@@ -1,20 +1,21 @@
-import { CipherFunction, alphabet, handleCipher } from "./iCipher";
+import { iCipherFunction, CipherFunction } from "./iCipher";
 
 /**
- * @implements {CipherFunction}
+ * @extends {CipherFunction}
+ * @implements {iCipherFunction}
  */
-export class AffineCipher {
+export class AffineCipher extends CipherFunction {
     static name = "Affine Cipher";
 
     static encryptFunction(c, numbers) {
         let a = numbers[0];
         let b = numbers[1];
-        if(this.gcd(a, alphabet.length) !== 1) {
+        if(this.gcd(a, this.alphabet.length) !== 1) {
             // a is not coprime with b, simply return the character.
             return c;
         }
-        let encipher = alphabet[(a*(alphabet.indexOf(c))+b)%alphabet.length];
-        return handleCipher(c, encipher);
+        let encipher = this.alphabet[(a*(this.alphabet.indexOf(c))+b)%this.alphabet.length];
+        return this.handleCipher(c, encipher);
     };
 
     static gcd(a, b) {
@@ -27,13 +28,13 @@ export class AffineCipher {
     static decryptFunction(c, numbers) {
         let a = numbers[0];
         let b = numbers[1];
-        let inv = this.modInverse(a, alphabet.length);
+        let inv = this.modInverse(a, this.alphabet.length);
         if(inv == -1) {
             // a is not coprime with b, simply return the character.
             return c;
         }
-        let decipher = alphabet[(inv*(alphabet.indexOf(c)-b+alphabet.length))%alphabet.length];
-        return handleCipher(c, decipher);
+        let decipher = this.alphabet[(inv*(this.alphabet.indexOf(c)-b+this.alphabet.length))%this.alphabet.length];
+        return this.handleCipher(c, decipher);
     };
 
     static modInverse(a, m) {

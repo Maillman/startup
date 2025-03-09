@@ -1,6 +1,7 @@
 import { ExampleCipher } from "./iCipher";
 import { AffineCipher } from "./affineCipher";
 import { CaesarCipher } from "./caesarCipher";
+import { AtbashCipher } from "./atbashCipher";
 
 test('transforms character to uppercase', () => {
     expect(ExampleCipher.encryptFunction('a')).toBe('A');
@@ -50,7 +51,7 @@ test('handles non-alphabetic characters', () => {
     expect(ExampleCipher.decryptFunction('@')).toBe('@');
     expect(CaesarCipher.encryptFunction('!', 1)).toBe('!');
     expect(CaesarCipher.decryptFunction('/', 5)).toBe('/');
-    //expect(atbashCipher(' ')).toBe(' ');
+    expect(AtbashCipher.encryptFunction(' ')).toBe(' ');
 });
 
 test('caesar cipher shifts characters', () => {
@@ -64,4 +65,11 @@ test('caesar cipher shifts characters', () => {
     expect(CaesarCipher.decryptFunction('b', 2)).toBe('d');
     expect(CaesarCipher.decryptFunction('c', 3)).toBe('f');
     expect(CaesarCipher.decryptFunction('z', 1)).toBe('a');
+});
+
+test('atbash cipher transforms characters', () => {
+    expect(AtbashCipher.encryptFunction('a')).toBe('z');
+    expect(AtbashCipher.encryptFunction('b')).toBe('y');
+    expect(AtbashCipher.decryptFunction('c')).toBe('x');
+    expect(AtbashCipher.decryptFunction('z')).toBe('a');
 });
