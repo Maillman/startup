@@ -14,6 +14,11 @@ export class iCipherFunction {
     static name;
 
     /**
+     * the applied function of the cipher function. Starts in the default state.
+     */
+    static appliedFunction = (c, index, key) => {}
+
+    /**
      * The function in it's encryption state.
      * @param {string} c - The character to be transformed.
      * @param {array[number]} index - The index of the character in the input text. The first element is the current index,
@@ -32,6 +37,18 @@ export class iCipherFunction {
      * @returns {string} - The transformed character.
      */
     static decryptFunction(c, index, key) {}
+
+    /**
+     * Gets the alphabet used for encryption/decryption.
+     * @returns {string} - The alphabet.
+     */
+    static getAlphabet() {}
+    
+    /**
+     * Sets the applied function to either of its states (decryption/encryption)
+     * @returns {function} - the cipher function used.
+     */
+    static applyFunction = () => {}
 }
 
 /**
@@ -48,12 +65,17 @@ export class CipherFunction {
         }
         return value;
     };
+
+    static getAlphabet() {
+        return this.alphabet;
+    }
 }
 
 /**
+ * @extends {CipherFunction}
  * @implements {iCipherFunction}
  */
-export class ExampleCipher {
+export class ExampleCipher extends CipherFunction {
     static name = "Example Cipher";
 
     static encryptFunction(c) {
