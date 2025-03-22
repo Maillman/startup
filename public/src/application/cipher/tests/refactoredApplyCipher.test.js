@@ -1,4 +1,5 @@
-import { CryptState } from "../../cryptState";
+import { CryptState } from "../core/cryptState";
+import { AffineCipher } from "../ciphers/affineCipher";
 import { BaconCipher } from "../ciphers/baconCipher";
 import { CaesarCipher } from "../ciphers/caesarCipher";
 import applyCipher from "../core/applyCipher";
@@ -14,9 +15,9 @@ test("transforms text using caesarCipher with a shift of 3", () => {
   expect(applyCipher("ABC", CaesarCipher)).toBe("DEF");
 });
 
-// test("handles mixed characters using testCipherFunction", () => {
-//   expect(applyCipher("a1!b2@", testCipher)).toBe("A1!B2@");
-// });
+test("handles mixed characters using testCipherFunction", () => {
+  expect(applyCipher("a1!b2@", ExampleCipher)).toBe("A1!B2@");
+});
 
 test("transforms bacon cipher text to plaintext", () => {
   let baconTextTest = [
@@ -33,13 +34,13 @@ test("transforms bacon cipher text to plaintext", () => {
   }
 });
 
-// test('transforms affine cipher text to plaintext', () => {
-//     const numbers = [15, 6];
-//     const enAffineCipherWithNumbers = (c) => enAffineCipher(c, numbers);
-//     const deAffineCipherWithNumbers = (c) => deAffineCipher(c, numbers);
-//     expect(applyCipher('A linear equation is used.', enAffineCipherWithNumbers)).toBe('G pwtogb omugfwit wq uqoz.')
-//     expect(applyCipher('G pwtogb omugfwit wq uqoz.', deAffineCipherWithNumbers)).toBe('A linear equation is used.')
-// });
+test('transforms affine cipher text to plaintext', () => {
+    const numbers = [15, 6];
+    AffineCipher.applyFunction(numbers, CryptState.Encrypted);
+    expect(applyCipher('A linear equation is used.', AffineCipher)).toBe('G pwtogb omugfwit wq uqoz.')
+    AffineCipher.applyFunction(numbers, CryptState.Decrypted);
+    expect(applyCipher('G pwtogb omugfwit wq uqoz.', AffineCipher)).toBe('A linear equation is used.')
+});
 
 // test('transforms A1Z26 cipher text to plaintext', () => {
 //     const delimiter = '-';
