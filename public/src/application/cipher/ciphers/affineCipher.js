@@ -8,10 +8,7 @@ import { iCipherFunction, CipherFunction } from "../core/iCipher";
 export class AffineCipher extends CipherFunction {
   static name = "Affine Cipher";
 
-  static numbers = [0, 0];
-
-  static appliedFunction = (c, index, key) =>
-    this.encryptFunction(c, this.numbers);
+  static appliedFunction = (c, index, key) => this.encryptFunction(c, [0, 0]);
 
   static encryptFunction(c, numbers) {
     //console.log(c, numbers);
@@ -60,7 +57,6 @@ export class AffineCipher extends CipherFunction {
   }
 
   static applyFunction(numbers, cryptState) {
-    this.numbers = numbers;
     this.appliedFunction = (c, index, key) =>
       cryptState.equals(CryptState.Encrypted)
         ? this.encryptFunction(c, numbers)

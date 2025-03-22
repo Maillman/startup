@@ -8,10 +8,7 @@ import { iCipherFunction, CipherFunction } from "../core/iCipher";
 export class CaesarCipher extends CipherFunction {
   static name = "Caesar Cipher";
 
-  static shift = 0;
-
-  static appliedFunction = (c, index, key) =>
-    this.encryptFunction(c, this.shift);
+  static appliedFunction = (c, index, key) => this.encryptFunction(c, 0);
 
   static encryptFunction(c, shift) {
     return this.caesarCipher(c, -shift);
@@ -33,10 +30,9 @@ export class CaesarCipher extends CipherFunction {
   }
 
   static applyFunction = (shift, cryptState) => {
-    this.shift = shift;
     this.appliedFunction = (c, index, key) =>
       cryptState.equals(CryptState.Encrypted)
-        ? this.encryptFunction(c, this.shift)
-        : this.decryptFunction(c, this.shift);
+        ? this.encryptFunction(c, shift)
+        : this.decryptFunction(c, shift);
   };
 }
