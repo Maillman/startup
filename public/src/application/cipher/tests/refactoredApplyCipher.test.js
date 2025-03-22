@@ -4,10 +4,12 @@ import { BaconCipher } from "../ciphers/baconCipher";
 import { CaesarCipher } from "../ciphers/caesarCipher";
 import applyCipher from "../core/applyCipher";
 import { ExampleCipher } from "../core/iCipher";
+import { AtbashCipher } from "../ciphers/atbashCipher";
+import { VigenèreCipher } from "../ciphers/vigenèreCipher";
 
-// test('transforms text to uppercase using testCipherFunction', () => {
-//     expect(applyCipher('input', ExampleCipher)).toBe('INPUT');
-// });
+test('transforms text to uppercase using ExampleCipher', () => {
+    expect(applyCipher('input', ExampleCipher)).toBe('INPUT');
+});
 
 test("transforms text using caesarCipher with a shift of 3", () => {
   const shift = 3;
@@ -15,8 +17,16 @@ test("transforms text using caesarCipher with a shift of 3", () => {
   expect(applyCipher("ABC", CaesarCipher)).toBe("DEF");
 });
 
-test("handles mixed characters using testCipherFunction", () => {
+test("handles mixed characters using ExampleCipher", () => {
   expect(applyCipher("a1!b2@", ExampleCipher)).toBe("A1!B2@");
+});
+
+test("transforms plaintext to atbash cipher text", () => {
+  expect(applyCipher("Letters should be flipped!", AtbashCipher)).toBe("Ovggvih hslfow yv uorkkvw!");
+});
+
+test("transforms plaintext to vigenère cipher text", () => {
+  expect(applyCipher("keykeykeykey", VigenèreCipher, "key")).toBe("aaaaaaaaaaaa");
 });
 
 test("transforms bacon cipher text to plaintext", () => {
