@@ -53,7 +53,7 @@ export class BaconCipher extends CipherFunction {
 
   static applyFunction = (text, cryptState) => {
     this.appliedFunction = (c, index, key) =>
-      cryptState === CryptState.Decrypted
+      cryptState.equals(CryptState.Encrypted)
         ? this.encryptFunction(c)
         : this.decryptFunction(c, index, text.toLowerCase());
   };

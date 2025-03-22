@@ -1,3 +1,5 @@
+import { CryptState } from "./cryptState";
+
 /**
  * A Cipher function interface for any cipher function to implement.
  * Any cipher function must have a name, an encryptFunction, and a
@@ -78,6 +80,9 @@ export class CipherFunction {
 export class ExampleCipher extends CipherFunction {
     static name = "Example Cipher";
 
+    // Default function applied / The applied function
+    static appliedFunction = (c, index, key) => this.encryptFunction(c);
+
     static encryptFunction(c) {
         // Your transformation logic here
         return c.toUpperCase(); // Example transformation
@@ -86,5 +91,10 @@ export class ExampleCipher extends CipherFunction {
     static decryptFunction(c) {
         // Your transformation logic here
         return c.toLowerCase(); // Example transformation
+    }
+
+    // Sets the appliedFunction to a new state
+    static applyFunction(cryptState){
+        this.appliedFunction = (c, index, key) => cryptState.equals(CryptState.Encrypted) ? this.encryptFunction(c) : this.decryptFunction(c);
     }
 }

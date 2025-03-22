@@ -6,4 +6,8 @@ export class CryptState {
     constructor(name) {
         this.name = name;
     }
+
+    equals(other) {
+        return other instanceof CryptState && this.name === other.name;
+    }
 }
