@@ -15,6 +15,7 @@ const applyCipher = (text, CipherFunction, key) => {
         }
         const isUpperCase = char === char.toUpperCase();
         const transformedChar = CipherFunction.appliedFunction(char.toLowerCase(), [index, remove], key)
+        //console.log(transformedChar);
         return isUpperCase ? transformedChar.toUpperCase() : transformedChar;
     }).join('');
 };
