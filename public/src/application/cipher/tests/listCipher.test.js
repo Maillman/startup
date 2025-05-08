@@ -9,7 +9,18 @@ test("assert dictionary has same number of ciphers as list", () => {
   expect(cipherNames.length).toBe(listCipher.getNumberOfCiphers());
 });
 
-test("dictionary should return ciphers correctly", () => {
+test("returns ciphers correctly", () => {
   expect(listCipher.getCipher("Example Cipher")).toBe(ExampleCipher);
   expect(listCipher.getCipher("Invalid Cipher")).toBe(undefined);
+});
+
+test("gets applied cipher correctly", () => {
+  expect(listCipher.getAppliedCipher().name).toBe("Atbash Cipher");
+});
+
+test("sets applied cipher correctly", () => {
+  expect(listCipher.getAppliedCipher().name).toBe("Atbash Cipher");
+  listCipher.setAppliedCipher("Example Cipher");
+  expect(listCipher.getAppliedCipher()).toBe(ExampleCipher);
+  expect(listCipher.getAppliedCipher().name).toBe("Example Cipher");
 });

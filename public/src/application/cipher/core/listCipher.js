@@ -19,6 +19,8 @@ export class ListCipher {
       // Add more ciphers here...
     ];
 
+    this.appliedCipher = AtbashCipher;
+
     this.cipherDictionary = {};
 
     this.listCiphers.forEach((item) => {
@@ -28,6 +30,18 @@ export class ListCipher {
 
   getCipher(nameCipher) {
     return this.cipherDictionary[nameCipher];
+  }
+
+  getAppliedCipher() {
+    return this.appliedCipher;
+  }
+
+  setAppliedCipher(nameCipher) {
+    let selectedCipher = this.cipherDictionary[nameCipher];
+    if (selectedCipher === undefined) {
+      throw new Error("Cipher not found in list, please check your spelling");
+    }
+    this.appliedCipher = selectedCipher;
   }
 
   getAllCiphers() {
