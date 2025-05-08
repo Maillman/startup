@@ -19,10 +19,16 @@
 
 The current list of cipher functions don't scale well. I should **refactor** the cipher functions to have several things:
 
-- [ ] The name of the cipher.
-- [ ] The encipher/decipher state.
-- [ ] The actual cipher function.
+- [x] The name of the cipher.
+- [x] The encipher/decipher state.
+- [x] The actual cipher function.
 - [ ] Group related cipher functions together.
+
+Phases of Refactoring:
+
+- [x] Phase 1 - Construct the refactored ciphers
+- [ ] Phase 2 - Replace the old ciphers with the refactored ciphers in the application
+- [ ] Phase 3 - Remove the old ciphers
 
 ## TODO Notes
 
