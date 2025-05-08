@@ -23,8 +23,14 @@ export class ListCipher {
 
     this.cipherDictionary = {};
 
-    this.listCiphers.forEach((item) => {
-      this.cipherDictionary[item.name] = item;
+    this.categoricalDictionary = {};
+
+    this.listCiphers.forEach((cipher) => {
+      this.cipherDictionary[cipher.name] = cipher;
+      let category = this.categoricalDictionary[cipher.category];
+      if(category===undefined) category = [];
+      category.push(cipher);
+      this.categoricalDictionary[cipher.category] = category;
     });
   }
 
@@ -42,6 +48,10 @@ export class ListCipher {
       throw new Error("Cipher not found in list, please check your spelling");
     }
     this.appliedCipher = selectedCipher;
+  }
+
+  getCiphersForCategory(category) {
+    return this.categoricalDictionary[category];
   }
 
   getAllCiphers() {

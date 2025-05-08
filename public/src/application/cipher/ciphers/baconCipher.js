@@ -8,6 +8,8 @@ import { iCipherFunction, CipherFunction } from "../core/iCipher";
 export class BaconCipher extends CipherFunction {
   static name = "Bacon Cipher";
 
+  static category = "Alphabetical Ciphers";
+
   static appliedFunction = (c, index, key) => this.encryptFunction(c);
 
   static encryptFunction(c) {

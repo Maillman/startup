@@ -8,6 +8,8 @@ import { iCipherFunction, CipherFunction } from "../core/iCipher";
 export class CaesarCipher extends CipherFunction {
   static name = "Caesar Cipher";
 
+  static category = "Alphabetical Ciphers";
+
   static appliedFunction = (c, index, key) => this.encryptFunction(c, 0);
 
   static encryptFunction(c, shift) {
