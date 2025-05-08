@@ -8,6 +8,8 @@ import { iCipherFunction, CipherFunction } from "./iCipher";
 export class TemplateCipher extends CipherFunction {
     static name = "Template Cipher"; //TODO: change name here!
 
+    static category = "Example Ciphers"; //TODO: change category here!
+
     //TODO Change default state as needed! 
     static appliedFunction = (c, index, key) => this.encryptFunction(c);
 

@@ -9,6 +9,8 @@ import { CaesarCipher } from "./caesarCipher";
 export class VigenèreCipher extends CipherFunction {
   static name = "Vigenère Cipher";
 
+  static category = "Alphabetical Ciphers";
+
   static appliedFunction = (c, index, key) =>
     this.encryptFunction(c, index, key);
 

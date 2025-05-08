@@ -24,3 +24,13 @@ test("sets applied cipher correctly", () => {
   expect(listCipher.getAppliedCipher()).toBe(ExampleCipher);
   expect(listCipher.getAppliedCipher().name).toBe("Example Cipher");
 });
+
+test("returns categories correctly", () => {
+    const exampleCiphers = listCipher.getCiphersForCategory("Example Ciphers");
+    const alphabeticalCiphers = listCipher.getCiphersForCategory("Alphabetical Ciphers");
+    const numericalCiphers = listCipher.getCiphersForCategory("Numerical Ciphers");
+    //console.log(exampleCiphers, alphabeticalCiphers, numericalCiphers);
+    expect(exampleCiphers.length).toBeGreaterThan(0);
+    expect(alphabeticalCiphers.length).toBeGreaterThan(0);
+    expect(numericalCiphers.length).toBeGreaterThan(0);
+});

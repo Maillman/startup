@@ -7,6 +7,8 @@ import { iCipherFunction, CipherFunction } from "../core/iCipher";
 export class AtbashCipher extends CipherFunction {
   static name = "Atbash Cipher";
 
+  static category = "Alphabetical Ciphers";
+
   static appliedFunction = (c, index, key) => this.atbashCipher(c);
 
   static encryptFunction(c) {

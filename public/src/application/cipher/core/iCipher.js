@@ -16,6 +16,13 @@ export class iCipherFunction {
     static name;
 
     /**
+     * The category the cipher function falls under.
+     * (e.g. 'Alphabetical Ciphers', 'Numerical Ciphers', etc.)
+     * @type {string}
+     */
+    static category;
+
+    /**
      * the applied function of the cipher function. Starts in the default state.
      */
     static appliedFunction = (c, index, key) => {}
@@ -79,6 +86,8 @@ export class CipherFunction {
  */
 export class ExampleCipher extends CipherFunction {
     static name = "Example Cipher";
+
+    static category = "Example Ciphers";
 
     // Default function applied / The applied function
     static appliedFunction = (c, index, key) => this.encryptFunction(c);
