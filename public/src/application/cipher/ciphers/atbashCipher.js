@@ -26,7 +26,7 @@ export class AtbashCipher extends CipherFunction {
     );
   }
 
-  static applyFunction() {
+  static applyFunction(text, cryptState) {
     this.appliedFunction = (c, index, key) => this.atbashCipher(c);
   }
 }

@@ -31,7 +31,7 @@ export class CaesarCipher extends CipherFunction {
     );
   }
 
-  static applyFunction(cryptState) {
+  static applyFunction(text, cryptState) {
     this.appliedFunction = (c, index, key) =>
       cryptState.equals(CryptState.Encrypted)
         ? this.encryptFunction(c, parseInt(key))

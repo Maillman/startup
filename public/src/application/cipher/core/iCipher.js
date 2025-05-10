@@ -57,7 +57,7 @@ export class iCipherFunction {
      * Sets the applied function to either of its states (decryption/encryption)
      * @returns {function} - the cipher function used.
      */
-    static applyFunction = () => {}
+    static applyFunction(text, cryptState) {}
 }
 
 /**
@@ -103,7 +103,7 @@ export class ExampleCipher extends CipherFunction {
     }
 
     // Sets the appliedFunction to a new state
-    static applyFunction(cryptState){
+    static applyFunction(text, cryptState){
         this.appliedFunction = (c, index, key) => cryptState.equals(CryptState.Encrypted) ? this.encryptFunction(c) : this.decryptFunction(c);
     }
 }

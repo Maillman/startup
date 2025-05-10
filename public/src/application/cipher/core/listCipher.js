@@ -50,6 +50,11 @@ export class ListCipher {
     this.appliedCipher = selectedCipher;
   }
 
+  setAndApplyCipher(nameCipher, text, cryptState) {
+    this.setAppliedCipher(nameCipher);
+    this.appliedCipher.applyFunction(text, cryptState);
+  }
+
   getCiphersForCategory(category) {
     return this.categoricalDictionary[category];
   }

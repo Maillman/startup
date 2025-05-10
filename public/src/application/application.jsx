@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import { ListCipher } from "./cipher/core/listCipher";
 import { CryptState } from "./cipher/core/cryptState";
 
-const ciphers = new ListCipher;
+const ciphers = new ListCipher();
 export function Application({ setToolTipOpen }) {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('a');
     //Do we even need this now?
-    const [cipher, setCipher] = React.useState(ciphers.getAppliedCipher());
+    //const [cipher, setCipher] = React.useState(ciphers.getAppliedCipher());
     const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
     useEffect(() => {
-        const convertText = applyCipher(plainText, cipher, key);
+        const convertText = applyCipher(plainText, ciphers.getAppliedCipher(), key);
         console.log(convertText);
         updateCipherText(convertText ? convertText : 'Encrypted/Decrypted Cipher Text');
-    }, [plainText, key, cipher]);
+    }, [plainText, key, ciphers.getAppliedCipher()]);
     
     function changeCipherText(e) {
         updatePlainText(e.target.value);
@@ -23,9 +23,7 @@ export function Application({ setToolTipOpen }) {
     }
 
     function handleCipherChange(cipher, state, text) {
-        //TODO: Add functionality
-        ciphers.setAppliedCipher(cipher);
-        ciphers.getAppliedCipher().appliedFunction()
+        ciphers.setAndApplyCipher(cipher, text, state);
     }
 
     function changeKey(e) {
