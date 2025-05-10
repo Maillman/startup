@@ -11,7 +11,7 @@ export class A1Z26Cipher extends CipherFunction {
   static category = "Numerical Ciphers";
 
   static appliedFunction = (c, index, key) =>
-    this.encryptFunction(c, index, "", "");
+    this.encryptFunction(c, index, "", key);
 
   static encryptFunction(c, index, text, delimiter) {
     let next_index = index[0] + 1;
@@ -41,10 +41,10 @@ export class A1Z26Cipher extends CipherFunction {
     return findCharacter;
   }
 
-  static applyFunction(text, delimiter, cryptState) {
+  static applyFunction(text, cryptState) {
     this.appliedFunction = (c, index, key) =>
       cryptState.equals(CryptState.Encrypted)
-        ? this.encryptFunction(c, index, text, delimiter)
-        : this.decryptFunction(c, delimiter);
+        ? this.encryptFunction(c, index, text, key)
+        : this.decryptFunction(c, key);
   }
 }

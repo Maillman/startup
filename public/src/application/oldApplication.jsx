@@ -1,14 +1,24 @@
 import React, { useEffect } from "react";
-import { ListCipher } from "./cipher/core/listCipher";
-import { CryptState } from "./cipher/core/cryptState";
+import * as Cipher from './cipher.js';
+import applyCipher from "./applyCipher";
+import { CryptState } from "./cryptState.js";
 
-const ciphers = new ListCipher;
+const { 
+    atbashCipher,
+    enBaconCipher,
+    deBaconCipher,
+    enAffineCipher,
+    deAffineCipher,
+    caesarCipher,
+    vigenèreCipher,
+    enA1Z26Cipher,
+    deA1Z26Cipher,
+} = Cipher;
 export function Application({ setToolTipOpen }) {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('a');
-    //Do we even need this now?
-    const [cipher, setCipher] = React.useState(ciphers.getAppliedCipher());
+    const [cipher, setCipher] = React.useState(() => (c, index, key) => atbashCipher(c));
     const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
     useEffect(() => {
         const convertText = applyCipher(plainText, cipher, key);
@@ -23,9 +33,33 @@ export function Application({ setToolTipOpen }) {
     }
 
     function handleCipherChange(cipher, state, text) {
-        //TODO: Add functionality
-        ciphers.setAppliedCipher(cipher);
-        ciphers.getAppliedCipher().appliedFunction()
+        const selectedCipher = cipher;
+        switch (selectedCipher) {
+            case 'Atbash Cipher':
+                setCipher(() => (c, index, key) => atbashCipher(c));
+                break;
+            case 'Affine Cipher':
+                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deAffineCipher(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num))) : enAffineCipher(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num))));
+                break;
+            case 'Bacon Cipher':
+                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deBaconCipher(c, index, text.toLowerCase()): enBaconCipher(c));
+                break;
+            case 'Caesar Cipher':
+                setCipher(() => (c, index, key) => caesarCipher(c, state==CryptState.Decrypted ? parseInt(key) : -1*parseInt(key))); // Assuming key is the shift for Caesar Cipher
+                break;
+            case 'Vigenère Cipher':
+                setCipher(() => (c, index, key) => vigenèreCipher(c, index, state==CryptState.Decrypted ? key.toLowerCase() : key.toLowerCase().split('').map(
+                    (char) => Cipher.alphabet[(-1*Cipher.alphabet.indexOf(char))+Cipher.alphabet.length]
+                ).join(''))); // Assuming key is the keyword for Vigenère Cipher
+                break;
+            case 'A1Z26 Cipher':
+                setCipher(() => (c, index, key) => state==CryptState.Decrypted ? deA1Z26Cipher(c, key) : enA1Z26Cipher(c, index, text, key));
+                setKey('');
+                break;
+            default:
+                setCipher(() => (c, index, key) => vigenèreCipher(c, index, key));;
+                break;
+        }
     }
 
     function changeKey(e) {
@@ -48,7 +82,16 @@ export function Application({ setToolTipOpen }) {
             <form>
                 <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '10px 0px' }}>
                     <select className="form-select" style={{ width: '200px' }} onChange={(e) => handleCipherChange(e.target.value, cryptState, plainText)}>
-                        //TODO: Add functionality
+                        <optgroup label="Alphabetical Ciphers">
+                            <option>Atbash Cipher</option>
+                            <option>Affine Cipher</option>
+                            <option>Bacon Cipher</option>
+                            <option>Caesar Cipher</option>
+                            <option>Vigenère Cipher</option>
+                        </optgroup>
+                        <optgroup label="Numerical Ciphers">
+                            <option>A1Z26 Cipher</option>
+                        </optgroup>
                     </select>
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>
                 </span>
