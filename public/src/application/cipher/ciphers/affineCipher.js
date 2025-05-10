@@ -58,7 +58,7 @@ export class AffineCipher extends CipherFunction {
     return -1;
   }
 
-  static applyFunction(cryptState) {
+  static applyFunction(text, cryptState) {
     this.appliedFunction = (c, index, key) =>
       cryptState.equals(CryptState.Encrypted)
         ? this.encryptFunction(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num)))

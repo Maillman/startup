@@ -15,7 +15,7 @@ test('transforms text to uppercase using ExampleCipher', () => {
 test("transforms text using caesarCipher with a shift of 3 both ways", () => {
   const shift = 3;
   expect(applyCipher("DEF", CaesarCipher, shift)).toBe("ABC");
-  CaesarCipher.applyFunction(CryptState.Decrypted);
+  CaesarCipher.applyFunction("", CryptState.Decrypted);
   expect(applyCipher("ABC", CaesarCipher, shift)).toBe("DEF");
 });
 
@@ -32,7 +32,7 @@ test("transforms plaintext to vigenère cipher text", () => {
 });
 
 test("transforms vigenère cipher text to plaintext", () => {
-  VigenèreCipher.applyFunction(CryptState.Decrypted);
+  VigenèreCipher.applyFunction("", CryptState.Decrypted);
   expect(applyCipher("aaaaaaaaaaaa", VigenèreCipher, "key")).toBe("keykeykeykey");
 });
 
@@ -52,9 +52,9 @@ test("transforms bacon cipher text to plaintext", () => {
 });
 
 test('transforms affine cipher text to plaintext', () => {
-    AffineCipher.applyFunction(CryptState.Encrypted);
+    AffineCipher.applyFunction('', CryptState.Encrypted);
     expect(applyCipher('A linear equation is used.', AffineCipher, '15,6')).toBe('G pwtogb omugfwit wq uqoz.')
-    AffineCipher.applyFunction(CryptState.Decrypted);
+    AffineCipher.applyFunction('', CryptState.Decrypted);
     expect(applyCipher('G pwtogb omugfwit wq uqoz.', AffineCipher, '15,6')).toBe('A linear equation is used.')
 });
 

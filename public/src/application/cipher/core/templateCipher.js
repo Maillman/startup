@@ -22,7 +22,7 @@ export class TemplateCipher extends CipherFunction {
     }
 
     //TODO: add parameters as needed!
-    static applyFunction(cryptState){
+    static applyFunction(text, cryptState){
         this.appliedFunction = (c, index, key) => cryptState.equals(CryptState.Encrypted) ? this.encryptFunction() : this.decryptFunction();
     }
 }
