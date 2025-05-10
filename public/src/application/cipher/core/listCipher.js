@@ -59,6 +59,10 @@ export class ListCipher {
     return this.categoricalDictionary[category];
   }
 
+  getAllCategories() {
+    return Object.keys(this.categoricalDictionary);
+  }
+
   getAllCiphers() {
     return this.cipherDictionary;
   }

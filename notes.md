@@ -27,7 +27,7 @@ The current list of cipher functions don't scale well. I should **refactor** the
 Phases of Refactoring:
 
 - [x] Phase 1 - Construct the refactored ciphers
-- [ ] Phase 2 - Replace the old ciphers with the refactored ciphers in the application
+- [x] Phase 2 - Replace the old ciphers with the refactored ciphers in the application
 - [ ] Phase 3 - Remove the old ciphers
 
 ## TODO Notes

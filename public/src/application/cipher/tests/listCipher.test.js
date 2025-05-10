@@ -34,3 +34,10 @@ test("returns categories correctly", () => {
     expect(alphabeticalCiphers.length).toBeGreaterThan(0);
     expect(numericalCiphers.length).toBeGreaterThan(0);
 });
+
+test("gets all categories", () => {
+  const allCategories = listCipher.getAllCategories();
+  //console.log(allCategories);
+  expect(allCategories.length).toBeGreaterThan(0);
+  expect(allCategories).toContain("Example Ciphers");
+});

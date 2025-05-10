@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { ListCipher } from "./cipher/core/listCipher";
+import applyCipher from "./cipher/core/applyCipher";
 import { CryptState } from "./cipher/core/cryptState";
 
 const ciphers = new ListCipher();
@@ -8,13 +9,13 @@ export function Application({ setToolTipOpen }) {
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('a');
     //Do we even need this now?
-    //const [cipher, setCipher] = React.useState(ciphers.getAppliedCipher());
+    const [cipher, setCipher] = React.useState(ciphers.getAppliedCipher().name);
     const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
     useEffect(() => {
         const convertText = applyCipher(plainText, ciphers.getAppliedCipher(), key);
         console.log(convertText);
         updateCipherText(convertText ? convertText : 'Encrypted/Decrypted Cipher Text');
-    }, [plainText, key, ciphers.getAppliedCipher()]);
+    }, [plainText, key, cipher, cryptState]);
     
     function changeCipherText(e) {
         updatePlainText(e.target.value);
@@ -24,6 +25,7 @@ export function Application({ setToolTipOpen }) {
 
     function handleCipherChange(cipher, state, text) {
         ciphers.setAndApplyCipher(cipher, text, state);
+        setCipher(cipher);
     }
 
     function changeKey(e) {
@@ -46,7 +48,15 @@ export function Application({ setToolTipOpen }) {
             <form>
                 <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '10px 0px' }}>
                     <select className="form-select" style={{ width: '200px' }} onChange={(e) => handleCipherChange(e.target.value, cryptState, plainText)}>
-                        //TODO: Add functionality
+                        {ciphers.getAllCategories().map((category) => {
+                            console.log(category);
+                            return <optgroup label={category}>
+                                {ciphers.getCiphersForCategory(category).map((cipher) => {
+                                    console.log(cipher);
+                                    return <option>{cipher.name}</option>
+                                })}
+                            </optgroup>
+                        })}
                     </select>
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>
                 </span>
