@@ -36,7 +36,20 @@ export class VigenèreCipher extends CipherFunction {
   static applyFunction(cryptState) {
     this.appliedFunction = (c, index, key) =>
       cryptState.equals(CryptState.Encrypted)
-        ? this.encryptFunction(c, index, key)
-        : this.decryptFunction(c, index, key);
+        ? this.encryptFunction(c, index, key.toLowerCase())
+        : this.decryptFunction(
+            c,
+            index,
+            key
+              .toLowerCase()
+              .split("")
+              .map(
+                (char) =>
+                  this.alphabet[
+                    -1 * this.alphabet.indexOf(char) + this.alphabet.length
+                  ]
+              )
+              .join("")
+          );
   }
 }

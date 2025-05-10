@@ -12,10 +12,11 @@ test('transforms text to uppercase using ExampleCipher', () => {
     expect(applyCipher('input', ExampleCipher)).toBe('INPUT');
 });
 
-test("transforms text using caesarCipher with a shift of 3", () => {
+test("transforms text using caesarCipher with a shift of 3 both ways", () => {
   const shift = 3;
-  CaesarCipher.applyFunction(shift, CryptState.Decrypted);
-  expect(applyCipher("ABC", CaesarCipher)).toBe("DEF");
+  expect(applyCipher("DEF", CaesarCipher, shift)).toBe("ABC");
+  CaesarCipher.applyFunction(CryptState.Decrypted);
+  expect(applyCipher("ABC", CaesarCipher, shift)).toBe("DEF");
 });
 
 test("handles mixed characters using ExampleCipher", () => {
@@ -28,6 +29,11 @@ test("transforms plaintext to atbash cipher text", () => {
 
 test("transforms plaintext to vigenère cipher text", () => {
   expect(applyCipher("keykeykeykey", VigenèreCipher, "key")).toBe("aaaaaaaaaaaa");
+});
+
+test("transforms vigenère cipher text to plaintext", () => {
+  VigenèreCipher.applyFunction(CryptState.Decrypted);
+  expect(applyCipher("aaaaaaaaaaaa", VigenèreCipher, "key")).toBe("keykeykeykey");
 });
 
 test("transforms bacon cipher text to plaintext", () => {
@@ -46,20 +52,19 @@ test("transforms bacon cipher text to plaintext", () => {
 });
 
 test('transforms affine cipher text to plaintext', () => {
-    const numbers = [15, 6];
-    AffineCipher.applyFunction(numbers, CryptState.Encrypted);
-    expect(applyCipher('A linear equation is used.', AffineCipher)).toBe('G pwtogb omugfwit wq uqoz.')
-    AffineCipher.applyFunction(numbers, CryptState.Decrypted);
-    expect(applyCipher('G pwtogb omugfwit wq uqoz.', AffineCipher)).toBe('A linear equation is used.')
+    AffineCipher.applyFunction(CryptState.Encrypted);
+    expect(applyCipher('A linear equation is used.', AffineCipher, '15,6')).toBe('G pwtogb omugfwit wq uqoz.')
+    AffineCipher.applyFunction(CryptState.Decrypted);
+    expect(applyCipher('G pwtogb omugfwit wq uqoz.', AffineCipher, '15,6')).toBe('A linear equation is used.')
 });
 
 test('transforms A1Z26 cipher text to plaintext', () => {
     const delimiter = '-';
-    A1Z26Cipher.applyFunction("", delimiter, CryptState.Decrypted);
-    expect(applyCipher('1 2 3 4 5', A1Z26Cipher)).toBe('A B C D E');
-    expect(applyCipher('1-2-3-4-5', A1Z26Cipher)).toBe('ABCDE');
-    expect(applyCipher('5-14-3-18-25-16-20-5-4 20-5-24-20', A1Z26Cipher)).toBe('ENCRYPTED TEXT');
-    expect(applyCipher('5-14-3-18-25-16-20-5\'4 20-5-24-20.', A1Z26Cipher)).toBe('ENCRYPTE\'D TEXT.');
+    A1Z26Cipher.applyFunction("", CryptState.Decrypted);
+    expect(applyCipher('1 2 3 4 5', A1Z26Cipher, '-')).toBe('A B C D E');
+    expect(applyCipher('1-2-3-4-5', A1Z26Cipher, '-')).toBe('ABCDE');
+    expect(applyCipher('5-14-3-18-25-16-20-5-4 20-5-24-20', A1Z26Cipher, delimiter)).toBe('ENCRYPTED TEXT');
+    expect(applyCipher('5-14-3-18-25-16-20-5\'4 20-5-24-20.', A1Z26Cipher, delimiter)).toBe('ENCRYPTE\'D TEXT.');
 });
 
 test('transforms plaintext to A1Z26 cipher text', () => {
@@ -68,7 +73,7 @@ test('transforms plaintext to A1Z26 cipher text', () => {
     let expectedText = ['1 2 3 4 5', '1-2-3-4-5', '5-14-3-18-25-16-20-5-4 20-5-24-20', '5-14-3-18-25-16-20-5\'4 20-5-24-20.'];
     for(let i = 0; i < A1Z26TextTest.length; i++) {
         // console.log(A1Z26TextTest[i] + ' -> ' + expectedText[i]);
-        A1Z26Cipher.applyFunction(A1Z26TextTest[i], delimiter, CryptState.Encrypted);
-        expect(applyCipher(A1Z26TextTest[i], A1Z26Cipher)).toBe(expectedText[i]);
+        A1Z26Cipher.applyFunction(A1Z26TextTest[i], CryptState.Encrypted);
+        expect(applyCipher(A1Z26TextTest[i], A1Z26Cipher, delimiter)).toBe(expectedText[i]);
     }
 });

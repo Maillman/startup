@@ -10,7 +10,7 @@ export class AffineCipher extends CipherFunction {
 
   static category = "Alphabetical Ciphers";
 
-  static appliedFunction = (c, index, key) => this.encryptFunction(c, [0, 0]);
+  static appliedFunction = (c, index, key) => this.encryptFunction(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num)));
 
   static encryptFunction(c, numbers) {
     //console.log(c, numbers);
@@ -58,10 +58,10 @@ export class AffineCipher extends CipherFunction {
     return -1;
   }
 
-  static applyFunction(numbers, cryptState) {
+  static applyFunction(cryptState) {
     this.appliedFunction = (c, index, key) =>
       cryptState.equals(CryptState.Encrypted)
-        ? this.encryptFunction(c, numbers)
-        : this.decryptFunction(c, numbers);
+        ? this.encryptFunction(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num)))
+        : this.decryptFunction(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num)));
   }
 }
