@@ -22,7 +22,7 @@ The current list of cipher functions don't scale well. I should **refactor** the
 - [x] The name of the cipher.
 - [x] The encipher/decipher state.
 - [x] The actual cipher function.
-- [ ] Group related cipher functions together.
+- [x] Group related cipher functions together.
 
 Phases of Refactoring:
 

@@ -3,7 +3,7 @@ import { ListCipher } from "../core/listCipher";
 
 const listCipher = new ListCipher();
 test("assert dictionary has same number of ciphers as list", () => {
-  const dictCiphers = listCipher.getAllCiphers();
+  const dictCiphers = listCipher.getCipherDictionary();
   const cipherNames = Object.keys(dictCiphers);
   //console.log(cipherNames);
   expect(cipherNames.length).toBe(listCipher.getNumberOfCiphers());

@@ -63,8 +63,12 @@ export class ListCipher {
     return Object.keys(this.categoricalDictionary);
   }
 
-  getAllCiphers() {
+  getCipherDictionary() {
     return this.cipherDictionary;
+  }
+
+  getAllCiphers() {
+    return Object.values(this.cipherDictionary);
   }
 
   getNumberOfCiphers() {

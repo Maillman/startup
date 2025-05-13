@@ -11,17 +11,20 @@ import { Login } from './login/login';
 import { Discussion } from './discussion/discussion';
 import { Thread } from './thread/thread';
 import { AuthState } from './login/authState';
-import applyCipher from "./application/applyCipher";
-import * as Cipher from './application/cipher';
+import applyCipher from "./application/cipher/core/applyCipher";
+import { ListCipher } from './application/cipher/core/listCipher';
+//import * as Cipher from './application/cipher';
+//import applyCipher from "./application/applyCipher";
 
 const fetch = fetchRetry(window.fetch);
 
-const { 
-    atbashCipher,
-    enBaconCipher,
-    caesarCipher,
-    vigenèreCipher 
-} = Cipher;
+// const { 
+//     atbashCipher,
+//     enBaconCipher,
+//     caesarCipher,
+//     vigenèreCipher 
+// } = Cipher;
+const ciphers = new ListCipher();
 export default function App() {
     const [challenge, setChallenge] = useState(null);
     const [logout, setLogout] = useState(false);
@@ -148,22 +151,94 @@ function updateChallenge() {
     })
 }
 
+// function storeChallengeOld(challenge){
+//     let id;
+//     const title = challenge.Title;
+//     //Step 1: Pick a random cipher to encrypt the challenge.
+//     const setOfCiphers = [
+//         (c, index, key) => atbashCipher(c),
+//         (c, index, key) => enBaconCipher(c),
+//         (c, index, key) => caesarCipher(c, -1*parseInt(key)),
+//         (c, index, key) => vigenèreCipher(c, index, key.toLowerCase().split('').map(
+//             (char) => Cipher.alphabet[(-1*Cipher.alphabet.indexOf(char))+Cipher.alphabet.length]
+//         ).join(''))
+//     ];
+//     let index = Math.floor(Math.random() * setOfCiphers.length)
+//     let cipher = setOfCiphers[index];
+//     let name = ["Atbash", "Bacon", "Caesar", "Vigenère"][index];
+//     let key = index==2 ? Math.floor(Math.random() * 26) : index==3 ? challenge.Keywords[Math.floor(Math.random() * challenge.Keywords.length)] : null;
+//     //Step 2: Encrypt the challenge with the cipher.
+//     console.log(challenge.Quote);
+//     const convertText = applyCipher(challenge.Quote, cipher, key);
+//     console.log(convertText);
+//     //Step 3: Create hints to the user to decrypt the challenge.
+//     let hints = [];
+//     hints.push(`A related word is ${challenge.Keywords[Math.floor(Math.random() * challenge.Keywords.length)]}.`);
+//     hints.push(challenge.Context);
+//     hints.push(`The challenge is encrypted using a ${name} cipher.`);
+//     //Step 4: Store created challenge in the backend.
+//     fetch('/api/challenge/discussion', {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ title: title, encryptedtext: convertText, hints: hints })
+//     })
+//     .then((response) => response.json())
+//     .then((data) => {
+//         console.log(data);
+//         id = data.id;
+//         //Step 5: Create a discussion thread for the challenge.
+//         document.cookie = `token=3767390d-81db-4640-a171-e86594008ee7`;
+//         fetch('/api/discussion', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//                 title: `Challenge #${id}: ${title}`,
+//                 body: `Cipher Text: \n${convertText}\n\n${hints.map((hint, index) => (`Hint #${index+1}: ${hint}`)).join('\n')}`
+//             })
+//         })
+//         .then((response) => {
+//             if(response.ok) {
+//                 console.log('Challenge created');
+//                 document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+//             }else{
+//                 response.json().then((data) => {
+//                     console.log(`⚠ Error: ${data.error}`);
+//                 });
+//             }
+//         });
+//     });
+// }
+
 function storeChallenge(challenge){
     let id;
     const title = challenge.Title;
     //Step 1: Pick a random cipher to encrypt the challenge.
-    const setOfCiphers = [
-        (c, index, key) => atbashCipher(c),
-        (c, index, key) => enBaconCipher(c),
-        (c, index, key) => caesarCipher(c, -1*parseInt(key)),
-        (c, index, key) => vigenèreCipher(c, index, key.toLowerCase().split('').map(
-            (char) => Cipher.alphabet[(-1*Cipher.alphabet.indexOf(char))+Cipher.alphabet.length]
-        ).join(''))
-    ];
+    const allCiphers = ciphers.getAllCiphers();
+    console.log(allCiphers);
+    const exampleCiphers = ciphers.getCiphersForCategory("Example Ciphers");
+    const setOfCiphers = allCiphers.filter(cipher => !exampleCiphers.includes(cipher) && cipher.name !== "Affine Cipher");
+    console.log(setOfCiphers);
     let index = Math.floor(Math.random() * setOfCiphers.length)
     let cipher = setOfCiphers[index];
-    let name = ["Atbash", "Bacon", "Caesar", "Vigenère"][index];
-    let key = index==2 ? Math.floor(Math.random() * 26) : index==3 ? challenge.Keywords[Math.floor(Math.random() * challenge.Keywords.length)] : null;
+    // let name = ["Atbash", "Bacon", "Caesar", "Vigenère"][index];
+    let key;
+    switch(cipher.name) {
+        case "A1Z26 Cipher":
+            key = "-";
+            break;
+        case "Caesar Cipher":
+            key = Math.floor(Math.random() * 26);
+            break;
+        case "Vigenère Cipher":
+            key = challenge.Keywords[Math.floor(Math.random() * challenge.Keywords.length)];
+            break;
+        default:
+            key = null;
+    }
     //Step 2: Encrypt the challenge with the cipher.
     console.log(challenge.Quote);
     const convertText = applyCipher(challenge.Quote, cipher, key);
@@ -172,7 +247,7 @@ function storeChallenge(challenge){
     let hints = [];
     hints.push(`A related word is ${challenge.Keywords[Math.floor(Math.random() * challenge.Keywords.length)]}.`);
     hints.push(challenge.Context);
-    hints.push(`The challenge is encrypted using a ${name} cipher.`);
+    hints.push(`The challenge is encrypted using a ${cipher.name}.`);
     //Step 4: Store created challenge in the backend.
     fetch('/api/challenge/discussion', {
         method: 'PUT',
