@@ -21,7 +21,7 @@ export function Home() {
     }, []);
     return(
         <main>
-            <div className="card container-fluid">
+            <div className="card container-fluid styled-box">
                 <span id={imageUrl==Image ? "picture" : "fetched-picture"} className="picture-box"><img style={{height: "5em", width: "35em", maxWidth: "100%"}} src={imageUrl} alt="random" /></span>
                 <p>
                     Have you ever been on the internet, perhaps on an online forum discussing a puzzle solution, when you suddenly get hit with the "gur vasbezngvba vf va gur gnfx". Or you're watching your favorite kids show containing a big mystery element when you spot some text in the credits looking like this: "judylwb idoov".

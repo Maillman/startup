@@ -65,7 +65,7 @@ export function Discussion({ setInitateThread, setSelectedDiscussion }) {
                 <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
             </span>
             {discussion.map((discussion, index) => (
-                <div onClick={() => handleClick(index)} onMouseEnter={!hideElement ? () => setIndexSelected(index) : null} key={index} className="card" id={`${index==indexSelected ? 'selected' : index-1==indexSelected ? 'placeholder' : ''}`}>
+                <div onClick={() => handleClick(index)} onMouseEnter={!hideElement ? () => setIndexSelected(index) : null} key={index} className="card styled-box" id={`${index==indexSelected ? 'selected' : index-1==indexSelected ? 'placeholder' : ''}`}>
                     {discussion.display}
                 </div>
             ))}
