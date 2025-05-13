@@ -79,31 +79,3 @@ export class CipherFunction {
         return this.alphabet;
     }
 }
-
-/**
- * @extends {CipherFunction}
- * @implements {iCipherFunction}
- */
-export class ExampleCipher extends CipherFunction {
-    static name = "Example Cipher";
-
-    static category = "Example Ciphers";
-
-    // Default function applied / The applied function
-    static appliedFunction = (c, index, key) => this.encryptFunction(c);
-
-    static encryptFunction(c) {
-        // Your transformation logic here
-        return c.toUpperCase(); // Example transformation
-    }
-
-    static decryptFunction(c) {
-        // Your transformation logic here
-        return c.toLowerCase(); // Example transformation
-    }
-
-    // Sets the appliedFunction to a new state
-    static applyFunction(text, cryptState){
-        this.appliedFunction = (c, index, key) => cryptState.equals(CryptState.Encrypted) ? this.encryptFunction(c) : this.decryptFunction(c);
-    }
-}

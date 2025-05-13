@@ -4,7 +4,6 @@ import { AtbashCipher } from "../ciphers/atbashCipher";
 import { BaconCipher } from "../ciphers/baconCipher";
 import { CaesarCipher } from "../ciphers/caesarCipher";
 import { VigenèreCipher } from "../ciphers/vigenèreCipher";
-import { ExampleCipher } from "./iCipher";
 
 export class ListCipher {
   constructor() {
@@ -15,7 +14,6 @@ export class ListCipher {
       BaconCipher,
       CaesarCipher,
       VigenèreCipher,
-      ExampleCipher,
       // Add more ciphers here...
     ];
 

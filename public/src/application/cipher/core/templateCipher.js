@@ -21,7 +21,7 @@ export class TemplateCipher extends CipherFunction {
         //TODO: implement code here!
     }
 
-    //TODO: add parameters as needed!
+    //TODO: provide parameters to encryptFunction(), decryptFunction() as needed
     static applyFunction(text, cryptState){
         this.appliedFunction = (c, index, key) => cryptState.equals(CryptState.Encrypted) ? this.encryptFunction() : this.decryptFunction();
     }

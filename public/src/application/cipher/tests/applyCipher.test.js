@@ -3,24 +3,15 @@ import { CryptState } from "../core/cryptState";
 import { AffineCipher } from "../ciphers/affineCipher";
 import { BaconCipher } from "../ciphers/baconCipher";
 import { CaesarCipher } from "../ciphers/caesarCipher";
-import { ExampleCipher } from "../core/iCipher";
 import { AtbashCipher } from "../ciphers/atbashCipher";
 import { VigenèreCipher } from "../ciphers/vigenèreCipher";
 import { A1Z26Cipher } from "../ciphers/A1Z26Cipher";
-
-test('transforms text to uppercase using ExampleCipher', () => {
-    expect(applyCipher('input', ExampleCipher)).toBe('INPUT');
-});
 
 test("transforms text using caesarCipher with a shift of 3 both ways", () => {
   const shift = 3;
   expect(applyCipher("DEF", CaesarCipher, shift)).toBe("ABC");
   CaesarCipher.applyFunction("", CryptState.Decrypted);
   expect(applyCipher("ABC", CaesarCipher, shift)).toBe("DEF");
-});
-
-test("handles mixed characters using ExampleCipher", () => {
-  expect(applyCipher("a1!b2@", ExampleCipher)).toBe("A1!B2@");
 });
 
 test("transforms plaintext to atbash cipher text", () => {

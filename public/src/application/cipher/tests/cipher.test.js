@@ -6,18 +6,6 @@ import { BaconCipher } from "../ciphers/baconCipher";
 import { VigenèreCipher } from "../ciphers/vigenèreCipher";
 import { A1Z26Cipher } from "../ciphers/A1Z26Cipher";
 
-test('transforms character to uppercase', () => {
-    expect(ExampleCipher.encryptFunction('a')).toBe('A');
-    expect(ExampleCipher.encryptFunction('b')).toBe('B');
-    expect(ExampleCipher.encryptFunction('c')).toBe('C');
-});
-
-test('transforms character to lowercase', () => {
-    expect(ExampleCipher.decryptFunction('A')).toBe('a');
-    expect(ExampleCipher.decryptFunction('B')).toBe('b');
-    expect(ExampleCipher.decryptFunction('C')).toBe('c');
-});
-
 test('affine cipher encryption transforms characters', () => {
     // Simple shift
     expect(AffineCipher.encryptFunction('a', [1, 1])).toBe('b');
@@ -49,9 +37,9 @@ test('affine cipher decryption transforms characters', () => {
 });
 
 test('handles non-alphabetic characters', () => {
-    expect(ExampleCipher.encryptFunction('1')).toBe('1');
-    expect(ExampleCipher.encryptFunction('!')).toBe('!');
-    expect(ExampleCipher.decryptFunction('@')).toBe('@');
+    expect(BaconCipher.encryptFunction('1')).toBe('1');
+    expect(BaconCipher.encryptFunction('!')).toBe('!');
+    expect(BaconCipher.decryptFunction('@', [0, 1], '@')).toBe('@');
     expect(CaesarCipher.encryptFunction('!', 1)).toBe('!');
     expect(CaesarCipher.decryptFunction('/', 5)).toBe('/');
     expect(AtbashCipher.encryptFunction(' ')).toBe(' ');
