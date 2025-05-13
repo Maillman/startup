@@ -17,18 +17,18 @@
 - [x] Create a copy text button on the application page.
 - [ ] Split the current tests into more bite sized tests using describe blocks.
 
-The current list of cipher functions don't scale well. I should **refactor** the cipher functions to have several things:
+~~The current list of cipher functions don't scale well. I should **refactor** the cipher functions to have several things:~~
 
-- [x] The name of the cipher.
-- [x] The encipher/decipher state.
-- [x] The actual cipher function.
-- [x] Group related cipher functions together.
+- [x] ~~The name of the cipher.~~
+- [x] ~~The encipher/decipher state.~~
+- [x] ~~The actual cipher function.~~
+- [x] ~~Group related cipher functions together.~~
 
-Phases of Refactoring:
+~~Phases of Refactoring:~~
 
-- [x] Phase 1 - Construct the refactored ciphers
-- [x] Phase 2 - Replace the old ciphers with the refactored ciphers in the application
-- [ ] Phase 3 - Remove the old ciphers
+- [x] ~~Phase 1 - Construct the refactored ciphers~~
+- [x] ~~Phase 2 - Replace the old ciphers with the refactored ciphers in the application~~
+- [x] ~~Phase 3 - Remove the old ciphers~~
 
 ## TODO Notes
 
