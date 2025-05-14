@@ -5,13 +5,16 @@ import { CryptState } from "./cipher/core/cryptState";
 import Select, { components } from 'react-select';
 
 const ciphers = new ListCipher();
-export function Application({ setCopyToolTipOpen, setCipherToolTipOpen }) {
+export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, handleMouseMove }) {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('a');
     //Do we even need this now?
     const [cipher, setCipher] = React.useState(ciphers.getAppliedCipher().name);
     const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
+
+    const CipherOption = createCipherOption(setCipherToolTipOpen, handleMouseMove);
+
     useEffect(() => {
         const convertText = applyCipher(plainText, ciphers.getAppliedCipher(), key);
         console.log(convertText);
@@ -59,6 +62,7 @@ export function Application({ setCopyToolTipOpen, setCipherToolTipOpen }) {
                         onChange={(selectedOption) =>
                             handleCipherChange(selectedOption.value, cryptState, plainText)
                         }
+                        onMenuClose={() => setCipherToolTipOpen(false)}
                         styles={{ container: (base) => ({ ...base, width: 200 }) }}
                     />
                     <input type="key" placeholder="Key" className="form-control col" style={{ minWidth: '125px' }} onChange={changeKey} required/>
@@ -77,15 +81,41 @@ export function Application({ setCopyToolTipOpen, setCipherToolTipOpen }) {
     );
 }
 
-const CipherOption = (props) => {
-  const handleHover = () => {
-    console.log('Hovered:', props.data.label);
-    // Add any trigger here
-  };
+const createCipherOption = (setCipherToolTipOpen, handleMouseMove) => {
+    const debouncedHover = debounce((label, event) => {
+        console.log('Debounced Hover:', label);
+        setCipherToolTipOpen(true);
+        handleMouseMove(event);
+    }, 750); // 750 ms debounce
+    
+    return (props) => {
+        const handleHover = (event) => {
+            debouncedHover(props.data.label, event);
+        };
 
-  return (
-    <components.Option {...props}>
-      <div onMouseEnter={handleHover}>{props.children}</div>
-    </components.Option>
-  );
+        return (
+            <components.Option {...props}>
+                <div onMouseEnter={handleHover} onClick={() => setCipherToolTipOpen(false)}>{props.children}</div>
+            </components.Option>
+        );
+    }
 };
+
+// function throttle(fn, limit) {
+//   let inThrottle;
+//   return function (...args) {
+//     if (!inThrottle) {
+//       fn.apply(this, args);
+//       inThrottle = true;
+//       setTimeout(() => (inThrottle = false), limit);
+//     }
+//   };
+// }
+
+function debounce(fn, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}

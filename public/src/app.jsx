@@ -25,6 +25,7 @@ export default function App() {
     const [authState, setAuthState] = useState(currentAuthState);
     const [copyToolTipOpen, setCopyToolTipOpen] = useState(false);
     const [cipherToolTipOpen, setCipherToolTipOpen] = useState(false);
+    const [cipherToolTipPosition, setCipherToolTipPosition] = useState({ x: 0, y: 0 });
     const [selectedDiscussion, setSelectedDiscussion] = useState({
         title: 'Discussion Title',
         body: 'Body Text',
@@ -57,6 +58,10 @@ export default function App() {
         });
     }, []);
 
+    const handleMouseMove = (event) => {
+        setCipherToolTipPosition({ x: event.pageX, y: event.pageY });
+    }
+
     function logoutUser() {
         localStorage.removeItem('userName');
         setLogout(true);
@@ -81,7 +86,7 @@ export default function App() {
         </header>
         {/*{(initiateThread) ? <Navigate to={`/thread/${initiateThread}`}/> : null}-->*/}
         <Tooltip anchorSelect=".copy-text-button" place="top" isOpen={copyToolTipOpen}>Copied to clipboard</Tooltip>
-        <Tooltip anchorSelect=".copy-text-button" place="right" isOpen={cipherToolTipOpen}>Test Description</Tooltip>
+        <Tooltip position={{...cipherToolTipPosition, fixed: true }} style={{ zIndex: 9999 }} place="right" isOpen={cipherToolTipOpen}>Test Description</Tooltip>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element=
@@ -96,7 +101,7 @@ export default function App() {
                     }}
                     logout={logout}
                 />} />
-            <Route path="/application" element={<Application setCopyToolTipOpen={(open) => {setCopyToolTipOpen(open)}} setCipherToolTipOpen={(open) => {setCipherToolTipOpen(open)}}/>} />
+            <Route path="/application" element={<Application setCopyToolTipOpen={(open) => {setCopyToolTipOpen(open)}} setCipherToolTipOpen={(open) => {setCipherToolTipOpen(open)}} handleMouseMove={handleMouseMove}/>} />
             <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {navigate(`/thread/${id}`)}, 1000)} setSelectedDiscussion={(discussion) => setSelectedDiscussion(discussion)}/>} />
             <Route path="/thread/:threadId" element={<Thread challenge={challenge} selectedDiscussion={selectedDiscussion} userName={userName}/>} />
             <Route path="*" element={<Home />} />
