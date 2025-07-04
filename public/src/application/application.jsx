@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ListCipher } from "./cipher/core/listCipher";
 import applyCipher from "./cipher/core/applyCipher";
 import { CryptState } from "./cipher/core/cryptState";
@@ -13,7 +13,8 @@ export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, handleMo
     const [cipher, setCipher] = React.useState(ciphers.getAppliedCipher().name);
     const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
 
-    const CipherOption = createCipherOption(setCipherToolTipOpen, handleMouseMove);
+    const lastHoveredLabel = useRef(null);
+    const CipherOption = createCipherOption(setCipherToolTipOpen, handleMouseMove, lastHoveredLabel);
 
     useEffect(() => {
         const convertText = applyCipher(plainText, ciphers.getAppliedCipher(), key);
@@ -82,21 +83,36 @@ export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, handleMo
     );
 }
 
-const createCipherOption = (setCipherToolTipOpen, handleMouseMove) => {
-    const debouncedHover = debounce((label, event) => {
-        console.log('Debounced Hover:', label);
-        setCipherToolTipOpen(true);
-        handleMouseMove(event);
+const createCipherOption = (setCipherToolTipOpen, handleMouseMove, lastHoveredLabel) => {
+    // Ref to store the latest mouse position
+    const mousePositionRef = useRef({ x: 0, y: 0 });
+
+    const debouncedHover = debounce((label) => {
+        if (lastHoveredLabel.current !== label) {
+            console.log('Debounced Hover:', label);
+            lastHoveredLabel.current = label;
+            setCipherToolTipOpen(true);
+            handleMouseMove(mousePositionRef.current);
+        }
     }, 750); // 750 ms debounce
     
     return (props) => {
-        const handleHover = (event) => {
-            debouncedHover(props.data.label, event);
+        const handleHover = () => {
+            debouncedHover(props.data.label);
+        };
+
+        // Update mouse position on every mouse move
+        const handleMouseMoveOption = (event) => {
+            mousePositionRef.current = { x: event.clientX, y: event.clientY };
         };
 
         return (
             <components.Option {...props}>
-                <div onMouseEnter={handleHover} onClick={() => setCipherToolTipOpen(false)}>{props.children}</div>
+                <div onMouseEnter={handleHover} onMouseMove={handleMouseMoveOption} onClick={() => {
+                    setCipherToolTipOpen(false);
+                    lastHoveredLabel.current = null;
+                }
+                }>{props.children}</div>
             </components.Option>
         );
     }

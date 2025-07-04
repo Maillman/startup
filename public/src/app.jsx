@@ -58,8 +58,8 @@ export default function App() {
         });
     }, []);
 
-    const handleMouseMove = (event) => {
-        setCipherToolTipPosition({ x: event.pageX, y: event.pageY });
+    const handleMouseMove = (mousePositionRef) => {
+        setCipherToolTipPosition(mousePositionRef);
     }
 
     function logoutUser() {
