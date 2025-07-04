@@ -16,6 +16,7 @@
 - [ ] Show discussions in reverse order, newest first.
 - [x] Create a copy text button on the application page.
 - [ ] Split the current tests into more bite sized tests using describe blocks.
+- [ ] Add a description of what a cipher does in a tooltip.
 
 ~~The current list of cipher functions don't scale well. I should **refactor** the cipher functions to have several things:~~
 

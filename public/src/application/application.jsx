@@ -51,6 +51,7 @@ export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, handleMo
             <form>
                 <span className="container-fluid d-flex flex-wrap align-items-center justify-content-between" style={{ padding: '10px 0px' }}>
                     <Select
+                        defaultValue={{ value: cipher, label: cipher }}
                         options={ciphers.getAllCategories().map(category => ({
                             label: category,
                             options: ciphers.getCiphersForCategory(category).map(cipher => ({
