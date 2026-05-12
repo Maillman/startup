@@ -7,6 +7,26 @@ import { AtbashCipher } from "../ciphers/atbashCipher";
 import { VigenèreCipher } from "../ciphers/vigenèreCipher";
 import { A1Z26Cipher } from "../ciphers/A1Z26Cipher";
 
+
+test("ciphers handles multiple lines correctly", () => {
+  expect(applyCipher(`
+      Letters should be flipped
+      New line
+      Another line...
+    `, AtbashCipher)).toBe(`
+      Ovggvih hslfow yv uorkkvw
+      Mvd ormv
+      Zmlgsvi ormv...
+    `);
+  expect(applyCipher(`
+      ZUSK'VW LVBMPDE OOOO, LUTSFLWX NUMMF
+      ZUS YCKZRFK OAJF, TAYJ YGSMHXGFH RVAKARE
+    `, VigenèreCipher, "gnomes")).toBe(`
+      THEY'RE FINALLY BACK, TOGETHER AGAIN
+      THE MYSTERY KIDS, FOUR STEADFAST FRIENDS
+    `);
+});
+
 test("transforms text using caesarCipher with a shift of 3 both ways", () => {
   const shift = 3;
   expect(applyCipher("DEF", CaesarCipher, shift)).toBe("ABC");

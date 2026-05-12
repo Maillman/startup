@@ -9,13 +9,13 @@ import { iCipherFunction } from "./iCipher";
  */
 const applyCipher = (text, CipherFunction, key) => {
     let remove = 0;
-    return text.split(/(\d+|(?=.))/).filter(Boolean).map((char, index) => {
+    return text.split(/(\d+|\n|\r\n|(?=.))/).filter(Boolean).map((char, index) => {
         if (CipherFunction.getAlphabet().indexOf(char.toLowerCase()) === -1) {
             remove += 1;
         }
         const isUpperCase = char === char.toUpperCase();
         const transformedChar = CipherFunction.appliedFunction(char.toLowerCase(), [index, remove], key)
-        //console.log(transformedChar);
+        //console.log(char + " -> " + transformedChar);
         return isUpperCase ? transformedChar.toUpperCase() : transformedChar;
     }).join('');
 };

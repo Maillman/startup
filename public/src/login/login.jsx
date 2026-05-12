@@ -8,7 +8,8 @@ export function Login({ userName, authState, onAuthChange, logout }) {
     useEffect(() => {
         if (logout) {
             //Change localStorage to an api fetch call to logout the user
-            //localStorage.removeItem('userName');
+            //We still need to remove the userName from local storage, so we aren't using a false cache
+            localStorage.removeItem('userName');
             fetch('/api/auth/logout',{
                 method: 'DELETE',
                 headers: {
