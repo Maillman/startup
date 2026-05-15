@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from "react-tooltip";
+import Markdown from 'react-markdown';
 import { useState, useEffect } from 'react';
 import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import fetchRetry from 'fetch-retry';
@@ -16,6 +17,12 @@ import { ListCipher } from './application/cipher/core/listCipher';
 
 const fetch = fetchRetry(window.fetch);
 
+const defaultMarkdown = `
+# Test Title
+---
+Test Description
+`;
+
 const ciphers = new ListCipher();
 export default function App() {
     const [challenge, setChallenge] = useState(null);
@@ -26,6 +33,7 @@ export default function App() {
     const [copyToolTipOpen, setCopyToolTipOpen] = useState(false);
     const [cipherToolTipOpen, setCipherToolTipOpen] = useState(false);
     const [cipherToolTipPosition, setCipherToolTipPosition] = useState({ x: 0, y: 0 });
+    const [cipherToolTipMarkdown, setCipherToolTipMarkdown] = useState(defaultMarkdown);
     const [selectedDiscussion, setSelectedDiscussion] = useState({
         title: 'Discussion Title',
         body: 'Body Text',
@@ -86,7 +94,13 @@ export default function App() {
         </header>
         {/*{(initiateThread) ? <Navigate to={`/thread/${initiateThread}`}/> : null}-->*/}
         <Tooltip anchorSelect=".copy-text-button" place="top" isOpen={copyToolTipOpen}>Copied to clipboard</Tooltip>
-        <Tooltip position={{...cipherToolTipPosition, fixed: true }} style={{ zIndex: 9999 }} place="right" isOpen={cipherToolTipOpen}>Test Description</Tooltip>
+        <Tooltip className="cipher-tool-tip" position={{...cipherToolTipPosition, fixed: true }} style={{ zIndex: 9999 }} place="right" isOpen={cipherToolTipOpen}>
+            <div className="cipher-markdown">
+                <Markdown>
+                    {cipherToolTipMarkdown}
+                </Markdown>
+            </div>
+        </Tooltip>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element=

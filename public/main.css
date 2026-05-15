@@ -21,6 +21,19 @@ main {
     border-radius: 0em !important;
 }
 
+.cipher-tool-tip > div {
+    padding: 6px 8px;
+}
+
+.cipher-markdown {
+    background-color: white;
+    color: black;
+    padding: 5px 20px;
+    height: 150px;
+    width: 400px;
+    border-radius: inherit;
+}
+
 main form:not(#login-form) {
     display: flex;
     flex-direction: column;
