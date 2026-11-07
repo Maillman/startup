@@ -10,6 +10,12 @@ export class CaesarCipher extends CipherFunction {
 
   static category = "Alphabetical Ciphers";
 
+  static markdown = `
+  # Caesar Cipher
+  ---
+  Test description.
+  `;
+
   static appliedFunction = (c, index, key) => this.encryptFunction(c, parseInt(key));
 
   static encryptFunction(c, shift) {

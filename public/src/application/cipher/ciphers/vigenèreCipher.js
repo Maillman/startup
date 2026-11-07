@@ -11,6 +11,12 @@ export class VigenèreCipher extends CipherFunction {
 
   static category = "Alphabetical Ciphers";
 
+  static markdown = `
+  # Vigenère Cipher
+  ---
+  Test description.
+  `;
+
   static appliedFunction = (c, index, key) =>
     this.encryptFunction(c, index, key);
 

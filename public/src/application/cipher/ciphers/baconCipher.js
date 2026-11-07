@@ -10,6 +10,12 @@ export class BaconCipher extends CipherFunction {
 
   static category = "Alphabetical Ciphers";
 
+  static markdown = `
+  # Bacon Cipher
+  ---
+  Test description.
+  `;
+
   static appliedFunction = (c, index, key) => this.encryptFunction(c);
 
   static encryptFunction(c) {

@@ -9,6 +9,12 @@ export class AffineCipher extends CipherFunction {
   static name = "Affine Cipher";
 
   static category = "Alphabetical Ciphers";
+  
+  static markdown = `
+  # Affine Cipher
+  ---
+  Test description.
+  `;
 
   static appliedFunction = (c, index, key) => this.encryptFunction(c, key.split(/[^0-9]+/).map(Number).filter(num => !isNaN(num)));
 

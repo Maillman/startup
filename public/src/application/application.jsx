@@ -5,7 +5,7 @@ import { CryptState } from "./cipher/core/cryptState";
 import Select, { components } from 'react-select';
 
 const ciphers = new ListCipher();
-export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, handleMouseMove }) {
+export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, setCipherToolTipMarkdown, handleMouseMove }) {
     const [cipherText, updateCipherText] = React.useState('Encrypted/Decrypted Cipher Text');
     const [plainText, updatePlainText] = React.useState('');
     const [key, setKey] = React.useState('a');
@@ -14,7 +14,7 @@ export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, handleMo
     const [cryptState, setCryptState] = React.useState(CryptState.Decrypted);
 
     const lastHoveredLabel = useRef(null);
-    const CipherOption = createCipherOption(setCipherToolTipOpen, handleMouseMove, lastHoveredLabel);
+    const CipherOption = createCipherOption(setCipherToolTipOpen, setCipherToolTipMarkdown, handleMouseMove, lastHoveredLabel);
 
     useEffect(() => {
         const convertText = applyCipher(plainText, ciphers.getAppliedCipher(), key);
@@ -83,7 +83,7 @@ export function Application({ setCopyToolTipOpen, setCipherToolTipOpen, handleMo
     );
 }
 
-const createCipherOption = (setCipherToolTipOpen, handleMouseMove, lastHoveredLabel) => {
+const createCipherOption = (setCipherToolTipOpen, setCipherToolTipMarkdown, handleMouseMove, lastHoveredLabel) => {
     // Ref to store the latest mouse position
     const mousePositionRef = useRef({ x: 0, y: 0 });
 
@@ -91,6 +91,7 @@ const createCipherOption = (setCipherToolTipOpen, handleMouseMove, lastHoveredLa
         if (lastHoveredLabel.current !== label) {
             console.log('Debounced Hover:', label);
             lastHoveredLabel.current = label;
+            setCipherToolTipMarkdown(ciphers.getCipher(label).markdown);
             setCipherToolTipOpen(true);
             handleMouseMove(mousePositionRef.current);
         }

@@ -10,6 +10,12 @@ export class A1Z26Cipher extends CipherFunction {
 
   static category = "Numerical Ciphers";
 
+  static markdown = `
+  # A1Z26 Cipher
+  ---
+  Test description.
+  `;
+
   static appliedFunction = (c, index, key) =>
     this.encryptFunction(c, index, "", key);
 

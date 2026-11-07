@@ -115,7 +115,7 @@ export default function App() {
                     }}
                     logout={logout}
                 />} />
-            <Route path="/application" element={<Application setCopyToolTipOpen={(open) => {setCopyToolTipOpen(open)}} setCipherToolTipOpen={(open) => {setCipherToolTipOpen(open)}} handleMouseMove={handleMouseMove}/>} />
+            <Route path="/application" element={<Application setCopyToolTipOpen={(open) => {setCopyToolTipOpen(open)}} setCipherToolTipOpen={(open) => {setCipherToolTipOpen(open)}} setCipherToolTipMarkdown={(markdown) => {setCipherToolTipMarkdown(markdown)}} handleMouseMove={handleMouseMove}/>} />
             <Route path="/discussion" element={<Discussion setInitateThread={(id) => setTimeout(() => {navigate(`/thread/${id}`)}, 1000)} setSelectedDiscussion={(discussion) => setSelectedDiscussion(discussion)}/>} />
             <Route path="/thread/:threadId" element={<Thread challenge={challenge} selectedDiscussion={selectedDiscussion} userName={userName}/>} />
             <Route path="*" element={<Home />} />

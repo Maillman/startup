@@ -9,6 +9,12 @@ export class AtbashCipher extends CipherFunction {
 
   static category = "Alphabetical Ciphers";
 
+  static markdown = `
+  # Atbash Cipher
+  ---
+  Test description.
+  `;
+
   static appliedFunction = (c, index, key) => this.atbashCipher(c);
 
   static encryptFunction(c) {
